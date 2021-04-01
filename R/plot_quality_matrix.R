@@ -46,8 +46,8 @@ plot_quality_matrix <- function(data){
     dplyr::group_by(names, quality) %>%
     dplyr::summarise(counter = n()) %>%
     dplyr::group_by(names) %>%
-    dplyr::ungroup() %>%
     dplyr::mutate(props = counter / sum(counter)) %>%
+    dplyr::ungroup() %>%
     dplyr::mutate(quality = factor(quality, levels = c("-Inf or Inf", "NaN", "Good")))
 
   # Calculate order of 'good' quality feature vectors to visually steer plot
@@ -74,7 +74,7 @@ plot_quality_matrix <- function(data){
   # Plot
 
   p <- tmp1 %>%
-    ggplot2::ggplot(ggplot2::aes(x = reorder(names, ranker), y = props)) +
+    ggplot2::ggplot(ggplot2::aes(x = reorder(names, -ranker), y = props)) +
     ggplot2::geom_bar(stat = "identity", ggplot2::aes(fill = quality)) +
     ggplot2::labs(title = "Data quality matrix for computed features",
                   x = "Feature",
