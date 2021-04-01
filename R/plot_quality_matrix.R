@@ -38,10 +38,11 @@ plot_quality_matrix <- function(data){
 
   tmp <- data %>%
     dplyr::mutate(quality = dplyr::case_when(
-                  is.na(values)                                                    ~ "NaN",
-                  is.nan(values)                                                   ~ "NaN",
-                  is.infinite(values)                                              ~ "-Inf or Inf",
-                  is.numeric(values) & !is.na(values) & !is.na(values) & !is.nan(values) ~ "Good")) %>%
+                  is.na(values)                         ~ "NaN",
+                  is.nan(values)                        ~ "NaN",
+                  is.infinite(values)                   ~ "-Inf or Inf",
+                  is.numeric(values) & !is.na(values) &
+                    !is.na(values) & !is.nan(values)    ~ "Good")) %>%
     dplyr::group_by(names, quality) %>%
     dplyr::summarise() %>%
     dplyr::group_by(names) %>%

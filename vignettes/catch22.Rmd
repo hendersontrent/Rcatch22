@@ -87,6 +87,14 @@ View(feature_list)
 
 If you do not want to or need to run the entire sets included in `catch22_all` you can also access the individual feature calculations as their unique function names, for example `SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1`.
 
+## Data quality checks
+
+The package comes with a function to visualise the data types of the calculated feature vectors.
+
+```{r, message = FALSE, warning = FALSE}
+plot_quality_matrix(feature_matrix)
+```
+
 ## Normalising/scaling functions
 
 Putting calculated feature vectors on an equal scale is crucial for any statistical or machine learning model as variables with high variance can adversely impact the model's capacity to fit the data appropriately, learn appropriate weight values, or minimise a loss function. `catch22` includes a convenience function `normalise_catch` to rescale a vector of values (e.g. vector of values for all participants in a study on the `CO_AddNoise_1_even_10_ami_at_10` feature) into a variety of different ranges for ease-of-use. Current transformations available in the package include:
