@@ -22,7 +22,7 @@ library(dplyr)
 library(catch22)
 ```
 
-The catch22 R package provides access to an open-source calculation of 22 CAnonical Time-series CHaracteristics (catch) and associated data normalisation and visualisation procedures coded in C and C++ for computational efficiency and scalability.
+`catch22` is an R package for the calculation and statistical visualisation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22) (catch). The package is an efficient implementation that calculates time-series features in C, then processes and visualises them using a [tidy data](https://www.tidyverse.org) philosophy with computational functions coded in C++ for performance.
 
 ## Core calculation functions
 

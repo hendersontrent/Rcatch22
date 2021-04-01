@@ -1,6 +1,6 @@
 Package: catch22
 Type: Package
-Title: Calculate and visualise 22 CAnonical Time-series CHaracteristics.
+Title: Calculation and statistical visualisation of 22 CAnonical Time-series CHaracteristics
 Version: 0.1.1
 Date: 2021-04-01
 Authors@R: c(
