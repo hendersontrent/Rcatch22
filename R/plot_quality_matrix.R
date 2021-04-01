@@ -1,7 +1,7 @@
 #' Produce a matrix visualisation of data types computed by feature calculation function.
 #' @import dplyr
 #' @import ggplot2
-#' @param data a dataframe with at least 2 columns called 'names' and 'values'
+#' @param data a dataframe with at least 2 columns called 'names' and 'values' such as the output of catch22::catch22_all
 #' @return an object of class ggplot that contains the graphic
 #' @author Trent Henderson
 #' @seealso [catchEmAll::catch22_all()]
@@ -36,11 +36,11 @@ plot_quality_matrix <- function(data){
   #--------------- Calculate proportions ------------
 
   tmp <- data %>%
-    dplyr::mutate(quality = case_when(
+    dplyr::mutate(quality = dplyr::case_when(
                   is.na(values)                                                    ~ "NaN",
                   is.nan(values)                                                   ~ "NaN",
                   is.infinite(values)                                              ~ "-Inf or Inf",
-                  is.numeric() & !is.na(values) & !is.na(values) & !is.nan(values) ~ "Good")) %>%
+                  is.numeric(values) & !is.na(values) & !is.na(values) & !is.nan(values) ~ "Good")) %>%
     dplyr::group_by(names, quality) %>%
     dplyr::summarise() %>%
     dplyr::group_by(names) %>%
