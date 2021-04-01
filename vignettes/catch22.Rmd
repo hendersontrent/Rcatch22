@@ -85,7 +85,7 @@ The full feature list can be accessed via a dataset that comes stock with the pa
 View(feature_list)
 ```
 
-If you do not want to or need to run the entire sets included in `catch22_all` you can also access the individual feature calculations as their unique function names, for example `SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1`.
+If you do not want to or need to run the entire sets included in `catch22_all` you can also access the individual feature calculations as their unique function names, for example `IN_AutoMutualInfoStats_40_gaussian_fmmi`.
 
 ## Data quality checks
 
@@ -97,7 +97,7 @@ plot_quality_matrix(feature_matrix)
 
 ## Normalising/scaling functions
 
-Putting calculated feature vectors on an equal scale is crucial for any statistical or machine learning model as variables with high variance can adversely impact the model's capacity to fit the data appropriately, learn appropriate weight values, or minimise a loss function. `catch22` includes a convenience function `normalise_catch` to rescale a vector of values (e.g. vector of values for all participants in a study on the `CO_AddNoise_1_even_10_ami_at_10` feature) into a variety of different ranges for ease-of-use. Current transformations available in the package include:
+Putting calculated feature vectors on an equal scale is crucial for any statistical or machine learning model as variables with high variance can adversely impact the model's capacity to fit the data appropriately, learn appropriate weight values, or minimise a loss function. `catch22` includes a convenience function `normalise_catch` to rescale a vector of values (e.g. vector of values for all participants in a study on the `SB_BinaryStats_mean_longstretch1` feature) into a variety of different ranges for ease-of-use. Current transformations available in the package include:
 
 * z-score
 * Sigmoid
