@@ -10,8 +10,6 @@
 
 catch22_all <- function(data){
 
-  message("Calculating features...")
-
   names <- c('DN_HistogramMode_5',
   	'DN_HistogramMode_10',
   	'CO_f1ecac',
