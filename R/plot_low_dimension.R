@@ -155,7 +155,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
       fits <- pca_fit %>%
         broom::augment(dat) %>%
         dplyr::rename(id = `.rownames`) %>%
-        dplyr::mutate(id = as.integer(id))
+        dplyr::mutate(id = as.factor(id))
 
       groups <- data_id %>%
         dplyr::rename(group_id = dplyr::all_of(group_var)) %>%
@@ -163,7 +163,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
         dplyr::summarise(counter = dplyr::n()) %>%
         dplyr::ungroup() %>%
         dplyr::select(-c(counter)) %>%
-        dplyr::mutate(id = as.integer(id))
+        dplyr::mutate(id = as.factor(id))
 
       fits <- fits %>%
         dplyr::inner_join(groups, by = c("id" = "id"))
@@ -206,7 +206,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
       fits <- pca_fit %>%
         broom::augment(dat) %>%
         dplyr::rename(id = `.rownames`) %>%
-        dplyr::mutate(id = as.integer(id))
+        dplyr::mutate(id = as.factor(id))
 
       p <- fits %>%
         ggplot2::ggplot(ggplot2::aes(x = .fittedPC1, y = .fittedPC2))
