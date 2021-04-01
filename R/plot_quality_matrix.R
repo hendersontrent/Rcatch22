@@ -39,38 +39,52 @@ plot_quality_matrix <- function(data){
     dplyr::mutate(quality = case_when(
                   is.na(values)                                                    ~ "NaN",
                   is.nan(values)                                                   ~ "NaN",
-                  is.infinite(values)                                              ~ "Inf",
+                  is.infinite(values)                                              ~ "-Inf or Inf",
                   is.numeric() & !is.na(values) & !is.na(values) & !is.nan(values) ~ "Good")) %>%
     dplyr::group_by(names, quality) %>%
     dplyr::summarise() %>%
     dplyr::group_by(names) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(props = counter / sum(counter))
+    dplyr::mutate(props = counter / sum(counter)) %>%
+    dplyr::mutate(quality = factor(quality, levels = c("-Inf or Inf", "NaN", "Good")))
+
+  # Calculate order of 'good' quality feature vectors to visually steer plot
+
+  ordering <- tmp %>%
+    dplyr::filter(quality == "Good") %>%
+    dplyr::mutate(ranker = dplyr::dense_rank(props)) %>%
+    dplyr::select(c(names, ranker))
+
+  # Join back in
+
+  tmp1 <- tmp %>%
+    dplyr::left_join(ordering, by = c("names" = "names"))
 
   #--------------- Draw plot ------------------------
 
   # Make a colour palette
-  # Palette from: https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=4
+  # Palette from: https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=3
 
-  my_palette <- c("-Inf" = "#ca0020",
-                  "Inf" = "#f4a582",
-                  "NaN" = "#92c5de",
-                  "Good" = "#0571b0")
+  my_palette <- c("-Inf or Inf" = "#ef8a62",
+                  "NaN" = "#f7f7f7",
+                  "Good" = "#67a9cf")
 
   # Plot
 
   p <- tmp %>%
-    ggplot2::ggplot(ggplot2::aes(x = names, y = props)) +
+    ggplot2::ggplot(ggplot2::aes(x = reorder(names, ranker), y = props)) +
     ggplot2::geom_bar(stat = "identity", ggplot2::aes(fill = quality)) +
-    ggplot2::labs(title "Data quality matrix for computed features",
+    ggplot2::labs(title = "Data quality matrix for computed features",
                   x = "Feature",
-                  y = "Proportion of Outputs") +
+                  y = "Proportion of Outputs",
+                  fill = "Data Quality") +
     ggplot2::scale_y_continuous(limits = c(0,1),
                                 breaks = seq(from = 0, to = 1, by = 0.1)) +
     ggplot2::scale_fill_manual(values = my_palette) +
     ggplot2::theme_bw() +
     ggplot2::theme(panel.grid = ggplot2::element_blank(),
-                   legend.position = "bottom")
+                   legend.position = "bottom",
+                   axis.text.x = ggplot2::element_text(angle = 90))
 
   return(p)
 }
