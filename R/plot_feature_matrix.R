@@ -134,7 +134,8 @@ plot_feature_matrix <- function(data, is_normalised = FALSE, id_var = NULL, meth
     ggplot2::scale_fill_distiller(palette = "RdYlBu") +
     ggplot2::theme(legend.position = "bottom",
                    axis.text.y = ggplot2::element_blank(),
-                   axis.text.x = ggplot2::element_text(angle = 90, hjust = 1))
+                   axis.text.x = ggplot2::element_text(angle = 90, hjust = 1),
+                   panel.grid = ggplot2::element_blank())
 
   return(p)
 }

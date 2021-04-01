@@ -92,12 +92,11 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
     normed <- data_id
   } else{
     normed <- data_id %>%
-      #dplyr::filter(!is.nan(values)) %>%
       dplyr::select(c(id, names, values)) %>%
       dplyr::group_by(names) %>%
       dplyr::mutate(values = normalise_catch(values, method = method)) %>%
-      dplyr::ungroup() #%>%
-      #tidyr::drop_na()
+      dplyr::ungroup() %>%
+      tidyr::drop_na()
 
     if(nrow(normed) != nrow(data_id)){
       message("Filtered out rows containing NaNs.")
@@ -124,7 +123,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
 
   eigens <- pca_fit %>%
     broom::tidy(matrix = "eigenvalues") %>%
-    dplyr::filter(PC %in% c(1,2)) %>% # Filter to just the 2 going on the plot
+    dplyr::filter(PC %in% c(1,2)) %>% # Filter to just the 2 going in the plot
     dplyr::select(c(PC, percent)) %>%
     dplyr::mutate(percent = round(percent*100), digits = 1)
 
@@ -162,9 +161,11 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
         dplyr::inner_join(groups, by = c("id" = "id"))
 
       # Define a nice colour palette
+      # Palette from https://colorbrewer2.org/#type=qualitative&scheme=Set3&n=11
 
-      available_colours <- c("#003f5c", "#ffa600", "#2f4b7c", "#ff7c43",
-                             "#665191", "#f95d6a", "#a05195", "#d45087")
+      available_colours <- c("#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3",
+                             "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd",
+                             "#ccebc5")
 
       # Draw plot
 
