@@ -44,7 +44,7 @@ plot_quality_matrix <- function(data){
                   is.numeric(values) & !is.na(values) &
                     !is.na(values) & !is.nan(values)    ~ "Good")) %>%
     dplyr::group_by(names, quality) %>%
-    dplyr::summarise(counter = n()) %>%
+    dplyr::summarise(counter = dplyr::n()) %>%
     dplyr::group_by(names) %>%
     dplyr::mutate(props = counter / sum(counter)) %>%
     dplyr::ungroup() %>%
@@ -65,11 +65,11 @@ plot_quality_matrix <- function(data){
   #--------------- Draw plot ------------------------
 
   # Make a colour palette
-  # Palette from: https://colorbrewer2.org/#type=diverging&scheme=RdBu&n=3
+  # Palette from: https://colorbrewer2.org/#type=qualitative&scheme=Set2&n=3
 
-  my_palette <- c("-Inf or Inf" = "#ef8a62",
-                  "NaN" = "#f7f7f7",
-                  "Good" = "#67a9cf")
+  my_palette <- c("-Inf or Inf" = "#8da0cb",
+                  "NaN" = "#fc8d62",
+                  "Good" = "#66c2a5")
 
   # Plot
 
@@ -79,7 +79,7 @@ plot_quality_matrix <- function(data){
     ggplot2::labs(title = "Data quality matrix for computed features",
                   x = "Feature",
                   y = "Proportion of Outputs",
-                  fill = "Data Quality") +
+                  fill = "Data Type") +
     ggplot2::scale_y_continuous(limits = c(0,1),
                                 breaks = seq(from = 0, to = 1, by = 0.1)) +
     ggplot2::scale_fill_manual(values = my_palette) +

@@ -78,10 +78,15 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
 
   #------------- Assign ID variable ---------------
 
-  if(is.null(id_var)){
-    data_id <- data %>%
-      dplyr::mutate(id = dplyr::row_number())
-  } else{
+  if (nrow(data) <= 22){
+    stop("Not enough data to compute principal components analysis. Need multiple samples per feature.")
+  }
+
+  if (is.null(id_var) & nrow(data) > 22){
+    stop("Data is not uniquely identifiable. Please add a unique identifier variable.")
+  }
+
+  if(!is.null(id_var) & nrow(data) > 22){
     data_id <- data %>%
       dplyr::rename(id = dplyr::all_of(id_var))
   }
@@ -90,7 +95,10 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
 
   if(is_normalised){
     normed <- data_id
-  } else{
+  } else if (is_normalised == FALSE & nrow(data_id) == 22){
+    message("Not enough data to standardise feature vectors. Using raw calculated values.")
+    normed <- data_id
+  }else{
     normed <- data_id %>%
       dplyr::select(c(id, names, values)) %>%
       dplyr::group_by(names) %>%
@@ -152,7 +160,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
       groups <- data_id %>%
         dplyr::rename(group_id = dplyr::all_of(group_var)) %>%
         dplyr::group_by(id, group_id) %>%
-        dplyr::summarise(counter = n()) %>%
+        dplyr::summarise(counter = dplyr::n()) %>%
         dplyr::ungroup() %>%
         dplyr::select(-c(counter)) %>%
         dplyr::mutate(id = as.integer(id))
@@ -165,7 +173,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
 
       available_colours <- c("#8dd3c7", "#ffffb3", "#bebada", "#fb8072", "#80b1d3",
                              "#fdb462", "#b3de69", "#fccde5", "#d9d9d9", "#bc80bd",
-                             "#ccebc5")
+                             "#ccebc5", "#ffed6f")
 
       # Draw plot
 
@@ -220,7 +228,7 @@ plot_low_dimension <- function(data, is_normalised = FALSE, id_var = NULL, group
     }
   } else{
     p <- pca_fit %>%
-      broom::augment(dat_filtered) %>%
+      broom::augment(dat) %>%
       dplyr::rename(id = `.rownames`)
   }
   return(p)

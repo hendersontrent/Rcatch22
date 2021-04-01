@@ -73,10 +73,15 @@ plot_feature_matrix <- function(data, is_normalised = FALSE, id_var = NULL, meth
 
   #------------- Assign ID variable ---------------
 
-  if(is.null(id_var)){
-    data_id <- data %>%
-      dplyr::mutate(id = dplyr::row_number())
-  } else{
+  if (nrow(data) <= 22){
+    stop("Not enough data to compute feature matrix. Need multiple samples per feature.")
+  }
+
+  if (is.null(id_var) & nrow(data) > 22){
+    stop("Data is not uniquely identifiable. Please add a unique identifier variable.")
+  }
+
+  if(!is.null(id_var) & nrow(data) > 22){
     data_id <- data %>%
       dplyr::rename(id = dplyr::all_of(id_var))
   }
@@ -85,7 +90,10 @@ plot_feature_matrix <- function(data, is_normalised = FALSE, id_var = NULL, meth
 
   if(is_normalised){
     normed <- data_id
-  } else{
+  } else if (is_normalised == FALSE & nrow(data_id) == 22){
+    message("Not enough data to standardise feature vectors. Using raw calculated values.")
+    normed <- data_id
+  }else{
     normed <- data_id %>%
       dplyr::select(c(id, names, values)) %>%
       dplyr::group_by(names) %>%

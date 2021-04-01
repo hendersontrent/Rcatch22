@@ -34,6 +34,13 @@ retrieve_dat <- function(){
   d1 <- ts %>%
     dplyr::left_join(ts_info, by = c("id" = "ID"))
 
+  keywords <- d1 %>%
+    mutate(Keywords = gsub(",.*","\\1",Keywords)) %>%
+    group_by(id, Keywords) %>%
+    summarise(counter = n()) %>%
+    ungroup() %>%
+    dplyr::select(c(id, Keywords))
+
   # Calculate features
 
   storage <- list()
@@ -55,7 +62,9 @@ retrieve_dat <- function(){
 
   # Pull into one tidy dataframe
 
-  feature_matrix <- data.table::rbindlist(storage, use.names = TRUE)
+  feature_matrix <- data.table::rbindlist(storage, use.names = TRUE) %>%
+    left_join(keywords, by = c("id" = "id"))
+
   return(feature_matrix)
 }
 
@@ -90,9 +99,16 @@ scale_test_meansub <- test_scaler(method = "MeanSubtract")
 
 # Test 3: Feature matrix
 
-plot_feature_matrix(feature_matrix, is_normalised = FALSE, id_var = NULL, method = "RobustSigmoid")
+plot_feature_matrix(feature_matrix, is_normalised = FALSE, id_var = "id", method = "RobustSigmoid")
 
 # Test 4: PCA
 
-plot_low_dimension(feature_matrix, is_normalised = TRUE, id_var = NULL, plot = TRUE)
-d <- plot_low_dimension(feature_matrix, is_normalised = TRUE, id_var = NULL, plot = FALSE)
+# Grouped
+
+plot_low_dimension(feature_matrix, is_normalised = FALSE, id_var = "id", group_var = "Keywords", plot = TRUE, method = "RobustSigmoid")
+d <- plot_low_dimension(feature_matrix, is_normalised = FALSE, id_var = "id", group_var = "Keywords", plot = FALSE, method = "RobustSigmoid")
+
+# Ungrouped
+
+plot_low_dimension(feature_matrix, is_normalised = FALSE, id_var = "id", group_var = NULL, plot = TRUE, method = "RobustSigmoid")
+d1 <- plot_low_dimension(feature_matrix, is_normalised = FALSE, id_var = "id", group_var = NULL, plot = FALSE, method = "RobustSigmoid")
