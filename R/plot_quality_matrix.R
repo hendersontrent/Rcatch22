@@ -1,5 +1,6 @@
 #' Produce a matrix visualisation of data types computed by feature calculation function.
 #' @import dplyr
+#' @importFrom magrittr %>%
 #' @import ggplot2
 #' @param data a dataframe with at least 2 columns called 'names' and 'values' such as the output of catch22::catch22_all
 #' @return an object of class ggplot that contains the graphic

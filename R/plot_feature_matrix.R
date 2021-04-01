@@ -1,8 +1,8 @@
 #' Produce a heatmap matrix of the calculated feature value vectors and each unique time series with automatic hierarchical clustering.
 #' @import dplyr
+#' @importFrom magrittr %>%
 #' @import ggplot2
 #' @import tibble
-#' @importFrom magrittr %>%
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyr pivot_longer
 #' @importFrom tidyr drop_na

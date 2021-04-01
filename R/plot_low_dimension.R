@@ -1,8 +1,8 @@
 #' Produce a principal components analysis (PCA) on normalised feature values and render a bivariate plot to visualise it
 #' @import dplyr
+#' @importFrom magrittr %>%
 #' @import ggplot2
 #' @import tibble
-#' @importFrom magrittr %>%
 #' @importFrom tidyr drop_na
 #' @importFrom broom augment
 #' @importFrom broom tidy
