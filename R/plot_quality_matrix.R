@@ -44,7 +44,7 @@ plot_quality_matrix <- function(data){
                   is.numeric(values) & !is.na(values) &
                     !is.na(values) & !is.nan(values)    ~ "Good")) %>%
     dplyr::group_by(names, quality) %>%
-    dplyr::summarise() %>%
+    dplyr::summarise(counter = n()) %>%
     dplyr::group_by(names) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(props = counter / sum(counter)) %>%
@@ -73,7 +73,7 @@ plot_quality_matrix <- function(data){
 
   # Plot
 
-  p <- tmp %>%
+  p <- tmp1 %>%
     ggplot2::ggplot(ggplot2::aes(x = reorder(names, ranker), y = props)) +
     ggplot2::geom_bar(stat = "identity", ggplot2::aes(fill = quality)) +
     ggplot2::labs(title = "Data quality matrix for computed features",
