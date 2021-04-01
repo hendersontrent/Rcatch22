@@ -1,0 +1,33 @@
+Package: catch22
+Type: Package
+Title: Calculate and visualise 22 CAnonical Time-series CHaracteristics.
+Version: 0.1.1
+Date: 2021-04-01
+Authors@R: c(
+  person("Trent", "Henderson", email = "then6675@uni.sydney.edu.au", role = c("cre", "aut")),
+  person("Carl", "Lubba", email = "c.lubba15@imperial.ac.uk", role = c("ctb"))
+  )
+Maintainer: Trent Henderson <then6675@uni.sydney.edu.au>
+Description: Calculation of CAnonical Time-series CHaracteristics in R. Calculates summary 
+    statistics on input time-series vectors to enable pattern detection, similarity analysis, 
+    classification, and regression applications in the feature space. All calculations are coded 
+    in C and C++ for computational efficiency and scalability to large datasets. Includes processing 
+    and data visualisation capabilities to analyse computed features using the tidy data philosophy.
+BugReports: https://github.com/hendersontrent/catch22/issues
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    R (>= 3.5.0)
+Imports: 
+    Rcpp (>= 0.12.15),
+    dplyr,
+    ggplot2,
+    magrittr,
+    tidyr,
+    reshape2,
+    tibble,
+    broom
+LinkingTo: 
+    Rcpp
+RoxygenNote: 7.1.1
