@@ -5,6 +5,7 @@
 version](http://www.r-pkg.org/badges/version/catch22)](http://www.r-pkg.org/pkg/catch22)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/catch22)](http://www.r-pkg.org/pkg/catch22)
+[![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
 
 R package for the calculation and statistical visualisation of [22
 CAnonical Time-series
@@ -33,6 +34,9 @@ Wiki](https://github.com/hendersontrent/catch22/wiki) for extensive
 information and tutorials.
 
 ## Citation
+
+A DOI is provided at the top of this README. Alternatively, the package
+can be cited using the following.
 
 ``` 
 
