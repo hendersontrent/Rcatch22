@@ -247,61 +247,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// minmax_scaler
-NumericVector minmax_scaler(NumericVector x);
-RcppExport SEXP _catch22_minmax_scaler(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(minmax_scaler(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// zscore_scaler
-NumericVector zscore_scaler(NumericVector x);
-RcppExport SEXP _catch22_zscore_scaler(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(zscore_scaler(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// sigmoid_scaler
-NumericVector sigmoid_scaler(NumericVector x);
-RcppExport SEXP _catch22_sigmoid_scaler(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(sigmoid_scaler(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// robustsigmoid_scaler
-NumericVector robustsigmoid_scaler(NumericVector x);
-RcppExport SEXP _catch22_robustsigmoid_scaler(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(robustsigmoid_scaler(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// mean_scaler
-NumericVector mean_scaler(NumericVector x);
-RcppExport SEXP _catch22_mean_scaler(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(mean_scaler(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_catch22_DN_HistogramMode_5", (DL_FUNC) &_catch22_DN_HistogramMode_5, 1},
@@ -326,11 +271,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1", (DL_FUNC) &_catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1, 1},
     {"_catch22_SP_Summaries_welch_rect_centroid", (DL_FUNC) &_catch22_SP_Summaries_welch_rect_centroid, 1},
     {"_catch22_FC_LocalSimple_mean3_stderr", (DL_FUNC) &_catch22_FC_LocalSimple_mean3_stderr, 1},
-    {"_catch22_minmax_scaler", (DL_FUNC) &_catch22_minmax_scaler, 1},
-    {"_catch22_zscore_scaler", (DL_FUNC) &_catch22_zscore_scaler, 1},
-    {"_catch22_sigmoid_scaler", (DL_FUNC) &_catch22_sigmoid_scaler, 1},
-    {"_catch22_robustsigmoid_scaler", (DL_FUNC) &_catch22_robustsigmoid_scaler, 1},
-    {"_catch22_mean_scaler", (DL_FUNC) &_catch22_mean_scaler, 1},
     {NULL, NULL, 0}
 };
 
