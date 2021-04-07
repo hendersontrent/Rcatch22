@@ -1,5 +1,5 @@
 
-# catchEmAll <img src="man/figures/logo.png" align="right" width="120" />
+# catch22 <img src="man/figures/logo.png" align="right" width="120" />
 
 [![CRAN
 version](http://www.r-pkg.org/badges/version/catch22)](http://www.r-pkg.org/pkg/catch22)
@@ -7,13 +7,10 @@ version](http://www.r-pkg.org/badges/version/catch22)](http://www.r-pkg.org/pkg/
 downloads](http://cranlogs.r-pkg.org/badges/catch22)](http://www.r-pkg.org/pkg/catch22)
 [![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
 
-R package for the calculation and statistical visualisation of [22
-CAnonical Time-series
+R package for the calculation of [22 CAnonical Time-series
 CHaracteristics](https://github.com/chlubba/catch22) (catch). The
 package is an efficient implementation that calculates time-series
-features in C, then processes and visualises them using a [tidy
-data](https://www.tidyverse.org) philosophy with computational functions
-coded in C++ for performance.
+features coded in C.
 
 ## Installation
 
@@ -30,8 +27,8 @@ devtools::install_github("hendersontrent/catch22")
 
 Please open the included vignette within an R environment or visit the
 detailed [`catch22`
-Wiki](https://github.com/hendersontrent/catch22/wiki) for extensive
-information and tutorials.
+Wiki](https://github.com/hendersontrent/catch22/wiki) for information
+and tutorials.
 
 ## Citation
 
@@ -42,16 +39,15 @@ can be cited using the following.
 
 To cite package 'catch22' in publications use:
 
-  Trent Henderson (2021). catch22: Calculation and statistical
-  visualisation of 22 CAnonical Time-series CHaracteristics. R package
-  version 0.1.1.
+  Trent Henderson (2021). catch22: Calculation of 22 CAnonical
+  Time-series CHaracteristics. R package version 0.1.2.
 
 A BibTeX entry for LaTeX users is
 
   @Manual{,
-    title = {catch22: Calculation and statistical visualisation of 22 CAnonical Time-series CHaracteristics},
+    title = {catch22: Calculation of 22 CAnonical Time-series CHaracteristics},
     author = {Trent Henderson},
     year = {2021},
-    note = {R package version 0.1.1},
+    note = {R package version 0.1.2},
   }
 ```

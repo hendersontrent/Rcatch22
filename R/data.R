@@ -1,4 +1,4 @@
-#' All features available in catchEmAll and the set each one corresponds to, in tidy format
+#' All features available in catch22 in tidy format
 #'
 #' The variables include:
 #'

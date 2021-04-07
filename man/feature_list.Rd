@@ -3,7 +3,7 @@
 \docType{data}
 \name{feature_list}
 \alias{feature_list}
-\title{All features available in catchEmAll and the set each one corresponds to, in tidy format}
+\title{All features available in catch22 in tidy format}
 \format{
 A tidy dataframe with 2 variables:
 \describe{

@@ -22,108 +22,21 @@ library(dplyr)
 library(catch22)
 ```
 
-`catch22` is an R package for the calculation and statistical visualisation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22) (catch). The package is an efficient implementation that calculates time-series features in C, then processes and visualises them using a [tidy data](https://www.tidyverse.org) philosophy with computational functions coded in C++ for performance.
+`catch22` is an R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22) (catch). The package is an efficient implementation that calculates time-series features coded in C.
 
-## Core calculation functions
+## Core calculation function
 
-Before we look at the available functions in the package, let's first pull a heap of time-series data from the [Empirical 1000](https://figshare.com/articles/dataset/1000_Empirical_Time_series/5436136) dataset. This section of code isn't directly needed for the package.
-
-```{r, message = FALSE, warning = FALSE}
-# Set up a tempfile and download the dataset (this may take a bit to download depending on your internet)
-
-temp <- tempfile()
-download.file("https://ndownloader.figshare.com/files/24950795",temp)
-ts <- read.csv(temp, header = FALSE)
-
-ts <- ts %>%
-  dplyr::mutate(id = dplyr::row_number()) %>%
-  tidyr::pivot_longer(!id, names_to = "timepoint", values_to = "value") %>%
-  dplyr::mutate(timepoint = as.numeric(gsub("V", "\\1", timepoint)))
-
-temp1 <- tempfile()
-download.file("https://ndownloader.figshare.com/files/24950798",temp1)
-ts_info <- read.csv(temp1, header = TRUE)
-
-d1 <- ts %>%
-  dplyr::left_join(ts_info, by = c("id" = "ID"))
-```
-
-### Calculating feature summary statistics
-
-The core function that automates the calculation of the feature statistics at once is `catch22_all`.
-
-These are demonstrated using a loop for step clarity, but should be vectorised in practice due to R's computational nature.
-
-#### Example for all features
+The main function of the package is `catch22_all` which automates the computation of the 22 features. This can be run in a one-liner in R:
 
 ```{r, message = FALSE, warning = FALSE}
-storage <- list()
-ids <- unique(d1$id)
-
-for(i in ids){
-  
-  tsPrep <- d1 %>%
-    filter(id == i) %>%
-    arrange(timepoint)
-  
-  tsData <- tsPrep$value
-  
-  tmp <- catch_all(tsData) %>%
-    mutate(id = i)
-  
-  storage[[i]] <- tmp
-}
-
-# Pull into one tidy dataframe
-
-feature_matrix <- data.table::rbindlist(storage, use.names = TRUE)
+data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+outs <- catch22_all(data)
 ```
+
+## Feature list
 
 The full feature list can be accessed via a dataset that comes stock with the package:
 
 ```{r, message = FALSE, warning = FALSE}
 View(feature_list)
-```
-
-If you do not want to or need to run the entire sets included in `catch22_all` you can also access the individual feature calculations as their unique function names, for example `IN_AutoMutualInfoStats_40_gaussian_fmmi`.
-
-## Data quality checks
-
-The package comes with a function to visualise the data types of the calculated feature vectors.
-
-```{r, message = FALSE, warning = FALSE}
-plot_quality_matrix(feature_matrix)
-```
-
-## Normalising/scaling functions
-
-Putting calculated feature vectors on an equal scale is crucial for any statistical or machine learning model as variables with high variance can adversely impact the model's capacity to fit the data appropriately, learn appropriate weight values, or minimise a loss function. `catch22` includes a convenience function `normalise_catch` to rescale a vector of values (e.g. vector of values for all participants in a study on the `SB_BinaryStats_mean_longstretch1` feature) into a variety of different ranges for ease-of-use. Current transformations available in the package include:
-
-* z-score
-* Sigmoid
-* Outlier-robust Sigmoid (credit to Ben Fulcher for creating the original [MATLAB version](https://github.com/benfulcher/hctsa))
-* Min-max
-* Mean subtraction
-
-## Data visualisation functions
-
-The package also comes with a built-in plotting engine for calculating and visualising (at present) two types of statistical graphics:
-
-* Feature by time-series matrices as heatmaps
-* Principal components analysis (PCA) on the feature space for each time-series as scatterplots
-
-### Feature matrix
-
-The function `plot_feature_matrix` takes the output of any included feature calculation function and produces a `ggplot` object heatmap showing the feature vectors across the `x` axis and each time series down the `y` axis. Prior to plotting, the function hierarchically clusters the data across both rows and columns to visually highlight the empirical structure.
-
-```{r, message = FALSE, warning = FALSE}
-plot_feature_matrix(feature_matrix, is_normalised = FALSE, id_var = "id", method = "RobustSigmoid")
-```
-
-### Dimension reduction
-
-The function `plot_low_dimension` takes the output of any included feature calculation function, calculates a PCA, and produces a `ggplot` object scatterplot showing the first and second principal components on the `x` and `y` axis respectively, their individual explained variance, and each time series as a point on the `x-y` space. If `plot = FALSE` the function returns a dataframe of PCA results. If a variable is specified in the `group_var` argument, the scatterplot points will be automatically coloured by group.
-
-```{r, message = FALSE, warning = FALSE}
-plot_low_dimension(feature_matrix, is_normalised = FALSE, id_var = "id", group_var = NULL, method = "RobustSigmoid", plot = TRUE)
 ```
