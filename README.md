@@ -40,7 +40,7 @@ can be cited using the following:
 To cite package 'catch22' in publications use:
 
   Trent Henderson (2021). catch22: Calculation of 22 CAnonical
-  Time-series CHaracteristics. R package version 0.1.2.
+  Time-series CHaracteristics. R package version 0.1.3.
 
 A BibTeX entry for LaTeX users is
 
@@ -48,7 +48,7 @@ A BibTeX entry for LaTeX users is
     title = {catch22: Calculation of 22 CAnonical Time-series CHaracteristics},
     author = {Trent Henderson},
     year = {2021},
-    note = {R package version 0.1.2},
+    note = {R package version 0.1.3},
   }
 ```
 
