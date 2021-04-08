@@ -5,9 +5,8 @@
 \alias{feature_list}
 \title{All features available in catch22 in tidy format}
 \format{
-A tidy dataframe with 2 variables:
+A vector with 1 variable:
 \describe{
-  \item{feature_set}{Name of the set the feature is from}
   \item{feature}{Name of the feature}
 }
 }

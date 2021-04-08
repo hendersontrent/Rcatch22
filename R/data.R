@@ -2,9 +2,8 @@
 #'
 #' The variables include:
 #'
-#' @format A tidy dataframe with 2 variables:
+#' @format A vector with 1 variable:
 #' \describe{
-#'   \item{feature_set}{Name of the set the feature is from}
 #'   \item{feature}{Name of the feature}
 #' }
 #'
