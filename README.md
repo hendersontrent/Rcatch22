@@ -8,9 +8,9 @@ downloads](http://cranlogs.r-pkg.org/badges/catch22)](http://www.r-pkg.org/pkg/c
 [![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
 
 R package for the calculation of [22 CAnonical Time-series
-CHaracteristics](https://github.com/chlubba/catch22) (catch). The
-package is an efficient implementation that calculates time-series
-features coded in C.
+CHaracteristics](https://github.com/chlubba/catch22). The package is an
+efficient implementation that calculates time-series features coded in
+C.
 
 ## Installation
 
@@ -33,7 +33,7 @@ and tutorials.
 ## Citation
 
 A DOI is provided at the top of this README. Alternatively, the package
-can be cited using the following.
+can be cited using the following:
 
 ``` 
 
@@ -51,3 +51,8 @@ A BibTeX entry for LaTeX users is
     note = {R package version 0.1.2},
   }
 ```
+
+Please also cite the original catch22 paper by using:
+
+  - [Lubba et al. (2019). catch22: CAnonical Time-series
+    CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x)
