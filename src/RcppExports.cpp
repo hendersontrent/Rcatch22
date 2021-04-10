@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // DN_HistogramMode_5
 NumericVector DN_HistogramMode_5(NumericVector x);
-RcppExport SEXP _catch22_DN_HistogramMode_5(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_DN_HistogramMode_5(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,7 +18,7 @@ END_RCPP
 }
 // DN_HistogramMode_10
 NumericVector DN_HistogramMode_10(NumericVector x);
-RcppExport SEXP _catch22_DN_HistogramMode_10(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_DN_HistogramMode_10(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -29,7 +29,7 @@ END_RCPP
 }
 // CO_f1ecac
 NumericVector CO_f1ecac(NumericVector x);
-RcppExport SEXP _catch22_CO_f1ecac(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_CO_f1ecac(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -40,7 +40,7 @@ END_RCPP
 }
 // CO_FirstMin_ac
 NumericVector CO_FirstMin_ac(NumericVector x);
-RcppExport SEXP _catch22_CO_FirstMin_ac(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_CO_FirstMin_ac(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -51,7 +51,7 @@ END_RCPP
 }
 // CO_HistogramAMI_even_2_5
 NumericVector CO_HistogramAMI_even_2_5(NumericVector x);
-RcppExport SEXP _catch22_CO_HistogramAMI_even_2_5(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_CO_HistogramAMI_even_2_5(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -62,7 +62,7 @@ END_RCPP
 }
 // CO_trev_1_num
 NumericVector CO_trev_1_num(NumericVector x);
-RcppExport SEXP _catch22_CO_trev_1_num(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_CO_trev_1_num(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -73,7 +73,7 @@ END_RCPP
 }
 // MD_hrv_classic_pnn40
 NumericVector MD_hrv_classic_pnn40(NumericVector x);
-RcppExport SEXP _catch22_MD_hrv_classic_pnn40(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_MD_hrv_classic_pnn40(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -84,7 +84,7 @@ END_RCPP
 }
 // SB_BinaryStats_mean_longstretch1
 NumericVector SB_BinaryStats_mean_longstretch1(NumericVector x);
-RcppExport SEXP _catch22_SB_BinaryStats_mean_longstretch1(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SB_BinaryStats_mean_longstretch1(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -95,7 +95,7 @@ END_RCPP
 }
 // SB_TransitionMatrix_3ac_sumdiagcov
 NumericVector SB_TransitionMatrix_3ac_sumdiagcov(NumericVector x);
-RcppExport SEXP _catch22_SB_TransitionMatrix_3ac_sumdiagcov(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SB_TransitionMatrix_3ac_sumdiagcov(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -106,7 +106,7 @@ END_RCPP
 }
 // PD_PeriodicityWang_th0_01
 NumericVector PD_PeriodicityWang_th0_01(NumericVector x);
-RcppExport SEXP _catch22_PD_PeriodicityWang_th0_01(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_PD_PeriodicityWang_th0_01(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -117,7 +117,7 @@ END_RCPP
 }
 // CO_Embed2_Dist_tau_d_expfit_meandiff
 NumericVector CO_Embed2_Dist_tau_d_expfit_meandiff(NumericVector x);
-RcppExport SEXP _catch22_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -128,7 +128,7 @@ END_RCPP
 }
 // IN_AutoMutualInfoStats_40_gaussian_fmmi
 NumericVector IN_AutoMutualInfoStats_40_gaussian_fmmi(NumericVector x);
-RcppExport SEXP _catch22_IN_AutoMutualInfoStats_40_gaussian_fmmi(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_IN_AutoMutualInfoStats_40_gaussian_fmmi(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -139,7 +139,7 @@ END_RCPP
 }
 // FC_LocalSimple_mean1_tauresrat
 NumericVector FC_LocalSimple_mean1_tauresrat(NumericVector x);
-RcppExport SEXP _catch22_FC_LocalSimple_mean1_tauresrat(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_FC_LocalSimple_mean1_tauresrat(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -150,7 +150,7 @@ END_RCPP
 }
 // DN_OutlierInclude_p_001_mdrmd
 NumericVector DN_OutlierInclude_p_001_mdrmd(NumericVector x);
-RcppExport SEXP _catch22_DN_OutlierInclude_p_001_mdrmd(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_DN_OutlierInclude_p_001_mdrmd(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -161,7 +161,7 @@ END_RCPP
 }
 // DN_OutlierInclude_n_001_mdrmd
 NumericVector DN_OutlierInclude_n_001_mdrmd(NumericVector x);
-RcppExport SEXP _catch22_DN_OutlierInclude_n_001_mdrmd(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_DN_OutlierInclude_n_001_mdrmd(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -172,7 +172,7 @@ END_RCPP
 }
 // SP_Summaries_welch_rect_area_5_1
 NumericVector SP_Summaries_welch_rect_area_5_1(NumericVector x);
-RcppExport SEXP _catch22_SP_Summaries_welch_rect_area_5_1(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SP_Summaries_welch_rect_area_5_1(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -183,7 +183,7 @@ END_RCPP
 }
 // SB_BinaryStats_diff_longstretch0
 NumericVector SB_BinaryStats_diff_longstretch0(NumericVector x);
-RcppExport SEXP _catch22_SB_BinaryStats_diff_longstretch0(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SB_BinaryStats_diff_longstretch0(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -194,7 +194,7 @@ END_RCPP
 }
 // SB_MotifThree_quantile_hh
 NumericVector SB_MotifThree_quantile_hh(NumericVector x);
-RcppExport SEXP _catch22_SB_MotifThree_quantile_hh(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SB_MotifThree_quantile_hh(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -205,7 +205,7 @@ END_RCPP
 }
 // SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1
 NumericVector SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(NumericVector x);
-RcppExport SEXP _catch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -216,7 +216,7 @@ END_RCPP
 }
 // SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1
 NumericVector SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(NumericVector x);
-RcppExport SEXP _catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -227,7 +227,7 @@ END_RCPP
 }
 // SP_Summaries_welch_rect_centroid
 NumericVector SP_Summaries_welch_rect_centroid(NumericVector x);
-RcppExport SEXP _catch22_SP_Summaries_welch_rect_centroid(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_SP_Summaries_welch_rect_centroid(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -238,7 +238,7 @@ END_RCPP
 }
 // FC_LocalSimple_mean3_stderr
 NumericVector FC_LocalSimple_mean3_stderr(NumericVector x);
-RcppExport SEXP _catch22_FC_LocalSimple_mean3_stderr(SEXP xSEXP) {
+RcppExport SEXP _Rcatch22_FC_LocalSimple_mean3_stderr(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -249,32 +249,32 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_catch22_DN_HistogramMode_5", (DL_FUNC) &_catch22_DN_HistogramMode_5, 1},
-    {"_catch22_DN_HistogramMode_10", (DL_FUNC) &_catch22_DN_HistogramMode_10, 1},
-    {"_catch22_CO_f1ecac", (DL_FUNC) &_catch22_CO_f1ecac, 1},
-    {"_catch22_CO_FirstMin_ac", (DL_FUNC) &_catch22_CO_FirstMin_ac, 1},
-    {"_catch22_CO_HistogramAMI_even_2_5", (DL_FUNC) &_catch22_CO_HistogramAMI_even_2_5, 1},
-    {"_catch22_CO_trev_1_num", (DL_FUNC) &_catch22_CO_trev_1_num, 1},
-    {"_catch22_MD_hrv_classic_pnn40", (DL_FUNC) &_catch22_MD_hrv_classic_pnn40, 1},
-    {"_catch22_SB_BinaryStats_mean_longstretch1", (DL_FUNC) &_catch22_SB_BinaryStats_mean_longstretch1, 1},
-    {"_catch22_SB_TransitionMatrix_3ac_sumdiagcov", (DL_FUNC) &_catch22_SB_TransitionMatrix_3ac_sumdiagcov, 1},
-    {"_catch22_PD_PeriodicityWang_th0_01", (DL_FUNC) &_catch22_PD_PeriodicityWang_th0_01, 1},
-    {"_catch22_CO_Embed2_Dist_tau_d_expfit_meandiff", (DL_FUNC) &_catch22_CO_Embed2_Dist_tau_d_expfit_meandiff, 1},
-    {"_catch22_IN_AutoMutualInfoStats_40_gaussian_fmmi", (DL_FUNC) &_catch22_IN_AutoMutualInfoStats_40_gaussian_fmmi, 1},
-    {"_catch22_FC_LocalSimple_mean1_tauresrat", (DL_FUNC) &_catch22_FC_LocalSimple_mean1_tauresrat, 1},
-    {"_catch22_DN_OutlierInclude_p_001_mdrmd", (DL_FUNC) &_catch22_DN_OutlierInclude_p_001_mdrmd, 1},
-    {"_catch22_DN_OutlierInclude_n_001_mdrmd", (DL_FUNC) &_catch22_DN_OutlierInclude_n_001_mdrmd, 1},
-    {"_catch22_SP_Summaries_welch_rect_area_5_1", (DL_FUNC) &_catch22_SP_Summaries_welch_rect_area_5_1, 1},
-    {"_catch22_SB_BinaryStats_diff_longstretch0", (DL_FUNC) &_catch22_SB_BinaryStats_diff_longstretch0, 1},
-    {"_catch22_SB_MotifThree_quantile_hh", (DL_FUNC) &_catch22_SB_MotifThree_quantile_hh, 1},
-    {"_catch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1", (DL_FUNC) &_catch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1, 1},
-    {"_catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1", (DL_FUNC) &_catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1, 1},
-    {"_catch22_SP_Summaries_welch_rect_centroid", (DL_FUNC) &_catch22_SP_Summaries_welch_rect_centroid, 1},
-    {"_catch22_FC_LocalSimple_mean3_stderr", (DL_FUNC) &_catch22_FC_LocalSimple_mean3_stderr, 1},
+    {"_Rcatch22_DN_HistogramMode_5", (DL_FUNC) &_Rcatch22_DN_HistogramMode_5, 1},
+    {"_Rcatch22_DN_HistogramMode_10", (DL_FUNC) &_Rcatch22_DN_HistogramMode_10, 1},
+    {"_Rcatch22_CO_f1ecac", (DL_FUNC) &_Rcatch22_CO_f1ecac, 1},
+    {"_Rcatch22_CO_FirstMin_ac", (DL_FUNC) &_Rcatch22_CO_FirstMin_ac, 1},
+    {"_Rcatch22_CO_HistogramAMI_even_2_5", (DL_FUNC) &_Rcatch22_CO_HistogramAMI_even_2_5, 1},
+    {"_Rcatch22_CO_trev_1_num", (DL_FUNC) &_Rcatch22_CO_trev_1_num, 1},
+    {"_Rcatch22_MD_hrv_classic_pnn40", (DL_FUNC) &_Rcatch22_MD_hrv_classic_pnn40, 1},
+    {"_Rcatch22_SB_BinaryStats_mean_longstretch1", (DL_FUNC) &_Rcatch22_SB_BinaryStats_mean_longstretch1, 1},
+    {"_Rcatch22_SB_TransitionMatrix_3ac_sumdiagcov", (DL_FUNC) &_Rcatch22_SB_TransitionMatrix_3ac_sumdiagcov, 1},
+    {"_Rcatch22_PD_PeriodicityWang_th0_01", (DL_FUNC) &_Rcatch22_PD_PeriodicityWang_th0_01, 1},
+    {"_Rcatch22_CO_Embed2_Dist_tau_d_expfit_meandiff", (DL_FUNC) &_Rcatch22_CO_Embed2_Dist_tau_d_expfit_meandiff, 1},
+    {"_Rcatch22_IN_AutoMutualInfoStats_40_gaussian_fmmi", (DL_FUNC) &_Rcatch22_IN_AutoMutualInfoStats_40_gaussian_fmmi, 1},
+    {"_Rcatch22_FC_LocalSimple_mean1_tauresrat", (DL_FUNC) &_Rcatch22_FC_LocalSimple_mean1_tauresrat, 1},
+    {"_Rcatch22_DN_OutlierInclude_p_001_mdrmd", (DL_FUNC) &_Rcatch22_DN_OutlierInclude_p_001_mdrmd, 1},
+    {"_Rcatch22_DN_OutlierInclude_n_001_mdrmd", (DL_FUNC) &_Rcatch22_DN_OutlierInclude_n_001_mdrmd, 1},
+    {"_Rcatch22_SP_Summaries_welch_rect_area_5_1", (DL_FUNC) &_Rcatch22_SP_Summaries_welch_rect_area_5_1, 1},
+    {"_Rcatch22_SB_BinaryStats_diff_longstretch0", (DL_FUNC) &_Rcatch22_SB_BinaryStats_diff_longstretch0, 1},
+    {"_Rcatch22_SB_MotifThree_quantile_hh", (DL_FUNC) &_Rcatch22_SB_MotifThree_quantile_hh, 1},
+    {"_Rcatch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1", (DL_FUNC) &_Rcatch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1, 1},
+    {"_Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1", (DL_FUNC) &_Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1, 1},
+    {"_Rcatch22_SP_Summaries_welch_rect_centroid", (DL_FUNC) &_Rcatch22_SP_Summaries_welch_rect_centroid, 1},
+    {"_Rcatch22_FC_LocalSimple_mean3_stderr", (DL_FUNC) &_Rcatch22_FC_LocalSimple_mean3_stderr, 1},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_catch22(DllInfo *dll) {
+RcppExport void R_init_Rcatch22(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

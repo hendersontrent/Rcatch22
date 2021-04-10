@@ -1,10 +1,10 @@
 ---
-title: "Introduction to catch22"
+title: "Introduction to Rcatch22"
 author: "Trent Henderson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to catch22}
+  %\VignetteIndexEntry{Introduction to Rcatch22}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,18 +18,18 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, message = FALSE, warning = FALSE}
-library(catch22)
+library(Rcatch22)
 ```
 
-`catch22` is an R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22) (catch). The package is an efficient implementation that calculates time-series features coded in C.
+`Rcatch22` is an R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/Rcatch22) (catch). The package is an efficient implementation that calculates time-series features coded in C.
 
 ## Core calculation function
 
-The main function of the package is `catch22_all` which automates the computation of the 22 features. This can be run in a one-liner in R:
+The main function of the package is `Rcatch22_all` which automates the computation of the 22 features. This can be run in a one-liner in R:
 
 ```{r, message = FALSE, warning = FALSE}
 data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
-outs <- catch22_all(data)
+outs <- Rcatch22_all(data)
 ```
 
 ## Feature list

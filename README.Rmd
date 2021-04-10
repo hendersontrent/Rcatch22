@@ -2,10 +2,10 @@
 output: rmarkdown::github_document
 ---
 
-# catch22 <img src="man/figures/logo.png" align="right" width="120" />
+# Rcatch22 <img src="man/figures/logo.png" align="right" width="120" />
 
-[![CRAN version](http://www.r-pkg.org/badges/version/catch22)](http://www.r-pkg.org/pkg/catch22)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/catch22)](http://www.r-pkg.org/pkg/catch22)
+[![CRAN version](http://www.r-pkg.org/badges/version/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
 [![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
 
 R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22). The package is an efficient implementation that calculates time-series features coded in C.
@@ -19,24 +19,71 @@ comment = NA, fig.width = 12, fig.height = 8, cache = FALSE)
 
 *Coming to CRAN soon... Stay posted!*
 
-You can install the development version of `catch22` from GitHub using the following:
+You can install the development version of `Rcatch22` from GitHub using the following:
 
 ```{r eval = FALSE}
-devtools::install_github("hendersontrent/catch22")
+devtools::install_github("hendersontrent/Rcatch22")
 ```
 
 ## Wiki
 
-Please open the included vignette within an R environment or visit the detailed [`catch22` Wiki](https://github.com/hendersontrent/catch22/wiki) for information and tutorials.
+Please open the included vignette within an R environment or visit the detailed [`Rcatch22` Wiki](https://github.com/hendersontrent/Rcatch22/wiki) for information and tutorials.
+
+## Computational performance
+
+With features coded in C, `Rcatch22` is highly computationally efficient. Computation time in milliseconds for a range of cumulative-sum Gaussian noise time series is presented below.
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE}
+library(dplyr)
+library(ggplot2)
+library(microbenchmark)
+library(Rcatch22)
+
+set.seed(123)
+
+# Simulate time-series of different lengths and calculate features
+
+storage <- list()
+lengths <- seq(from = 100, to = 10000, by = 5)
+
+for(i in lengths){
+  
+  tmp <- cumsum(rnorm(i, mean = 0, sd = 1))
+  
+  m <- summary(microbenchmark(catch22_all(tmp), times = 3, unit = "ms"))
+  
+  m1 <- data.frame(m) %>%
+    dplyr::select(c(mean)) %>%
+    rename(comp_time = mean) %>%
+    mutate(ts_length = i)
+      
+  storage[[i]] <- m1
+}
+
+outData <- data.table::rbindlist(storage, use.names = TRUE)
+```
+
+```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.keep = TRUE}
+# Draw graphic
+
+outData %>%
+  ggplot(aes(x = ts_length, y = comp_time)) +
+  geom_line(size = 1.25) +
+  labs(title = "Computation time of Rcatch22 by length of time series",
+       x = "Time Series Length",
+       y = "Computation Time (milliseconds)") +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank())
+```
 
 ## Citation
 
 A DOI is provided at the top of this README. Alternatively, the package can be cited using the following:
 
 ```{r, echo = FALSE}
-citation("catch22")
+citation("Rcatch22")
 ```
 
-Please also cite the original catch22 paper by using:
+Please also cite the original *catch22* paper by using:
 
 * [Lubba et al. (2019). catch22: CAnonical Time-series CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x)

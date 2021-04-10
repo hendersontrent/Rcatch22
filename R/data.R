@@ -1,4 +1,4 @@
-#' All features available in catch22 in tidy format
+#' All features available in Rcatch22 in tidy format
 #'
 #' The variables include:
 #'

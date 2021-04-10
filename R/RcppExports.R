@@ -12,7 +12,7 @@
 #' outs <- DN_HistogramMode_5(x)
 #'
 DN_HistogramMode_5 <- function(x) {
-    .Call('_catch22_DN_HistogramMode_5', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_DN_HistogramMode_5', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -26,7 +26,7 @@ DN_HistogramMode_5 <- function(x) {
 #' outs <- DN_HistogramMode_10(x)
 #'
 DN_HistogramMode_10 <- function(x) {
-    .Call('_catch22_DN_HistogramMode_10', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_DN_HistogramMode_10', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -40,7 +40,7 @@ DN_HistogramMode_10 <- function(x) {
 #' outs <- CO_f1ecac(x)
 #'
 CO_f1ecac <- function(x) {
-    .Call('_catch22_CO_f1ecac', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_CO_f1ecac', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -54,7 +54,7 @@ CO_f1ecac <- function(x) {
 #' outs <- CO_FirstMin_ac(x)
 #'
 CO_FirstMin_ac <- function(x) {
-    .Call('_catch22_CO_FirstMin_ac', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_CO_FirstMin_ac', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -68,7 +68,7 @@ CO_FirstMin_ac <- function(x) {
 #' outs <- CO_HistogramAMI_even_2_5(x)
 #'
 CO_HistogramAMI_even_2_5 <- function(x) {
-    .Call('_catch22_CO_HistogramAMI_even_2_5', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_CO_HistogramAMI_even_2_5', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -82,7 +82,7 @@ CO_HistogramAMI_even_2_5 <- function(x) {
 #' outs <- CO_trev_1_num(x)
 #'
 CO_trev_1_num <- function(x) {
-    .Call('_catch22_CO_trev_1_num', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_CO_trev_1_num', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -96,7 +96,7 @@ CO_trev_1_num <- function(x) {
 #' outs <- MD_hrv_classic_pnn40(x)
 #'
 MD_hrv_classic_pnn40 <- function(x) {
-    .Call('_catch22_MD_hrv_classic_pnn40', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_MD_hrv_classic_pnn40', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -110,7 +110,7 @@ MD_hrv_classic_pnn40 <- function(x) {
 #' outs <- SB_BinaryStats_mean_longstretch1(x)
 #'
 SB_BinaryStats_mean_longstretch1 <- function(x) {
-    .Call('_catch22_SB_BinaryStats_mean_longstretch1', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SB_BinaryStats_mean_longstretch1', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -124,7 +124,7 @@ SB_BinaryStats_mean_longstretch1 <- function(x) {
 #' outs <- SB_TransitionMatrix_3ac_sumdiagcov(x)
 #'
 SB_TransitionMatrix_3ac_sumdiagcov <- function(x) {
-    .Call('_catch22_SB_TransitionMatrix_3ac_sumdiagcov', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SB_TransitionMatrix_3ac_sumdiagcov', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -138,7 +138,7 @@ SB_TransitionMatrix_3ac_sumdiagcov <- function(x) {
 #' outs <- PD_PeriodicityWang_th0_01(x)
 #'
 PD_PeriodicityWang_th0_01 <- function(x) {
-    .Call('_catch22_PD_PeriodicityWang_th0_01', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_PD_PeriodicityWang_th0_01', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -152,7 +152,7 @@ PD_PeriodicityWang_th0_01 <- function(x) {
 #' outs <- CO_Embed2_Dist_tau_d_expfit_meandiff(x)
 #'
 CO_Embed2_Dist_tau_d_expfit_meandiff <- function(x) {
-    .Call('_catch22_CO_Embed2_Dist_tau_d_expfit_meandiff', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_CO_Embed2_Dist_tau_d_expfit_meandiff', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -166,7 +166,7 @@ CO_Embed2_Dist_tau_d_expfit_meandiff <- function(x) {
 #' outs <- IN_AutoMutualInfoStats_40_gaussian_fmmi(x)
 #'
 IN_AutoMutualInfoStats_40_gaussian_fmmi <- function(x) {
-    .Call('_catch22_IN_AutoMutualInfoStats_40_gaussian_fmmi', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_IN_AutoMutualInfoStats_40_gaussian_fmmi', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -180,7 +180,7 @@ IN_AutoMutualInfoStats_40_gaussian_fmmi <- function(x) {
 #' outs <- FC_LocalSimple_mean1_tauresrat(x)
 #'
 FC_LocalSimple_mean1_tauresrat <- function(x) {
-    .Call('_catch22_FC_LocalSimple_mean1_tauresrat', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_FC_LocalSimple_mean1_tauresrat', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -194,7 +194,7 @@ FC_LocalSimple_mean1_tauresrat <- function(x) {
 #' outs <- DN_OutlierInclude_p_001_mdrmd(x)
 #'
 DN_OutlierInclude_p_001_mdrmd <- function(x) {
-    .Call('_catch22_DN_OutlierInclude_p_001_mdrmd', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_DN_OutlierInclude_p_001_mdrmd', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -208,7 +208,7 @@ DN_OutlierInclude_p_001_mdrmd <- function(x) {
 #' outs <- DN_OutlierInclude_n_001_mdrmd(x)
 #'
 DN_OutlierInclude_n_001_mdrmd <- function(x) {
-    .Call('_catch22_DN_OutlierInclude_n_001_mdrmd', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_DN_OutlierInclude_n_001_mdrmd', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -222,7 +222,7 @@ DN_OutlierInclude_n_001_mdrmd <- function(x) {
 #' outs <- SP_Summaries_welch_rect_area_5_1(x)
 #'
 SP_Summaries_welch_rect_area_5_1 <- function(x) {
-    .Call('_catch22_SP_Summaries_welch_rect_area_5_1', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SP_Summaries_welch_rect_area_5_1', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -236,7 +236,7 @@ SP_Summaries_welch_rect_area_5_1 <- function(x) {
 #' outs <- SB_BinaryStats_diff_longstretch0(x)
 #'
 SB_BinaryStats_diff_longstretch0 <- function(x) {
-    .Call('_catch22_SB_BinaryStats_diff_longstretch0', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SB_BinaryStats_diff_longstretch0', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -250,7 +250,7 @@ SB_BinaryStats_diff_longstretch0 <- function(x) {
 #' outs <- SB_MotifThree_quantile_hh(x)
 #'
 SB_MotifThree_quantile_hh <- function(x) {
-    .Call('_catch22_SB_MotifThree_quantile_hh', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SB_MotifThree_quantile_hh', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -264,7 +264,7 @@ SB_MotifThree_quantile_hh <- function(x) {
 #' outs <- SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(x)
 #'
 SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1 <- function(x) {
-    .Call('_catch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -278,7 +278,7 @@ SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1 <- function(x) {
 #' outs <- SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(x)
 #'
 SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1 <- function(x) {
-    .Call('_catch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -292,7 +292,7 @@ SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1 <- function(x) {
 #' outs <- SP_Summaries_welch_rect_centroid(x)
 #'
 SP_Summaries_welch_rect_centroid <- function(x) {
-    .Call('_catch22_SP_Summaries_welch_rect_centroid', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_SP_Summaries_welch_rect_centroid', PACKAGE = 'Rcatch22', x)
 }
 
 #' Function to calculate a statistical feature
@@ -306,6 +306,6 @@ SP_Summaries_welch_rect_centroid <- function(x) {
 #' outs <- FC_LocalSimple_mean3_stderr(x)
 #'
 FC_LocalSimple_mean3_stderr <- function(x) {
-    .Call('_catch22_FC_LocalSimple_mean3_stderr', PACKAGE = 'catch22', x)
+    .Call('_Rcatch22_FC_LocalSimple_mean3_stderr', PACKAGE = 'Rcatch22', x)
 }
 

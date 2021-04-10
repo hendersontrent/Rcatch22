@@ -1,13 +1,13 @@
 #---------------------------------------
 # This script sets out to test the core
-# functions of the catch22 package
+# functions of the Rcatch22 package
 #---------------------------------------
 
 #--------------------------------------
 # Author: Trent Henderson, 1 April 2021
 #--------------------------------------
 
-library(catch22)
+library(Rcatch22)
 
 # Calculations
 

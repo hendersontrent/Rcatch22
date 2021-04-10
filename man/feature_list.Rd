@@ -3,7 +3,7 @@
 \docType{data}
 \name{feature_list}
 \alias{feature_list}
-\title{All features available in catch22 in tidy format}
+\title{All features available in Rcatch22 in tidy format}
 \format{
 A vector with 1 variable:
 \describe{
