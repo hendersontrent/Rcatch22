@@ -38,6 +38,7 @@ library(dplyr)
 library(ggplot2)
 library(microbenchmark)
 library(Rcatch22)
+library(mgcv)
 
 set.seed(123)
 
@@ -68,8 +69,8 @@ outData <- data.table::rbindlist(storage, use.names = TRUE)
 
 outData %>%
   ggplot(aes(x = ts_length, y = comp_time)) +
-  geom_line(size = 1.25) +
-  labs(title = "Computation time of Rcatch22 by length of time series",
+  geom_smooth(formula = y ~ s(x), method = "gam", se = FALSE, colour = "steelblue2") +
+  labs(title = "Smoothed computation time of Rcatch22 by length of time series",
        x = "Time Series Length",
        y = "Computation Time (milliseconds)") +
   theme_bw() +
