@@ -25,17 +25,9 @@ library(Rcatch22)
 
 ## Core calculation function
 
-The main function of the package is `Rcatch22_all` which automates the computation of the 22 features. This can be run in a one-liner in R:
+The main function of the package is `catch22_all` which automates the computation of the 22 features. This can be run in a one-liner in R:
 
 ```{r, message = FALSE, warning = FALSE}
 data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
-outs <- Rcatch22_all(data)
-```
-
-## Feature list
-
-The full feature list can be accessed via a dataset that comes stock with the package:
-
-```{r, message = FALSE, warning = FALSE}
-View(feature_list)
+outs <- catch22_all(data)
 ```
