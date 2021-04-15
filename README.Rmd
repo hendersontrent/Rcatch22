@@ -31,50 +31,80 @@ Please open the included vignette within an R environment or visit the detailed 
 
 ## Computational performance
 
-With features coded in C, `Rcatch22` is highly computationally efficient. Computation time in milliseconds for a range of cumulative-sum Gaussian noise time series is presented below.
+With features coded in C, `Rcatch22` is highly computationally efficient. Computation time in milliseconds for a range of time series is presented below.
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
 library(ggplot2)
 library(microbenchmark)
 library(Rcatch22)
-library(mgcv)
 
-set.seed(123)
-
-# Simulate time-series of different lengths and calculate features
-
-storage <- list()
-lengths <- seq(from = 100, to = 10000, by = 5)
-
-for(i in lengths){
+simulate_features <- function(method = c("Sinusoid", "WhiteNoise", "RandomWalk")){
   
-  tmp <- cumsum(rnorm(i, mean = 0, sd = 1))
+  set.seed(123)
+  storage <- list()
+  baselengths <- c(100)
+  otherlengths <- seq(from = 1000, to = 10000, by = 1000)
+  lengths <- append(baselengths, otherlengths)
   
-  m <- summary(microbenchmark(catch22_all(tmp), times = 3, unit = "ms"))
+  for(i in lengths){
+    
+    if(method == "Sinusoid"){
+      tmp <- sin(i)+rnorm(i, mean = 0, sd = 0.01)
+    }
+    
+    if(method == "WhiteNoise"){
+      tmp <- rnorm(i, mean = 0, sd = 1)
+    }
+    
+    if(method == "RandomWalk"){
+      tmp <- cumsum(rnorm(i, mean = 0, sd = 1))
+    }
+    
+    m <- summary(microbenchmark(catch22_all(tmp), times = 50, unit = "ms"))
+    
+    m1 <- data.frame(m) %>%
+      dplyr::select(c(mean, min, max)) %>%
+      dplyr::mutate(sd = (max-min)/4) %>%
+      dplyr::mutate(lower = mean+1.96*sd,
+                    upper = mean-1.96*sd) %>%
+      mutate(ts_length = i) %>%
+      mutate(ts_type = method)
+    
+    storage[[i]] <- m1
+  }
   
-  m1 <- data.frame(m) %>%
-    dplyr::select(c(mean)) %>%
-    rename(comp_time = mean) %>%
-    mutate(ts_length = i)
-      
-  storage[[i]] <- m1
+  outData <- data.table::rbindlist(storage, use.names = TRUE)
+  return(outData)
 }
 
-outData <- data.table::rbindlist(storage, use.names = TRUE)
+# Run sims
+
+sim_sin <- simulate_features(method = "Sinusoid")
+sim_gauss <- simulate_features(method = "WhiteNoise")
+sim_rw <- simulate_features(method = "RandomWalk")
+
+# Pull into single dataframe
+
+outs <- bind_rows(sim_sin, sim_gauss, sim_rw)
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.keep = TRUE}
 # Draw graphic
 
-outData %>%
-  ggplot(aes(x = ts_length, y = comp_time)) +
-  geom_smooth(formula = y ~ s(x), method = "gam", se = FALSE, colour = "steelblue2") +
-  labs(title = "Smoothed computation time of Rcatch22 by length of time series",
+outs %>%
+  ggplot() +
+  geom_errorbar(aes(x = ts_length, ymin = lower, ymax = upper, colour = ts_type)) +
+  geom_line(aes(x = ts_length, y = mean, colour = ts_type)) +
+  geom_point(aes(x = ts_length, y = mean, colour = ts_type)) +
+  labs(title = "Computation time in milliseconds of Rcatch22 by type and length of time series",
+       subtitle = "Bars indicate estimated 95% confidence interval over 50 simulations at each time point",
        x = "Time Series Length",
-       y = "Computation Time (milliseconds)") +
+       y = "Computation Time (milliseconds)",
+       colour = NULL) +
   theme_bw() +
-  theme(panel.grid.minor = element_blank())
+  theme(panel.grid.minor = element_blank(),
+        legend.position = "bottom")
 ```
 
 ## Citation
