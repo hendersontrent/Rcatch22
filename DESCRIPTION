@@ -22,4 +22,7 @@ Imports:
     Rcpp (>= 0.12.15)
 LinkingTo: 
     Rcpp
+Suggests:
+    knitr
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
