@@ -8,10 +8,10 @@ Authors@R: c(
   person("Carl", "Lubba", email = "c.lubba15@imperial.ac.uk", role = c("ctb"))
   )
 Maintainer: Trent Henderson <then6675@uni.sydney.edu.au>
-Description: Calculation of CAnonical Time-series CHaracteristics in R. Calculates summary 
+Description: Calculation of CAnonical Time-series CHaracteristics in R. Calculates 22 summary 
     statistics on input time-series vectors to enable pattern detection, similarity analysis, 
     classification, and regression applications in the feature space. All calculations are coded 
-    in C and C++ for computational efficiency and scalability to large datasets.
+    in C for computational efficiency and scalability to large datasets.
 BugReports: https://github.com/hendersontrent/catch22/issues
 License: GPL-3
 Encoding: UTF-8
