@@ -33,8 +33,8 @@ and tutorials.
 ## Computational performance
 
 With features coded in C, `Rcatch22` is highly computationally
-efficient. Computation time in milliseconds for a range of time series
-is presented below.
+efficient. Computation time in *milliseconds* for a range of time series
+lengths is presented below.
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
