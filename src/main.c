@@ -206,10 +206,10 @@ void run_features(double y[], int size, FILE * outfile)
 void print_help(char *argv[], char msg[])
 {
   if (strlen(msg) > 0) {
-    fprintf(stdout, "ERROR: %s\n", msg);
+    Rprintf("ERROR: %s\n", msg);
   }
-  fprintf(stdout, "Usage is %s <infile> <outfile>\n", argv[0]);
-  fprintf(stdout, "\n\tSpecifying outfile is optional, by default it is stdout\n");
+  Rprintf("Usage is %s <infile> <outfile>\n", argv[0]);
+  Rprintf("\n\tSpecifying outfile is optional, by default it is stdout\n");
   // fprintf(stdout, "\tOutput order is:\n%s\n", HEADER);
 }
 
