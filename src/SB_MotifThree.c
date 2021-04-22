@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "SB_CoarseGrain.h"
 #include "helper_functions.h"
+#include <R.h>
 
 double SB_MotifThree_quantile_hh(const double y[], const int size)
 {
@@ -15,7 +16,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             return NAN;
         }
     }
-    
+
     int tmp_idx, r_idx;
     int dynamic_idx;
     int alphabet_size = 3;
@@ -23,10 +24,10 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
     int * yt = malloc(size * sizeof(yt)); // alphabetized array
     double hh; // output
     double * out = malloc(124 * sizeof(out)); // output array
-    
+
     // transfer to alphabet
     sb_coarsegrain(y, size, "quantile", 3, yt);
-    
+
     // words of length 1
     array_size = alphabet_size;
     int ** r1 = malloc(array_size * sizeof(*r1));
@@ -45,7 +46,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             }
         }
     }
-    
+
     // words of length 2
     array_size *= alphabet_size;
     // removing last item if it is == max possible idx since later we are taking idx + 1
@@ -60,16 +61,16 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             free(tmp_ar);
         }
     }
-    
+
     /*
-    int *** r2 = malloc(array_size * sizeof(**r2));
-    int ** sizes_r2 = malloc(array_size * sizeof(*sizes_r2));
-    double ** out2 = malloc(array_size * sizeof(*out2));
-    */
+     int *** r2 = malloc(array_size * sizeof(**r2));
+     int ** sizes_r2 = malloc(array_size * sizeof(*sizes_r2));
+     double ** out2 = malloc(array_size * sizeof(*out2));
+     */
     int*** r2 = malloc(alphabet_size * sizeof(**r2));
     int** sizes_r2 = malloc(alphabet_size * sizeof(*sizes_r2));
     double** out2 = malloc(alphabet_size * sizeof(*out2));
-    
+
 
     // allocate separately
     for (int i = 0; i < alphabet_size; i++) {
@@ -84,7 +85,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
 
     // fill separately
     for (int i = 0; i < alphabet_size; i++) {
-    // for (int i = 0; i < array_size; i++) {
+        // for (int i = 0; i < array_size; i++) {
         //r2[i] = malloc(alphabet_size * sizeof(r2[i]));
         //sizes_r2[i] = malloc(alphabet_size * sizeof(sizes_r2[i]));
         //out2[i] = malloc(alphabet_size * sizeof(out2[i]));
@@ -123,9 +124,9 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
     }
     free(r1);
     // free(sizes_r1);
-    
+
     for (int i = 0; i < alphabet_size; i++) {
-    //for (int i = alphabet_size - 1; i >= 0; i--) {
+        //for (int i = alphabet_size - 1; i >= 0; i--) {
 
         free(sizes_r2[i]);
         free(out2[i]);
@@ -138,14 +139,14 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
         }
         free(r2[i]);
     }
-    
+
     free(r2);
     free(sizes_r2);
     free(out2);
-    
-    
+
+
     return hh;
-    
+
 }
 
 double * sb_motifthree(const double y[], int size, const char how[])
@@ -166,8 +167,7 @@ double * sb_motifthree(const double y[], int size, const char how[])
         sb_coarsegrain(diff_y, size, how, alphabet_size, yt);
         size--;
     } else {
-        fprintf(stdout, "ERROR in sb_motifthree: Unknown how method");
-        exit(1);
+        error("ERROR in sb_motifthree: Unknown how method");
     }
 
     // words of length 1
@@ -347,28 +347,3 @@ double * sb_motifthree(const double y[], int size, const char how[])
 
     return out;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
