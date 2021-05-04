@@ -1,17 +1,17 @@
 Package: Rcatch22
 Type: Package
 Title: Calculation of 22 CAnonical Time-series CHaracteristics
-Version: 0.1.5
-Date: 2021-04-08
+Version: 0.1.7
+Date: 2021-04-20
 Authors@R: c(
   person("Trent", "Henderson", email = "then6675@uni.sydney.edu.au", role = c("cre", "aut")),
   person("Carl", "Lubba", email = "c.lubba15@imperial.ac.uk", role = c("ctb"))
   )
 Maintainer: Trent Henderson <then6675@uni.sydney.edu.au>
-Description: Calculation of CAnonical Time-series CHaracteristics in R. Calculates summary 
+Description: Calculation of CAnonical Time-series CHaracteristics in R. Calculates 22 summary 
     statistics on input time-series vectors to enable pattern detection, similarity analysis, 
     classification, and regression applications in the feature space. All calculations are coded 
-    in C and C++ for computational efficiency and scalability to large datasets.
+    in C for computational efficiency and scalability to large datasets.
 BugReports: https://github.com/hendersontrent/catch22/issues
 License: GPL-3
 Encoding: UTF-8
@@ -22,4 +22,7 @@ Imports:
     Rcpp (>= 0.12.15)
 LinkingTo: 
     Rcpp
+Suggests:
+    knitr
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr

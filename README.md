@@ -33,8 +33,8 @@ and tutorials.
 ## Computational performance
 
 With features coded in C, `Rcatch22` is highly computationally
-efficient. Computation time in milliseconds for a range of time series
-is presented below.
+efficient. Computation time in *milliseconds* for a range of time series
+lengths is presented below.
 
 ![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
@@ -48,7 +48,7 @@ can be cited using the following:
 To cite package 'Rcatch22' in publications use:
 
   Trent Henderson (2021). Rcatch22: Calculation of 22 CAnonical
-  Time-series CHaracteristics. R package version 0.1.5.
+  Time-series CHaracteristics. R package version 0.1.7.
 
 A BibTeX entry for LaTeX users is
 
@@ -56,7 +56,7 @@ A BibTeX entry for LaTeX users is
     title = {Rcatch22: Calculation of 22 CAnonical Time-series CHaracteristics},
     author = {Trent Henderson},
     year = {2021},
-    note = {R package version 0.1.5},
+    note = {R package version 0.1.7},
   }
 ```
 

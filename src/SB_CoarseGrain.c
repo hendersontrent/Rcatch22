@@ -4,21 +4,21 @@
 #include <stdio.h>
 #include "stats.h"
 #include "helper_functions.h"
+#include <R.h>
 
 void sb_coarsegrain(const double y[], const int size, const char how[], const int num_groups, int labels[])
 {
     int i, j;
     if (strcmp(how, "quantile") == 1) {
-        fprintf(stdout, "ERROR in sb_coarsegrain: unknown coarse-graining method\n");
-        exit(1);
+        error("ERROR in sb_coarsegrain: unknown coarse-graining method\n");
     }
-    
+
     /*
-    for(int i = 0; i < size; i++){
-        printf("yin coarsegrain[%i]=%1.4f\n", i, y[i]);
-    }
-    */
-    
+     for(int i = 0; i < size; i++){
+     printf("yin coarsegrain[%i]=%1.4f\n", i, y[i]);
+     }
+     */
+
     double * th = malloc((num_groups + 1) * 2 * sizeof(th));
     double * ls = malloc((num_groups + 1) * 2 * sizeof(th));
     linspace(0, 1, num_groups + 1, ls);
@@ -34,7 +34,7 @@ void sb_coarsegrain(const double y[], const int size, const char how[], const in
             }
         }
     }
-    
+
     free(th);
     free(ls);
 }
