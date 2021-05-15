@@ -213,65 +213,6 @@ void print_help(char *argv[], char msg[])
   // fprintf(stdout, "\tOutput order is:\n%s\n", HEADER);
 }
 
-int main(int argc, char * argv[])
-{
-  FILE * infile, * outfile;
-  int array_size;
-  double * y;
-  int size;
-  double value;
-  // DIR *d;
-  struct dirent *dir;
-
-
-  switch (argc) {
-  case 1:
-    print_help(argv, "");
-    break;
-  case 2:
-    if ((infile = fopen(argv[1], "r")) == NULL) {
-      print_help(argv, "Can't open input file\n");
-    }
-    outfile = stdout;
-    break;
-  case 3:
-    if ((infile = fopen(argv[1], "r")) == NULL) {
-      print_help(argv, "Can't open input file\n");
-    }
-    if ((outfile = fopen(argv[2], "w")) == NULL) {
-      print_help(argv, "Can't open output file\n");
-    }
-    break;
-  }
-
-  /*
-   // debug: fix these.
-   infile = fopen("/Users/carl/PycharmProjects/catch22/C/timeSeries/tsid0244.txt", "r");
-   outfile = stdout;
-   */
-
-  // fprintf(outfile, "%s", HEADER);
-  array_size = 50;
-  size = 0;
-  y = malloc(array_size * sizeof *y);
-
-  while (fscanf(infile, "%lf", &value) != EOF) {
-    if (size == array_size) {
-      y = realloc(y, 2 * array_size * sizeof *y);
-      array_size *= 2;
-    }
-    y[size++] = value;
-  }
-  fclose(infile);
-  y = realloc(y, size * sizeof *y);
-  //printf("size=%i\n", size);
-  run_features(y, size, outfile);
-  fclose(outfile);
-  free(y);
-
-  return 0;
-}
-
 int main2(int argc, char * argv[])
 {
   (void)argc;
