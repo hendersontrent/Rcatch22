@@ -21,15 +21,15 @@ double IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size)
             return NAN;
         }
     }
-    
+
     // maximum time delay
     int tau = 40;
-    
+
     // don't go above half the signal length
     if(tau > ceil((double)size/2)){
         tau = ceil((double)size/2);
     }
-    
+
     // compute autocorrelations and compute automutual information
     double * ami = malloc(size * sizeof(double));
     for(int i = 0; i < tau; i++){
@@ -37,18 +37,18 @@ double IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size)
         ami[i] = -0.5 * log(1 - ac*ac);
         // printf("ami[%i]=%1.7f\n", i, ami[i]);
     }
-    
+
     // find first minimum of automutual information
     double fmmi = tau;
     for(int i = 1; i < tau-1; i++){
-        if(ami[i] < ami[i-1] & ami[i] < ami[i+1]){
+        if((ami[i] < ami[i-1]) & (ami[i] < ami[i+1])){
             fmmi = i;
             // printf("found minimum at %i\n", i);
             break;
         }
     }
-    
+
     free(ami);
-    
+
     return fmmi;
 }
