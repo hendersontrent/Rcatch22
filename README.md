@@ -1,14 +1,8 @@
 
 # Rcatch22 <img src="man/figures/logo.png" align="right" width="120" />
 
-[![CRAN
-version](http://www.r-pkg.org/badges/version/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
-[![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
-[![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
-
 R package for the calculation of [22 CAnonical Time-series
-CHaracteristics](https://github.com/chlubba/catch22). The package is an
+CHaracteristics](https://github.com/chlubba/catch22/). The package is an
 efficient implementation that calculates time-series features coded in
 C.
 
@@ -27,7 +21,7 @@ devtools::install_github("hendersontrent/Rcatch22")
 
 Please open the included vignette within an R environment or visit the
 detailed [`Rcatch22`
-Wiki](https://github.com/hendersontrent/Rcatch22/wiki) for information
+Wiki](https://github.com/hendersontrent/Rcatch22/wiki/) for information
 and tutorials.
 
 ## Computational performance
@@ -62,5 +56,5 @@ A BibTeX entry for LaTeX users is
 
 Please also cite the original *catch22* paper by using:
 
-  - [Lubba et al. (2019). catch22: CAnonical Time-series
-    CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x)
+  - [Lubba et al. (2019). catch22: CAnonical Time-series
+    CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x/)
