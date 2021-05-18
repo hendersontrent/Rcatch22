@@ -2,16 +2,15 @@ Package: Rcatch22
 Type: Package
 Title: Calculation of 22 CAnonical Time-Series CHaracteristics
 Version: 0.1.10
-Date: 2021-05-17
+Date: 2021-05-18
 Authors@R: c(
   person("Trent", "Henderson", email = "then6675@uni.sydney.edu.au", role = c("cre", "aut")),
   person("Carl", "Lubba", email = "c.lubba15@imperial.ac.uk", role = c("ctb"))
   )
 Maintainer: Trent Henderson <then6675@uni.sydney.edu.au>
-Description: Calculation of CAnonical Time-series CHaracteristics in R, as developed by Lubba et al. (2019) <doi:10.1007/s10618-019-00647-x>. 
-    Calculates 22 summary statistics on input time-series vectors to enable pattern detection, similarity analysis, 
-    classification, and regression applications in the feature space. All calculations are coded 
-    in C for computational efficiency and scalability to large datasets.
+Description: Calculate 22 summary statistics coded in C on time-series vectors to enable 
+    pattern detection, classification, and regression applications in the 
+    feature space as proposed by Lubba et al. (2019) <doi:10.1007/s10618-019-00647-x>.
 BugReports: https://github.com/hendersontrent/Rcatch22/issues/
 License: GPL-3
 Encoding: UTF-8
