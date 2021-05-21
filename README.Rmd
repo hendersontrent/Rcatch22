@@ -17,7 +17,11 @@ comment = NA, fig.width = 8, fig.height = 6, cache = FALSE)
 
 ## Installation
 
-*Coming to CRAN soon... Stay posted!*
+You can install the stable version of `Rcatch22` from CRAN using the following:
+
+```{r eval = FALSE}
+install.packages("Rcatch22")
+```
 
 You can install the development version of `Rcatch22` from GitHub using the following:
 
@@ -88,6 +92,6 @@ A DOI is provided at the top of this README. Alternatively, the package can be c
 citation("Rcatch22")
 ```
 
-Please also cite the original *catch22* paper by using:
+Please also cite the original *catch22* paper:
 
 * [Lubba et al. (2019). catch22: CAnonical Time-series CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x/)
