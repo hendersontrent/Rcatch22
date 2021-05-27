@@ -9,7 +9,7 @@
 #include "SB_BinaryStats.h"
 #include "stats.h"
 
-double SB_BinaryStats_diff_longstretch0(const double y[], const int size){
+double C_SB_BinaryStats_diff_longstretch0(const double y[], const int size){
 
     // NaN check
     for(int i = 0; i < size; i++)
@@ -51,7 +51,7 @@ double SB_BinaryStats_diff_longstretch0(const double y[], const int size){
     return maxstretch0;
 }
 
-double SB_BinaryStats_mean_longstretch1(const double y[], const int size){
+double C_SB_BinaryStats_mean_longstretch1(const double y[], const int size){
 
     // NaN check
     for(int i = 0; i < size; i++)

@@ -11,7 +11,7 @@
 #include "CO_AutoCorr.h"
 #include "stats.h"
 
-double IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size)
+double C_IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size)
 {
     // NaN check
     for(int i = 0; i < size; i++)

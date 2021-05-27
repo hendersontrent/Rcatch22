@@ -13,7 +13,7 @@
 #include "splinefit.h"
 #include "stats.h"
 
-int PD_PeriodicityWang_th0_01(const double * y, const int size){
+int C_PD_PeriodicityWang_th0_01(const double * y, const int size){
 
     // NaN check
     for(int i = 0; i < size; i++)

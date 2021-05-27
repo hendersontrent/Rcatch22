@@ -4,6 +4,6 @@
 #include <string.h>
 #include "stats.h"
 
-extern double DN_HistogramMode_5(const double y[], const int size);
+extern double C_DN_HistogramMode_5(const double y[], const int size);
 
 #endif

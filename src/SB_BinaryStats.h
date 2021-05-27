@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 
-extern double SB_BinaryStats_diff_longstretch0(const double y[], const int size);
-extern double SB_BinaryStats_mean_longstretch1(const double y[], const int size);
+extern double C_SB_BinaryStats_diff_longstretch0(const double y[], const int size);
+extern double C_SB_BinaryStats_mean_longstretch1(const double y[], const int size);
 
 #endif /* SB_BinaryStats_h */

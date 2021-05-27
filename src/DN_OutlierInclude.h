@@ -8,7 +8,7 @@
 
 extern double DN_OutlierInclude_abs_001(const double y[], const int size);
 extern double DN_OutlierInclude_np_001_mdrmd(const double y[], const int size, const int sign);
-extern double DN_OutlierInclude_p_001_mdrmd(const double y[], const int size);
-extern double DN_OutlierInclude_n_001_mdrmd(const double y[], const int size);
+extern double C_DN_OutlierInclude_p_001_mdrmd(const double y[], const int size);
+extern double C_DN_OutlierInclude_n_001_mdrmd(const double y[], const int size);
 
 #endif

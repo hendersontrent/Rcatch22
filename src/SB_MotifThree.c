@@ -6,7 +6,7 @@
 #include "helper_functions.h"
 #include <R.h>
 
-double SB_MotifThree_quantile_hh(const double y[], const int size)
+double C_SB_MotifThree_quantile_hh(const double y[], const int size)
 {
     // NaN check
     for(int i = 0; i < size; i++)

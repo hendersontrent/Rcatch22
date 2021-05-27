@@ -43,5 +43,4 @@ catch22_all <- function(data){
   outData = data.frame(names = names, values = values)
 
   return(outData)
-
 }

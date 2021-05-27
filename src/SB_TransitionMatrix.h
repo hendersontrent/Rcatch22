@@ -1,6 +1,6 @@
 //
 //  SB_TransitionMatrix.h
-//  
+//
 //
 //  Created by Carl Henning Lubba on 23/09/2018.
 //
@@ -10,6 +10,6 @@
 
 #include <stdio.h>
 
-extern double SB_TransitionMatrix_3ac_sumdiagcov(const double y[], const int size);
+extern double C_SB_TransitionMatrix_3ac_sumdiagcov(const double y[], const int size);
 
 #endif /* SB_TransitionMatrix_h */

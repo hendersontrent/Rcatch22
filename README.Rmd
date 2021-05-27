@@ -12,7 +12,7 @@ R package for the calculation of [22 CAnonical Time-series CHaracteristics](http
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-comment = NA, fig.width = 8, fig.height = 6, cache = FALSE)
+comment = NA, fig.width = 7, fig.height = 5, cache = FALSE)
 ```
 
 ## Installation
@@ -42,26 +42,25 @@ library(dplyr)
 library(ggplot2)
 library(microbenchmark)
 library(Rcatch22)
+library(mgcv)
 
 set.seed(123)
 storage <- list()
-baselengths <- c(100, 500)
-otherlengths <- seq(from = 1000, to = 10000, by = 500)
-lengths <- append(baselengths, otherlengths)
+lengths <- c(10^2, 10^3, 10^4, 10^5, 10^6)
 
 for(i in lengths){
-
+  
   tmp <- c(cumsum(rnorm(i, mean = 0, sd = 1)))
-
-  m <- summary(microbenchmark(catch22_all(tmp), times = 50, unit = "ms"))
-
+  
+  m <- summary(microbenchmark(catch22_all(tmp), times = 20, unit = "ms"))
+  
   mdat <- data.frame(m) %>%
     dplyr::select(c(mean)) %>%
     mutate(ts_length = i)
-    
+  
   storage[[i]] <- mdat
 }
-  
+
 sims <- data.table::rbindlist(storage, use.names = TRUE)
 ```
 
@@ -71,17 +70,20 @@ sims <- data.table::rbindlist(storage, use.names = TRUE)
 sims %>%
   ggplot() +
   geom_line(aes(x = ts_length, y = mean), size = 1.15, colour = "#1f78b4") +
-  geom_point(aes(x = ts_length, y = mean), size = 2.5, colour = "#1f78b4") +
+  geom_point(aes(x = ts_length, y = mean), size = 3.5, colour = "#1f78b4") +
   labs(title = "Computational performance of Rcatch22 in milliseconds",
        x = "Time Series Length",
        y = "Computation Time (milliseconds)") +
-  scale_x_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+  scale_x_log10(limits = c(1e1,1e6),
+                breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-  scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+  scale_y_log10(limits = c(1,1e6),
+                breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(),
-        legend.position = "bottom")
+        legend.position = "bottom",
+        axis.text = element_text(size = 12))
 ```
 
 ## Citation

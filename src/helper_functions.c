@@ -1,20 +1,9 @@
-#if __cplusplus
-#   include <complex>
-typedef std::complex< double > cplx;
-#else
-#   include <complex.h>
-#if defined(__GNUC__) || defined(__GNUG__)
-typedef double complex cplx;
-#elif defined(_MSC_VER)
-typedef _Dcomplex cplx;
-#endif
-#endif
-
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "stats.h"
+#include <R.h>
 
 // compare function for qsort, for array of doubles
 static int compare (const void * a, const void * b)
@@ -46,34 +35,34 @@ void linspace(double start, double end, int num_groups, double out[])
 }
 
 double quantile(const double y[], const int size, const double quant)
-{   
+{
     double quant_idx, q, value;
     int idx_left, idx_right;
     double * tmp = malloc(size * sizeof(*y));
     memcpy(tmp, y, size * sizeof(*y));
     sort(tmp, size);
-    
+
     /*
-    for(int i=0; i < size; i++){
-        printf("y[%i]=%1.4f\n", i, y[i]);
-    }
-    for(int i=0; i < size; i++){
-        printf("sorted[%i]=%1.4f\n", i, tmp[i]);
-    }
+     for(int i=0; i < size; i++){
+     printf("y[%i]=%1.4f\n", i, y[i]);
+     }
+     for(int i=0; i < size; i++){
+     printf("sorted[%i]=%1.4f\n", i, tmp[i]);
+     }
      */
-    
+
     // out of range limit?
     q = 0.5 / size;
     if (quant < q) {
         value = tmp[0]; // min value
         free(tmp);
-        return value; 
+        return value;
     } else if (quant > (1 - q)) {
         value = tmp[size - 1]; // max value
         free(tmp);
-        return value; 
+        return value;
     }
-    
+
     quant_idx = size * quant - 0.5;
     idx_left = (int)floor(quant_idx);
     idx_right = (int)ceil(quant_idx);
@@ -83,7 +72,7 @@ double quantile(const double y[], const int size, const double quant)
 }
 
 void binarize(const double a[], const int size, int b[], const char how[])
-{   
+{
     double m = 0.0;
     if (strcmp(how, "mean") == 0) {
         m = mean(a, size);
@@ -92,7 +81,7 @@ void binarize(const double a[], const int size, int b[], const char how[])
     }
     for (int i = 0; i < size; i++) {
         b[i] = (a[i] > m) ? 1 : 0;
-    }  
+    }
     return;
 }
 
@@ -116,64 +105,39 @@ void subset(const int a[], int b[], const int start, const int end)
     return;
 }
 
-#if defined(__GNUC__) || defined(__GNUG__)
-    cplx _Cmulcc(const cplx x, const cplx y) {
-        /*double a = x._Val[0];
-        double b = x._Val[1];
+Rcomplex _Cmulcc(const Rcomplex x, const Rcomplex y) {
+    Rcomplex z;
 
-        double c = y._Val[0];
-        double d = y._Val[1];
+    z.r = x.r*y.r - x.i*y.i;
+    z.i = x.r*y.i + y.r*x.i;
 
-        cplx result = { (a * c - b * d), (a * d + c * b) };
-         */
-        return x*y;
-    }
+    return z;
+}
 
-    cplx _Cminuscc(const cplx x, const cplx y) {
-        //cplx result = { x._Val[0] - y._Val[0], x._Val[1] - y._Val[1] };
-        return x - y;
-    }
+Rcomplex _Cminuscc(const Rcomplex x, const Rcomplex y) {
+    Rcomplex z;
 
-    cplx _Caddcc(const cplx x, const cplx y) {
-        // cplx result = { x._Val[0] + y._Val[0], x._Val[1] + y._Val[1] };
-        return x + y;
-    }
+    z.r = x.r - y.r;
+    z.i = x.i - y.i;
 
-    cplx _Cdivcc(const cplx x, const cplx y) {
-        
-        double a = creal(x);
-        double b = cimag(x);
+    return z;
+}
 
-        double c = creal(y);
-        double d = cimag(y);
+Rcomplex _Caddcc(const Rcomplex x, const Rcomplex y) {
 
-        cplx result = (a*c + b*d) / (c*c + d*d) + (b*c - a*d)/(c*c + d*d) * I;
-        
-        return result;
-         
-        // return x / y;
-    }
+    Rcomplex z;
 
-#elif defined(_MSC_VER)
-    cplx _Cminuscc(const cplx x, const cplx y) {
-        cplx result = { x._Val[0] - y._Val[0], x._Val[1] - y._Val[1] };
-        return result;
-    }
+    z.r = x.r + y.r;
+    z.i = x.i + y.i;
 
-    cplx _Caddcc(const cplx x, const cplx y) {
-        cplx result = { x._Val[0] + y._Val[0], x._Val[1] + y._Val[1] };
-        return result;
-    }
+    return z;
+}
 
-    cplx _Cdivcc(const cplx x, const cplx y) {
-        double a = x._Val[0];
-        double b = x._Val[1];
+Rcomplex _Cdivcc(const Rcomplex x, const Rcomplex y) {
+    Rcomplex z;
 
-        double c = y._Val[0];
-        double d = y._Val[1];
+    z.r = (x.r*y.r + x.i*y.i)/(y.r*y.r+y.i*y.i);
+    z.i = (x.i*y.r - x.r*y.i)/(y.r*y.r + y.i*y.i);
 
-        cplx result = { (a*c + b*d) / (c*c + d*d), (b*c - a*d)/(c*c + d*d)};
-
-        return result;
-    }
-#endif
+    return z;
+}

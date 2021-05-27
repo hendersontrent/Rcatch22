@@ -130,12 +130,12 @@ double DN_OutlierInclude_np_001_mdrmd(const double y[], const int size, const in
     return outputScalar;
 }
 
-double DN_OutlierInclude_p_001_mdrmd(const double y[], const int size)
+double C_DN_OutlierInclude_p_001_mdrmd(const double y[], const int size)
 {
     return DN_OutlierInclude_np_001_mdrmd(y, size, 1.0);
 }
 
-double DN_OutlierInclude_n_001_mdrmd(const double y[], const int size)
+double C_DN_OutlierInclude_n_001_mdrmd(const double y[], const int size)
 {
     return DN_OutlierInclude_np_001_mdrmd(y, size, -1.0);
 }
