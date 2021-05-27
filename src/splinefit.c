@@ -6,7 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "splinefit.h"
 #include "stats.h"
 

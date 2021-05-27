@@ -2,6 +2,9 @@
 #include <string.h>
 #include <math.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 #include "helper_functions.h"
 

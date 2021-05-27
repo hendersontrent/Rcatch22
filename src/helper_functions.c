@@ -2,8 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "stats.h"
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
+#include "stats.h"
 
 // compare function for qsort, for array of doubles
 static int compare (const void * a, const void * b)

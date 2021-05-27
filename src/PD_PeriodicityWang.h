@@ -10,7 +10,11 @@
 #define PD_PeriodicityWang_h
 
 #include <stdio.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
-extern int C_PD_PeriodicityWang_th0_01(const double * y, const int size);
+extern SEXP C_PD_PeriodicityWang_th0_01(SEXP * y);
 
 #endif /* PD_PeriodicityWang_h */

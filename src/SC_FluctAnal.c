@@ -3,17 +3,31 @@
 #include <time.h>
 #include <float.h>
 #include <stdio.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "stats.h"
 #include "CO_AutoCorr.h"
 
-double SC_FluctAnal_2_50_1_logi_prop_r1(const double y[], const int size, const int lag, const char how[])
+SEXP SC_FluctAnal_2_50_1_logi_prop_r1(SEXP y[], const int lag, const char how[])
 {
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -193,14 +207,14 @@ double SC_FluctAnal_2_50_1_logi_prop_r1(const double y[], const int size, const 
     free(sserr);
     free(buffer);
 
-    return (firstMinInd+1)/ntt;
+    return ScalarReal((firstMinInd+1)/ntt);
 
 }
 
-double C_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(const double y[], const int size){
-    return SC_FluctAnal_2_50_1_logi_prop_r1(y, size, 2, "dfa");
+SEXP C_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(SEXP y[]){
+    return SC_FluctAnal_2_50_1_logi_prop_r1(y, 2, "dfa");
 }
 
-double C_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(const double y[], const int size){
-    return SC_FluctAnal_2_50_1_logi_prop_r1(y, size, 1, "rsrangefit");
+SEXP C_SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(SEXP y[]){
+    return SC_FluctAnal_2_50_1_logi_prop_r1(y, 1, "rsrangefit");
 }

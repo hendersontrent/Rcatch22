@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 #include "stats.h"
 #include "fft.h"
@@ -132,15 +135,25 @@ int co_firstzero(const double y[], const int size, const int maxtau)
 
 }
 
-int C_CO_f1ecac(const double y[], const int size)
+SEXP C_CO_f1ecac(SEXP y[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != INTSXP) {
+        error("y was not a INT vector.");
+    }
+    const double * x = INTEGER(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return 0;
+            return ScalarInteger(NA_INTEGER);
         }
     }
 
@@ -164,7 +177,7 @@ int C_CO_f1ecac(const double y[], const int size)
 
     free(autocorrs);
 
-    return out;
+    return ScalarInteger(out);
 
 }
 
@@ -192,15 +205,25 @@ double CO_Embed2_Basic_tau_incircle(const double y[], const int size, const doub
     return insidecount/(size-tauIntern);
 }
 
-double C_CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
+SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -273,19 +296,29 @@ double C_CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
     free(histCountsNorm);
     free(histCounts);
 
-    return out;
+    return ScalarReal(out);
 
 }
 
-int C_CO_FirstMin_ac(const double y[], const int size)
+SEXP C_CO_FirstMin_ac(SEXP y[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != INTSXP) {
+        error("y was not a INT vector.");
+    }
+    const double * x = INTEGER(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return 0;
+            return ScalarInteger(NA_INTEGER);
         }
     }
 
@@ -303,19 +336,29 @@ int C_CO_FirstMin_ac(const double y[], const int size)
 
     free(autocorrs);
 
-    return minInd;
+    return ScalarInteger(minInd);
 
 }
 
-double C_CO_trev_1_num(const double y[], const int size)
+SEXP C_CO_trev_1_num(SEXP y[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -340,15 +383,25 @@ double C_CO_trev_1_num(const double y[], const int size)
 #define tau 2
 #define numBins 5
 
-double C_CO_HistogramAMI_even_2_5(const double y[], const int size)
+SEXP C_CO_HistogramAMI_even_2_5(SEXP y[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -476,5 +529,5 @@ double C_CO_HistogramAMI_even_2_5(const double y[], const int size)
     free(y2);
     free(bins12);
 
-    return ami;
+    return ScalarReal(ami);
 }

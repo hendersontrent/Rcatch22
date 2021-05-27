@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 extern Rcomplex cexpC(Rcomplex x);
 extern void twiddles(Rcomplex a[], int size);

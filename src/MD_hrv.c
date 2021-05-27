@@ -6,17 +6,31 @@
 //  Copyright © 2018 Carl Henning Lubba. All rights reserved.
 //
 
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "MD_hrv.h"
 #include "stats.h"
 
-double C_MD_hrv_classic_pnn40(const double y[], const int size){
+SEXP C_MD_hrv_classic_pnn40(SEXP y[]){
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -35,5 +49,5 @@ double C_MD_hrv_classic_pnn40(const double y[], const int size){
 
     free(Dy);
 
-    return pnn40/(size-1);
+    return ScalarReal(pnn40/(size-1));
 }

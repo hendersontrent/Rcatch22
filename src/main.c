@@ -3,6 +3,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 //#include <dirent.h>
 
 #include "DN_HistogramMode_5.h"

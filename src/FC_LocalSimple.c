@@ -1,5 +1,9 @@
 #include <math.h>
 #include <string.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "stats.h"
 #include "CO_AutoCorr.h"
 
@@ -19,15 +23,25 @@ double fc_local_simple(const double y[], const int size, const int train_length)
     return m;
 }
 
-double FC_LocalSimple_mean_tauresrat(const double y[], const int size, const int train_length)
+SEXP FC_LocalSimple_mean_tauresrat(SEXP y[], const int train_length)
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -51,18 +65,28 @@ double FC_LocalSimple_mean_tauresrat(const double y[], const int size, const int
     double output = resAC1stZ/yAC1stZ;
 
     free(res);
-    return output;
+    return ScalarReal(output);
 
 }
 
-double FC_LocalSimple_mean_stderr(const double y[], const int size, const int train_length)
+SEXP FC_LocalSimple_mean_stderr(SEXP y[], const int train_length)
 {
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -84,17 +108,17 @@ double FC_LocalSimple_mean_stderr(const double y[], const int size, const int tr
     double output = stddev(res, size - train_length);
 
     free(res);
-    return output;
+    return ScalarReal(output);
 
 }
 
-double C_FC_LocalSimple_mean3_stderr(const double y[], const int size)
+SEXP C_FC_LocalSimple_mean3_stderr(SEXP y[])
 {
-    return FC_LocalSimple_mean_stderr(y, size, 3);
+    return FC_LocalSimple_mean_stderr(y, 3);
 }
 
-double C_FC_LocalSimple_mean1_tauresrat(const double y[], const int size){
-    return FC_LocalSimple_mean_tauresrat(y, size, 1);
+SEXP C_FC_LocalSimple_mean1_tauresrat(SEXP y[]){
+    return FC_LocalSimple_mean_tauresrat(y, 1);
 }
 
 double FC_LocalSimple_mean_taures(const double y[], const int size, const int train_length)

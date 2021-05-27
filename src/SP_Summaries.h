@@ -10,10 +10,13 @@
 
 #include <stdio.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 extern double cabsC(Rcomplex x);
 extern double SP_Summaries_welch_rect(const double y[], const int size, const char what[]);
-extern double C_SP_Summaries_welch_rect_area_5_1(const double y[], const int size);
-extern double C_SP_Summaries_welch_rect_centroid(const double y[], const int size);
+extern SEXP C_SP_Summaries_welch_rect_area_5_1(SEXP y[]);
+extern SEXP C_SP_Summaries_welch_rect_centroid(SEXP y[]);
 
 #endif /* SP_Summaries_h */

@@ -6,6 +6,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 /* Function Declarations */
 //extern int main(int argc, const char * const argv[]);

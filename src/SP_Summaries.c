@@ -7,6 +7,9 @@
 
 #include <math.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "SP_Summaries.h"
 #include "CO_AutoCorr.h"
 
@@ -109,15 +112,25 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
     return Nout;
 }
 
-double SP_Summaries_welch_rect(const double y[], const int size, const char what[])
+SEXP SP_Summaries_welch_rect(SEXP y[], const char what[])
 {
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return NAN;
+            return ScalarReal(NA_REAL);
         }
     }
 
@@ -194,15 +207,15 @@ double SP_Summaries_welch_rect(const double y[], const int size, const char what
     free(f);
     free(S);
 
-    return output;
+    return ScalarReal(output);
 }
 
 
-double C_SP_Summaries_welch_rect_area_5_1(const double y[], const int size)
+SEXP C_SP_Summaries_welch_rect_area_5_1(SEXP y[])
 {
-    return SP_Summaries_welch_rect(y, size, "area_5_1");
+    return SP_Summaries_welch_rect(y, "area_5_1");
 }
-double C_SP_Summaries_welch_rect_centroid(const double y[], const int size)
+SEXP C_SP_Summaries_welch_rect_centroid(SEXP y[])
 {
-    return SP_Summaries_welch_rect(y, size, "centroid");
+    return SP_Summaries_welch_rect(y, "centroid");
 }

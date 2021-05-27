@@ -4,11 +4,15 @@
 #include <string.h>
 #include <time.h>
 #include <float.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "stats.h"
 
 extern double DN_OutlierInclude_abs_001(const double y[], const int size);
 extern double DN_OutlierInclude_np_001_mdrmd(const double y[], const int size, const int sign);
-extern double C_DN_OutlierInclude_p_001_mdrmd(const double y[], const int size);
-extern double C_DN_OutlierInclude_n_001_mdrmd(const double y[], const int size);
+extern SEXP C_DN_OutlierInclude_p_001_mdrmd(SEXP y[]);
+extern SEXP C_DN_OutlierInclude_n_001_mdrmd(SEXP y[]);
 
 #endif

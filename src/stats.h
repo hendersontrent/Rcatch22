@@ -3,6 +3,10 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 extern double max_(const double a[], const int size);
 extern double min_(const double a[], const int size);

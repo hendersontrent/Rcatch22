@@ -10,7 +10,11 @@
 #define IN_AutoMutualInfoStats_h
 
 #include <stdio.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
-extern double C_IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size);
+extern SEXP C_IN_AutoMutualInfoStats_40_gaussian_fmmi(SEXP y[]);
 
 #endif /* IN_AutoMutualInfoStats_h */

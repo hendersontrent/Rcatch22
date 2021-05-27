@@ -8,19 +8,32 @@
 
 #include <stdlib.h>
 #include <math.h>
-
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "PD_PeriodicityWang.h"
 #include "splinefit.h"
 #include "stats.h"
 
-int C_PD_PeriodicityWang_th0_01(const double * y, const int size){
+SEXP C_PD_PeriodicityWang_th0_01(SEXP * y){
 
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != INTSXP) {
+        error("y was not a REAL vector.");
+    }
+    const int * x = INTEGER(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
+        if(ISNAN(x[i]))
         {
-            return 0;
+            return ScalarInteger(NA_INTEGER);
         }
     }
 
@@ -132,6 +145,6 @@ int C_PD_PeriodicityWang_th0_01(const double * y, const int size){
     free(troughs);
     free(peaks);
 
-    return out;
+    return ScalarInteger(out);
 
 }

@@ -10,6 +10,10 @@
 #define splinefit_h
 
 #include <stdio.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
 extern int splinefit(const double *y, const int size, double *yOut);
 

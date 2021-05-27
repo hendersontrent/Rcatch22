@@ -6,28 +6,46 @@
 //
 
 #include "SB_TransitionMatrix.h"
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "butterworth.h"
 #include "CO_AutoCorr.h"
 #include "SB_CoarseGrain.h"
 #include "stats.h"
 
-double C_SB_TransitionMatrix_3ac_sumdiagcov(const double y[], const int size)
+SEXP C_SB_TransitionMatrix_3ac_sumdiagcov(SEXP y[])
 {
+    // we use int in loops
+    if (xlength(y) >= INT_MAX) {
+        error("y was a long vector, not supported.");
+    }
+    int size = xlength(y);
+    // Don't accept integer vectors -- will be wrong pointer below
+    if (TYPEOF(y) != REALSXP) {
+        error("y was not a REAL vector.");
+    }
+    const double * x = REAL(y);
+    // NaN check
+    for(int i = 0; i < size; i++)
+    {
+        if(ISNAN(x[i]))
+        {
+            return ScalarReal(NA_REAL);
+        }
+    }
 
-    // NaN and const check
+    // Const check
     int constant = 1;
     for(int i = 0; i < size; i++)
     {
-        if(isnan(y[i]))
-        {
-            return NAN;
-        }
         if(y[i] != y[0]){
             constant = 0;
         }
     }
     if (constant){
-        return NAN;
+        return ScalarReal(NA_REAL);
     }
 
     const int numGroups = 3;
@@ -157,6 +175,6 @@ double C_SB_TransitionMatrix_3ac_sumdiagcov(const double y[], const int size)
     free(yDown);
     free(yCG);
 
-    return sumdiagcov;
+    return ScalarReal(sumdiagcov);
 
 }

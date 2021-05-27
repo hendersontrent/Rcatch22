@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 #include "stats.h"
 #include "fft.h"
 
@@ -17,10 +20,10 @@ extern double * CO_AutoCorr(const double y[], const int size, const int tau[], c
 extern double * co_autocorrs(const double y[], const int size);
 extern int co_firstzero(const double y[], const int size, const int maxtau);
 extern double CO_Embed2_Basic_tau_incircle(const double y[], const int size, const double radius, const int tau);
-extern double C_CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size);
-extern int C_CO_FirstMin_ac(const double y[], const int size);
-extern double C_CO_trev_1_num(const double y[], const int size);
-extern int C_CO_f1ecac(const double y[], const int size);
-extern double C_CO_HistogramAMI_even_2_5(const double y[], const int size);
+extern SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[]);
+extern SEXP C_CO_FirstMin_ac(SEXP y[]);
+extern SEXP C_CO_trev_1_num(SEXP y[]);
+extern SEXP C_CO_f1ecac(SEXP y[]);
+extern SEXP C_CO_HistogramAMI_even_2_5(SEXP y[]);
 
 #endif

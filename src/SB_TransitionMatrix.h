@@ -9,7 +9,11 @@
 #define SB_TransitionMatrix_h
 
 #include <stdio.h>
+#include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
 
-extern double C_SB_TransitionMatrix_3ac_sumdiagcov(const double y[], const int size);
+extern SEXP C_SB_TransitionMatrix_3ac_sumdiagcov(SEXP y[]);
 
 #endif /* SB_TransitionMatrix_h */

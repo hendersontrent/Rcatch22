@@ -3,8 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "stats.h"
 #include <R.h>
+#define USE_RINTERNALS
+#include <Rinternals.h>
+#include <Rversion.h>
+#include "stats.h"
 
 extern void linspace(double start, double end, int num_groups, double out[]);
 extern double quantile(const double y[], const int size, const double quant);
