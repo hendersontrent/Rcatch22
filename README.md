@@ -53,7 +53,7 @@ can be cited using the following:
 To cite package 'Rcatch22' in publications use:
 
   Trent Henderson (2021). Rcatch22: Calculation of 22 CAnonical
-  Time-Series CHaracteristics. R package version 0.1.11.
+  Time-Series CHaracteristics. R package version 0.1.12.
 
 A BibTeX entry for LaTeX users is
 
@@ -61,7 +61,7 @@ A BibTeX entry for LaTeX users is
     title = {Rcatch22: Calculation of 22 CAnonical Time-Series CHaracteristics},
     author = {Trent Henderson},
     year = {2021},
-    note = {R package version 0.1.11},
+    note = {R package version 0.1.12},
   }
 ```
 
