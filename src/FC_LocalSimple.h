@@ -2,10 +2,6 @@
 #define FC_LOCALSIMPLE_H
 #include <math.h>
 #include <string.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "stats.h"
 #include "CO_AutoCorr.h"
 
@@ -13,8 +9,8 @@ extern double fc_local_simple(const double y[], const int size, const int train_
 extern double FC_LocalSimple_mean_taures(const double y[], const int size, const int train_length);
 extern double FC_LocalSimple_lfit_taures(const double y[], const int size);
 extern double FC_LocalSimple_mean_tauresrat(const double y[], const int size, const int train_length);
-extern SEXP C_FC_LocalSimple_mean1_tauresrat(SEXP y[]);
+extern double FC_LocalSimple_mean1_tauresrat(const double y[], const int size);
 extern double FC_LocalSimple_mean_stderr(const double y[], const int size, const int train_length);
-extern SEXP C_FC_LocalSimple_mean3_stderr(SEXP y[]);
+extern double FC_LocalSimple_mean3_stderr(const double y[], const int size);
 
 #endif

@@ -10,12 +10,8 @@
 #define SB_BinaryStats_h
 
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 
-extern SEXP C_SB_BinaryStats_diff_longstretch0(SEXP y[]);
-extern SEXP C_SB_BinaryStats_mean_longstretch1(SEXP y[]);
+extern double SB_BinaryStats_diff_longstretch0(const double y[], const int size);
+extern double SB_BinaryStats_mean_longstretch1(const double y[], const int size);
 
 #endif /* SB_BinaryStats_h */

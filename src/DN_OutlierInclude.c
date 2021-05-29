@@ -4,31 +4,17 @@
 #include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "stats.h"
 
-SEXP DN_OutlierInclude_np_001_mdrmd(SEXP y[], const int sign)
+double DN_OutlierInclude_np_001_mdrmd(const double y[], const int size, const int sign)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -141,17 +127,17 @@ SEXP DN_OutlierInclude_np_001_mdrmd(SEXP y[], const int sign)
     free(msDti3);
     free(msDti4);
 
-    return ScalarReal(outputScalar);
+    return outputScalar;
 }
 
-SEXP C_DN_OutlierInclude_p_001_mdrmd(SEXP y[])
+double DN_OutlierInclude_p_001_mdrmd(const double y[], const int size)
 {
-    return DN_OutlierInclude_np_001_mdrmd(y, 1.0);
+    return DN_OutlierInclude_np_001_mdrmd(y, size, 1.0);
 }
 
-SEXP C_DN_OutlierInclude_n_001_mdrmd(SEXP y[])
+double DN_OutlierInclude_n_001_mdrmd(const double y[], const int size)
 {
-    return DN_OutlierInclude_np_001_mdrmd(y, -1.0);
+    return DN_OutlierInclude_np_001_mdrmd(y, size, -1.0);
 }
 
 double DN_OutlierInclude_abs_001(const double y[], const int size)

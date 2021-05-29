@@ -3,14 +3,10 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "SB_CoarseGrain.h"
 #include "helper_functions.h"
 
-extern SEXP C_SB_MotifThree_quantile_hh(SEXP y[]);
+extern double SB_MotifThree_quantile_hh(const double y[], const int size);
 extern double * sb_motifthree(const double y[], int size, const char how[]);
 
 #endif

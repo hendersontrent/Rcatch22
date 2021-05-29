@@ -6,32 +6,19 @@
 //  Copyright © 2018 Carl Henning Lubba. All rights reserved.
 //
 #include <math.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
+
 #include "IN_AutoMutualInfoStats.h"
 #include "CO_AutoCorr.h"
 #include "stats.h"
 
-SEXP C_IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[])
+double IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[], const int size)
 {
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -63,5 +50,5 @@ SEXP C_IN_AutoMutualInfoStats_40_gaussian_fmmi(const double y[])
 
     free(ami);
 
-    return ScalarReal(fmmi);
+    return fmmi;
 }

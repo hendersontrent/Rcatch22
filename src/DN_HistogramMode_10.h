@@ -3,11 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include "stats.h"
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 
-extern SEXP C_DN_HistogramMode_10(SEXP x);
+extern double DN_HistogramMode_10(const double y[], const int size);
 
 #endif

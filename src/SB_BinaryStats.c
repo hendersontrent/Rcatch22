@@ -7,30 +7,16 @@
 //
 
 #include "SB_BinaryStats.h"
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "stats.h"
 
-SEXP C_SB_BinaryStats_diff_longstretch0(SEXP y[]){
+double SB_BinaryStats_diff_longstretch0(const double y[], const int size){
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -62,27 +48,17 @@ SEXP C_SB_BinaryStats_diff_longstretch0(SEXP y[]){
 
     free(yBin);
 
-    return ScalarReal(maxstretch0);
+    return maxstretch0;
 }
 
-SEXP C_SB_BinaryStats_mean_longstretch1(SEXP y[]){
+double SB_BinaryStats_mean_longstretch1(const double y[], const int size){
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -111,5 +87,5 @@ SEXP C_SB_BinaryStats_mean_longstretch1(SEXP y[]){
 
     free(yBin);
 
-    return ScalarReal(maxstretch1);
+    return maxstretch1;
 }

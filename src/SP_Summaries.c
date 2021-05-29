@@ -5,18 +5,9 @@
 //  Created by Carl Henning Lubba on 23/09/2018.
 //
 
-#include <math.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "SP_Summaries.h"
 #include "CO_AutoCorr.h"
-
-double cabsC(Rcomplex x)
-{
-    return hypot (x.r, x.i);
-}
+#include <complex.h>
 
 int welch(const double y[], const int size, const int NFFT, const double Fs, const double window[], const int windowWidth, double ** Pxx, double ** f){
 
@@ -36,8 +27,8 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
     }
 
     // fft variables
-    Rcomplex * F = malloc(NFFT * sizeof *F);
-    Rcomplex * tw = malloc(NFFT * sizeof *tw);
+    double _Complex * F = malloc(NFFT * sizeof *F);
+    double _Complex * tw = malloc(NFFT * sizeof *tw);
     twiddles(tw, NFFT);
 
     double * xw = malloc(windowWidth * sizeof(double));
@@ -50,16 +41,16 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
 
         // initialise F (
         for (int i = 0; i < windowWidth; i++) {
-          Rcomplex tmp;
-          tmp.r = xw[i] - m;
-          tmp.i = 0.0;
-          F[i] = tmp; // CMPLX(xw[i] - m, 0.0);
+
+	    double _Complex tmp = xw[i] - m + 0.0 * I;
+
+            F[i] = tmp; // CMPLX(xw[i] - m, 0.0);
         }
         for (int i = windowWidth; i < NFFT; i++) {
-          Rcomplex tmp;
-          tmp.r = 0.0;
-          tmp.i = 0.0;
-          F[i] = tmp;
+            // F[i] = CMPLX(0.0, 0.0);
+            //double _Complex tmp = { 0.0, 0.0 };
+            double _Complex tmp = 0.0 + 0.0 * I;
+            F[i] = tmp;
         }
 
         fft(F, NFFT, tw);
@@ -70,7 +61,7 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
          */
 
         for(int l = 0; l < NFFT; l++){
-            P[l] += pow(cabsC(F[l]),2);
+            P[l] += pow(cabs(F[l]),2);
         }
         /*
         for(int i = 0; i < NFFT; i++){
@@ -112,25 +103,15 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
     return Nout;
 }
 
-SEXP SP_Summaries_welch_rect(SEXP y[], const char what[])
+double SP_Summaries_welch_rect(const double y[], const int size, const char what[])
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -154,10 +135,10 @@ SEXP SP_Summaries_welch_rect(SEXP y[], const char what[])
     double * w = malloc(nWelch * sizeof(double));
     double * Sw = malloc(nWelch * sizeof(double));
 
-    double myPI = 3.14159265359;
+    double PI = 3.14159265359;
     for(int i = 0; i < nWelch; i++){
-        w[i] = 2*myPI*f[i];
-        Sw[i] = S[i]/(2*myPI);
+        w[i] = 2*PI*f[i];
+        Sw[i] = S[i]/(2*PI);
         //printf("w[%i]=%1.3f, Sw[%i]=%1.3f\n", i, w[i], i, Sw[i]);
         if(isinf(Sw[i]) | isinf(-Sw[i])){
             return 0;
@@ -207,15 +188,18 @@ SEXP SP_Summaries_welch_rect(SEXP y[], const char what[])
     free(f);
     free(S);
 
-    return ScalarReal(output);
+    return output;
+
+
 }
 
 
-SEXP C_SP_Summaries_welch_rect_area_5_1(SEXP y[])
+double SP_Summaries_welch_rect_area_5_1(const double y[], const int size)
 {
-    return SP_Summaries_welch_rect(y, "area_5_1");
+    return SP_Summaries_welch_rect(y, size, "area_5_1");
 }
-SEXP C_SP_Summaries_welch_rect_centroid(SEXP y[])
+double SP_Summaries_welch_rect_centroid(const double y[], const int size)
 {
-    return SP_Summaries_welch_rect(y, "centroid");
+    return SP_Summaries_welch_rect(y, size, "centroid");
+
 }

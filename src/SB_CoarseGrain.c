@@ -2,12 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "stats.h"
 #include "helper_functions.h"
+#include <R.h>
 
 void sb_coarsegrain(const double y[], const int size, const char how[], const int num_groups, int labels[])
 {

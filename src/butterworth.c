@@ -1,26 +1,69 @@
 //
 //  butterworth.c
-//
+//  
 //
 //  Created by Carl Henning Lubba on 23/09/2018.
 //
 
 #include <stdlib.h>
 #include <math.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
+#include <complex.h>
 
 #include "helper_functions.h"
 #include "butterworth.h"
 
+#ifndef CMPLX
+#define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
+#endif
+
+void poly(double _Complex x[], int size, double _Complex out[])
+{
+    /* Convert roots x to polynomial coefficients */
+    
+    // initialise
+    #if defined(__GNUC__) || defined(__GNUG__)
+        out[0] = 1;
+        for(int i=1; i<size+1; i++){
+            out[i] = 0;
+        }
+    #elif defined(_MSC_VER)
+        double _Complex c1 = { 1, 0 };
+        out[0] = c1;//1;
+        for(int i=1; i<size+1; i++){
+            c1._Val[0] = 0;
+            out[i] = c1;
+        }
+    #endif
+    
+    
+    double _Complex * outTemp = malloc((size+1)* sizeof(double _Complex));
+    
+    for(int i=1; i<size+1; i++){
+        
+        // save old out to not reuse some already changed values
+        //(can be done more efficiently by only saving one old value, but who cares, pole number is usually ~4)
+        for(int j=0; j<size+1; j++){
+            outTemp[j] = out[j];
+        }
+        
+        for(int j=1; j<i+1; j++){
+            
+            double _Complex temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
+            double _Complex temp2 = out[j];
+            out[j] = _Cminuscc(temp2, temp1);//x[i - 1] * outTemp[j - 1];
+            
+        }
+        
+    }
+    
+}
+
 void filt(double y[], int size, double a[], double b[], int nCoeffs, double out[]){
-
+    
     /* Filter a signal y with the filter coefficients a and b, output to array out.*/
-
+    
     double offset = y[0];
-
+    
     for(int i = 0; i < size; i++){
         out[i] = 0;
         for(int j = 0; j < nCoeffs; j++){
@@ -35,16 +78,16 @@ void filt(double y[], int size, double a[], double b[], int nCoeffs, double out[
             }
         }
     }
-
+    
     for(int i = 0; i < size; i++){
         out[i] += offset;
     }
 }
 
 void reverse_array(double a[], int size){
-
+    
     /* Reverse the order of the elements in an array. Write back into the input array.*/
-
+    
     double temp;
     for(int i = 0; i < size/2; i++){
         temp = a[i];
@@ -60,30 +103,30 @@ void reverse_array(double a[], int size){
 }
 
 void filt_reverse(double y[], int size, double a[], double b[], int nCoeffs, double out[]){
-
+    
     /* Filter a signal y with the filter coefficients a and b _in reverse order_, output to array out.*/
-
+    
     double * yTemp = malloc(size * sizeof(double));
     for(int i = 0; i < size; i++){
         yTemp[i] = y[i];
     }
-
+    
     /*
     for(int i=0; i < size; i++){
         printf("yTemp[%i]=%1.3f\n", i, yTemp[i]);
     }
      */
-
+    
     reverse_array(yTemp, size);
-
+    
     /*
     for(int i=0; i < size; i++){
         printf("reversed[%i]=%1.3f\n", i, yTemp[i]);
     }
      */
-
+    
     double offset = yTemp[0];
-
+    
     for(int i = 0; i < size; i++){
         out[i] = 0;
         for(int j = 0; j < nCoeffs; j++){
@@ -98,13 +141,147 @@ void filt_reverse(double y[], int size, double a[], double b[], int nCoeffs, dou
             }
         }
     }
-
+    
     for(int i = 0; i < size; i++){
         out[i] += offset;
     }
-
+    
     reverse_array(out, size);
-
+    
     free(yTemp);
-
+    
 }
+
+/*
+void butterworthFilter(const double y[], int size, const int nPoles, const double W, double out[]){
+    
+    double PI = 3.14159265359;
+
+    double V = tan(W * PI/2);
+    double _Complex * Q = malloc(nPoles * sizeof(double _Complex));
+    
+    for(int i = 0; i<nPoles; i++){
+        double _Complex tmp1 = { 0, PI / 2 };
+        double _Complex tmp2 = { nPoles, 0 };
+        Q[i] =  conj(cexp((_Cdivcc(tmp1, tmp2)) * ((2 + nPoles - 1) + 2*i)));
+        //printf("Q[%i]= real %1.3f imag %1.3f\n", i, creal(Q[i]), cimag(Q[i]));
+        
+    }
+    
+    double Sg = pow(V,nPoles);
+    double _Complex * Sp = malloc(nPoles * sizeof(double _Complex));
+    
+    for(int i = 0; i<nPoles; i++){
+        Sp[i] = V * Q[i];
+        //printf("Sp[%i]= real %1.3f imag %1.3f\n", i, creal(Sp[i]), cimag(Sp[i]));
+    }
+    
+    double _Complex * P = malloc(nPoles * sizeof(double _Complex));
+    double _Complex * Z = malloc(nPoles * sizeof(double _Complex));
+    
+    double _Complex prod1mSp = 1; // %1 - Sp[0];
+    
+    // Bilinear transform for poles, fill zeros, compute products
+    for(int i = 0; i<nPoles; i++){
+        P[i] = (1 + Sp[i]) / (1 - Sp[i]);
+        Z[i] = -1;
+        
+        // printf("P[%i]= real %1.3f imag %1.3f\n", i, creal(P[i]), cimag(P[i]));
+        // printf("Z[%i]= real %1.3f imag %1.3f\n", i, creal(Z[i]), cimag(Z[i]));
+        
+        prod1mSp *= (1 - Sp[i]);
+        
+        //if(i > 0){
+        //    prod1mSp *= (1 - Sp[i]);
+        //}
+         
+    }
+
+    double G = creal(Sg / prod1mSp);
+    
+    double _Complex * Zpoly = malloc((nPoles+1) * sizeof(double _Complex));
+    double _Complex * Ppoly = malloc((nPoles+1) * sizeof(double _Complex));
+    
+    // polynomial coefficients from poles and zeros for filtering
+    poly(Z, nPoles, Zpoly);
+    
+    //for(int i = 0; i < nPoles+1; i++){
+    //    printf("Zpoly[%i]= %1.3f + %1.3f i\n", i, creal(Zpoly[i]), cimag(Zpoly[i]));
+    //}
+    
+    poly(P, nPoles, Ppoly);
+    
+    //for(int i = 0; i < nPoles+1; i++){
+    //    printf("Ppoly[%i]= %1.3f + %1.3f i\n", i, creal(Ppoly[i]), cimag(Ppoly[i]));
+    //}
+    
+    
+    // coeffs for filtering
+    double * b = malloc((nPoles+1) * sizeof(double)); // zeros
+    double * a = malloc((nPoles+1) * sizeof(double)); // poles
+    
+    for(int i = 0; i<nPoles+1; i++){
+        b[i] = G * creal(Zpoly[i]);
+        a[i] = creal(Ppoly[i]);
+        //printf("a[%i]=%1.8f, b[%i]=%1.8f\n", i, a[i], i, b[i]);
+    }
+    
+    
+    // this is the simple solution, one forward filtering, phase not preserved.
+    //filt(y, size, a, b, nPoles, out);
+    
+    // from here, better way of filtering. Forward and backward.
+    // pad to both sides to avoid end-transients
+    int nfact = 3*nPoles;
+    double * yPadded = malloc((size + 2*nfact) * sizeof(double));
+    
+    for(int i = 0; i < nfact; i ++)
+    {
+        yPadded[i] = 2*y[0] - y[nfact-i];
+        yPadded[nfact + size + i] = 2*y[size-1] - y[size-2-i];
+        
+    }
+    for(int i = 0; i < size; i ++)
+    {
+        yPadded[nfact+i] = y[i];
+    }
+    
+    // filter in both directions
+    double * outPadded = malloc((size + 2*nfact) * sizeof(double));
+    filt(yPadded, (size + 2*nfact), a, b, nPoles, outPadded);
+    
+    //for(int i=0; i < (size + 2*nfact); i++){
+    //    printf("filtPadded[%i]=%1.3f\n", i, outPadded[i]);
+    //}
+     
+    filt_reverse(outPadded, (size + 2*nfact), a, b, nPoles, outPadded);
+    
+    
+    // for(int i=0; i < (size + 2*nfact); i++){
+    //    printf("filtfiltPadded[%i]=%1.3f\n", i, outPadded[i]);
+    //}
+     
+     
+    for(int i = 0; i < size; i ++){
+        out[i] = outPadded[nfact + i];
+    }
+    
+    
+    //for(int i=0; i < size; i++){
+    //    printf("out[%i]=%1.3f\n", i, out[i]);
+    //}
+     
+    
+    free(Q);
+    free(Sp);
+    free(P);
+    free(Z);
+    free(a);
+    free(b);
+    free(Zpoly);
+    free(Ppoly);
+    free(outPadded);
+    
+}
+
+*/

@@ -2,10 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
+#include <complex.h>
 #include "stats.h"
 
 // compare function for qsort, for array of doubles
@@ -46,12 +43,12 @@ double quantile(const double y[], const int size, const double quant)
     sort(tmp, size);
 
     /*
-     for(int i=0; i < size; i++){
-     printf("y[%i]=%1.4f\n", i, y[i]);
-     }
-     for(int i=0; i < size; i++){
-     printf("sorted[%i]=%1.4f\n", i, tmp[i]);
-     }
+    for(int i=0; i < size; i++){
+        printf("y[%i]=%1.4f\n", i, y[i]);
+    }
+    for(int i=0; i < size; i++){
+        printf("sorted[%i]=%1.4f\n", i, tmp[i]);
+    }
      */
 
     // out of range limit?
@@ -108,39 +105,31 @@ void subset(const int a[], int b[], const int start, const int end)
     return;
 }
 
-Rcomplex _Cmulcc(const Rcomplex x, const Rcomplex y) {
-    Rcomplex z;
+double _Complex _Cmulcc(const double _Complex x, const double _Complex y) {
+        return x*y;
+    }
 
-    z.r = x.r*y.r - x.i*y.i;
-    z.i = x.r*y.i + y.r*x.i;
+    double _Complex _Cminuscc(const double _Complex x, const double _Complex y) {
+        //double _Complex result = { x._Val[0] - y._Val[0], x._Val[1] - y._Val[1] };
+        return x - y;
+    }
 
-    return z;
-}
+    double _Complex _Caddcc(const double _Complex x, const double _Complex y) {
+        // double _Complex result = { x._Val[0] + y._Val[0], x._Val[1] + y._Val[1] };
+        return x + y;
+    }
 
-Rcomplex _Cminuscc(const Rcomplex x, const Rcomplex y) {
-    Rcomplex z;
+    double _Complex _Cdivcc(const double _Complex x, const double _Complex y) {
 
-    z.r = x.r - y.r;
-    z.i = x.i - y.i;
+        double a = creal(x);
+        double b = cimag(x);
 
-    return z;
-}
+        double c = creal(y);
+        double d = cimag(y);
 
-Rcomplex _Caddcc(const Rcomplex x, const Rcomplex y) {
+        double _Complex result = (a*c + b*d) / (c*c + d*d) + (b*c - a*d)/(c*c + d*d) * I;
 
-    Rcomplex z;
+        return result;
 
-    z.r = x.r + y.r;
-    z.i = x.i + y.i;
-
-    return z;
-}
-
-Rcomplex _Cdivcc(const Rcomplex x, const Rcomplex y) {
-    Rcomplex z;
-
-    z.r = (x.r*y.r + x.i*y.i)/(y.r*y.r+y.i*y.i);
-    z.i = (x.i*y.r - x.r*y.i)/(y.r*y.r + y.i*y.i);
-
-    return z;
-}
+        // return x / y;
+    }

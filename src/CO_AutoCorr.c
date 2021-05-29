@@ -2,10 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
+#include <complex.h>
 
 #include "stats.h"
 #include "fft.h"
@@ -13,6 +10,9 @@
 
 #include "helper_functions.h"
 
+#ifndef CMPLX
+#define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
+#endif
 #define pow2(x) (1 << x)
 
 int nextpow2(int n)
@@ -27,26 +27,10 @@ int nextpow2(int n)
     return n;
 }
 
-Rcomplex makeComplex(double x, double y)
-{
-    Rcomplex z;
-    z.r = x;
-    z.i = y;
-    return z;
-}
-
-Rcomplex conjC(Rcomplex x)
-{
-    Rcomplex y;
-    y.r = x.r;
-    y.i = -x.i;
-    return y;
-}
-
-void dot_multiply(Rcomplex a[], Rcomplex b[], int size)
+void dot_multiply(double _Complex a[], double _Complex b[], int size)
 {
     for (int i = 0; i < size; i++) {
-        a[i] = _Cmulcc(a[i], conjC(b[i]));
+        a[i] = _Cmulcc(a[i], conj(b[i]));
     }
 }
 
@@ -56,13 +40,16 @@ double * CO_AutoCorr(const double y[], const int size, const int tau[], const in
     m = mean(y, size);
     nFFT = nextpow2(size) << 1;
 
-    Rcomplex * F = malloc(nFFT * sizeof *F);
-    Rcomplex * tw = malloc(nFFT * sizeof *tw);
+    double _Complex * F = malloc(nFFT * sizeof *F);
+    double _Complex * tw = malloc(nFFT * sizeof *tw);
     for (int i = 0; i < size; i++) {
-        F[i] = makeComplex(y[i] - m, 0.0);
+
+        F[i] = CMPLX(y[i] - m, 0.0);
+
     }
     for (int i = size; i < nFFT; i++) {
-        F[i] = makeComplex(0.0, 0.0);
+        F[i] = CMPLX(0.0, 0.0);
+
     }
     // size = nFFT;
 
@@ -70,7 +57,7 @@ double * CO_AutoCorr(const double y[], const int size, const int tau[], const in
     fft(F, nFFT, tw);
     dot_multiply(F, F, nFFT);
     fft(F, nFFT, tw);
-    Rcomplex divisor = F[0];
+    double _Complex divisor = F[0];
     for (int i = 0; i < nFFT; i++) {
         //F[i] = F[i] / divisor;
         F[i] = _Cdivcc(F[i], divisor);
@@ -78,7 +65,7 @@ double * CO_AutoCorr(const double y[], const int size, const int tau[], const in
 
     double * out = malloc(tau_size * sizeof(out));
     for (int i = 0; i < tau_size; i++) {
-        out[i] = F[tau[i]].r;
+        out[i] = creal(F[tau[i]]);
     }
     free(F);
     free(tw);
@@ -91,13 +78,15 @@ double * co_autocorrs(const double y[], const int size)
     m = mean(y, size);
     nFFT = nextpow2(size) << 1;
 
-    Rcomplex * F = malloc(nFFT * 2 * sizeof *F);
-    Rcomplex * tw = malloc(nFFT * 2 * sizeof *tw);
+    double _Complex * F = malloc(nFFT * 2 * sizeof *F);
+    double _Complex * tw = malloc(nFFT * 2 * sizeof *tw);
     for (int i = 0; i < size; i++) {
-        F[i] = makeComplex(y[i] - m, 0.0);
+
+        F[i] = CMPLX(y[i] - m, 0.0);
     }
     for (int i = size; i < nFFT; i++) {
-        F[i] = makeComplex(0.0, 0.0);
+
+        F[i] = CMPLX(0.0, 0.0);
     }
     //size = nFFT;
 
@@ -105,14 +94,14 @@ double * co_autocorrs(const double y[], const int size)
     fft(F, nFFT, tw);
     dot_multiply(F, F, nFFT);
     fft(F, nFFT, tw);
-    Rcomplex divisor = F[0];
+    double _Complex divisor = F[0];
     for (int i = 0; i < nFFT; i++) {
         F[i] = _Cdivcc(F[i], divisor); // F[i] / divisor;
     }
 
     double * out = malloc(nFFT * 2 * sizeof(out));
     for (int i = 0; i < nFFT; i++) {
-        out[i] = F[i].r;
+        out[i] = creal(F[i]);
     }
     free(F);
     free(tw);
@@ -121,6 +110,9 @@ double * co_autocorrs(const double y[], const int size)
 
 int co_firstzero(const double y[], const int size, const int maxtau)
 {
+
+    //double * autocorrs = malloc(size * sizeof * autocorrs);
+    //autocorrs = co_autocorrs(y, size);
 
     double * autocorrs = co_autocorrs(y, size);
 
@@ -135,25 +127,15 @@ int co_firstzero(const double y[], const int size, const int maxtau)
 
 }
 
-SEXP C_CO_f1ecac(SEXP y[])
+int CO_f1ecac(const double y[], const int size)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != INTSXP) {
-        error("y was not a INT vector.");
-    }
-    const double * x = INTEGER(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarInteger(NA_INTEGER);
+            return 0;
         }
     }
 
@@ -177,7 +159,7 @@ SEXP C_CO_f1ecac(SEXP y[])
 
     free(autocorrs);
 
-    return ScalarInteger(out);
+    return out;
 
 }
 
@@ -205,25 +187,15 @@ double CO_Embed2_Basic_tau_incircle(const double y[], const int size, const doub
     return insidecount/(size-tauIntern);
 }
 
-SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
+double CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -259,6 +231,13 @@ SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
     // mean for exponential fit
     double l = mean(d, size-tau-1);
 
+    // count histogram bin contents
+    /*
+     int * histCounts;
+    double * binEdges;
+    int nBins = histcounts(d, size-tau-1, -1, &histCounts, &binEdges);
+     */
+
     int nBins = num_bins_auto(d, size-tau-1);
     if (nBins == 0){
         return 0;
@@ -277,6 +256,8 @@ SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
         //printf("histCounts norm %i: %1.3f\n", i, histCountsNorm[i]);
     }
 
+    //printf("histcounts normed\n");
+
     double * d_expfit_diff = malloc(nBins * sizeof(double));
     for(int i = 0; i < nBins; i++){
         double expf = exp(-(binEdges[i] + binEdges[i+1])*0.5/l)/l;
@@ -289,6 +270,9 @@ SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
 
     double out = mean(d_expfit_diff, nBins);
 
+    //printf("out = %1.6f\n", out);
+    //printf("reached free statements\n");
+
     // arrays created dynamically in function histcounts
     free(d);
     free(d_expfit_diff);
@@ -296,29 +280,19 @@ SEXP C_CO_Embed2_Dist_tau_d_expfit_meandiff(SEXP y[])
     free(histCountsNorm);
     free(histCounts);
 
-    return ScalarReal(out);
+    return out;
 
 }
 
-SEXP C_CO_FirstMin_ac(SEXP y[])
+int CO_FirstMin_ac(const double y[], const int size)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != INTSXP) {
-        error("y was not a INT vector.");
-    }
-    const double * x = INTEGER(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarInteger(NA_INTEGER);
+            return 0;
         }
     }
 
@@ -336,29 +310,19 @@ SEXP C_CO_FirstMin_ac(SEXP y[])
 
     free(autocorrs);
 
-    return ScalarInteger(minInd);
+    return minInd;
 
 }
 
-SEXP C_CO_trev_1_num(SEXP y[])
+double CO_trev_1_num(const double y[], const int size)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -383,25 +347,15 @@ SEXP C_CO_trev_1_num(SEXP y[])
 #define tau 2
 #define numBins 5
 
-SEXP C_CO_HistogramAMI_even_2_5(SEXP y[])
+double CO_HistogramAMI_even_2_5(const double y[], const int size)
 {
 
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -529,5 +483,5 @@ SEXP C_CO_HistogramAMI_even_2_5(SEXP y[])
     free(y2);
     free(bins12);
 
-    return ScalarReal(ami);
+    return ami;
 }

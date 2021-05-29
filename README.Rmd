@@ -42,7 +42,6 @@ library(dplyr)
 library(ggplot2)
 library(microbenchmark)
 library(Rcatch22)
-library(mgcv)
 
 set.seed(123)
 storage <- list()
@@ -52,7 +51,7 @@ for(i in lengths){
   
   tmp <- c(cumsum(rnorm(i, mean = 0, sd = 1)))
   
-  m <- summary(microbenchmark(catch22_all(tmp), times = 20, unit = "ms"))
+  m <- summary(microbenchmark(catch22_all(tmp), times = 10, unit = "ms"))
   
   mdat <- data.frame(m) %>%
     dplyr::select(c(mean)) %>%

@@ -12,10 +12,6 @@
 #include <stdlib.h>
 #include <float.h>
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 
 extern int num_bins_auto(const double y[], const int size);
 extern int histcounts(const double y[], const int size, int nBins, int ** binCounts, double ** binEdges);

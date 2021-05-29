@@ -10,11 +10,7 @@
 #define MD_hrv_h
 
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 
-extern SEXP C_MD_hrv_classic_pnn40(SEXP y[]);
+extern double MD_hrv_classic_pnn40(const double y[], const int size);
 
 #endif /* MD_hrv_h */

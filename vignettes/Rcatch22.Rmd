@@ -31,15 +31,3 @@ The main function of the package is `catch22_all` which automates the computatio
 data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
 outs <- catch22_all(data)
 ```
-
-Individual features can also be run separately by directly calling their name. Here is an example for `DN_HistogramMode_5`:
-
-```{r, message = FALSE, warning = FALSE}
-calcs <- DN_HistogramMode_5(data)
-```
-
-A list of all the features can be accessed by calling the dataframe that ships with `Rcatch22`:
-
-```{r, message = FALSE, warning = FALSE}
-View(Rcatch22::feature_list)
-```

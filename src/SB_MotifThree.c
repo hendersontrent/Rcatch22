@@ -2,31 +2,18 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <R.h>
-#define USE_RINTERNALS
-#include <Rinternals.h>
-#include <Rversion.h>
 #include "SB_CoarseGrain.h"
 #include "helper_functions.h"
+#include <R.h>
 
-SEXP C_SB_MotifThree_quantile_hh(SEXP y[])
+double SB_MotifThree_quantile_hh(const double y[], const int size)
 {
-    // we use int in loops
-    if (xlength(y) >= INT_MAX) {
-        error("y was a long vector, not supported.");
-    }
-    int size = xlength(y);
-    // Don't accept integer vectors -- will be wrong pointer below
-    if (TYPEOF(y) != REALSXP) {
-        error("y was not a REAL vector.");
-    }
-    const double * x = REAL(y);
     // NaN check
     for(int i = 0; i < size; i++)
     {
-        if(ISNAN(x[i]))
+        if(isnan(y[i]))
         {
-            return ScalarReal(NA_REAL);
+            return NAN;
         }
     }
 
@@ -158,7 +145,7 @@ SEXP C_SB_MotifThree_quantile_hh(SEXP y[])
     free(out2);
 
 
-    return ScalarReal(hh);
+    return hh;
 
 }
 
