@@ -73,7 +73,7 @@ sims %>%
   labs(title = "Computational performance of Rcatch22 in milliseconds",
        x = "Time Series Length",
        y = "Computation Time (milliseconds)") +
-  scale_x_log10(limits = c(1e1,1e6),
+  scale_x_log10(limits = c(1e2,1e6),
                 breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
   scale_y_log10(limits = c(1,1e6),

@@ -2,7 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <complex.h>
+#if __cplusplus
+#   include <complex>
+#else
+#   include <complex.h>
+#endif
 
 #include "stats.h"
 #include "fft.h"
@@ -10,8 +14,14 @@
 
 #include "helper_functions.h"
 
+#if defined(__GNUC__) || defined(__GNUG__)
 #ifndef CMPLX
 #define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
+#endif
+#elif defined(_MSC_VER)
+#ifndef CMPLX
+#define CMPLX(x, y) ((_Dcomplex)((double)(x) + _Imaginary_I * (double)(y)))
+#endif
 #endif
 #define pow2(x) (1 << x)
 
@@ -27,12 +37,21 @@ int nextpow2(int n)
     return n;
 }
 
+#if defined(__GNUC__) || defined(__GNUG__)
 void dot_multiply(double _Complex a[], double _Complex b[], int size)
 {
     for (int i = 0; i < size; i++) {
         a[i] = _Cmulcc(a[i], conj(b[i]));
     }
 }
+#elif defined(_MSC_VER)
+void dot_multiply(_Dcomplex a[], _Dcomplex b[], int size)
+{
+    for (int i = 0; i < size; i++) {
+        a[i] = _Cmulcc(a[i], conj(b[i]));
+    }
+}
+#endif
 
 double * CO_AutoCorr(const double y[], const int size, const int tau[], const int tau_size)
 {
@@ -40,15 +59,30 @@ double * CO_AutoCorr(const double y[], const int size, const int tau[], const in
     m = mean(y, size);
     nFFT = nextpow2(size) << 1;
 
+    #if defined(__GNUC__) || defined(__GNUG__)
     double _Complex * F = malloc(nFFT * sizeof *F);
     double _Complex * tw = malloc(nFFT * sizeof *tw);
+    #elif defined(_MSC_VER)
+    _Dcomplex * F = malloc(nFFT * sizeof *F);
+    _Dcomplex * tw = malloc(nFFT * sizeof *tw);
+    #endif
     for (int i = 0; i < size; i++) {
 
+    #if defined(__GNUC__) || defined(__GNUG__)
         F[i] = CMPLX(y[i] - m, 0.0);
+    #elif defined(_MSC_VER)
+        _Dcomplex tmp = { y[i] - m, 0.0 };
+        F[i] = tmp;
+    #endif
 
     }
     for (int i = size; i < nFFT; i++) {
+    #if defined(__GNUC__) || defined(__GNUG__)
         F[i] = CMPLX(0.0, 0.0);
+    #elif defined(_MSC_VER)
+        _Dcomplex tmp = { 0.0, 0.0 };
+        F[i] = tmp; // CMPLX(0.0, 0.0);
+    #endif
 
     }
     // size = nFFT;
@@ -57,7 +91,12 @@ double * CO_AutoCorr(const double y[], const int size, const int tau[], const in
     fft(F, nFFT, tw);
     dot_multiply(F, F, nFFT);
     fft(F, nFFT, tw);
+
+    #if defined(__GNUC__) || defined(__GNUG__)
     double _Complex divisor = F[0];
+    #elif defined(_MSC_VER)
+    _Dcomplex divisor = F[0];
+    #endif
     for (int i = 0; i < nFFT; i++) {
         //F[i] = F[i] / divisor;
         F[i] = _Cdivcc(F[i], divisor);
@@ -78,8 +117,13 @@ double * co_autocorrs(const double y[], const int size)
     m = mean(y, size);
     nFFT = nextpow2(size) << 1;
 
+    #if defined(__GNUC__) || defined(__GNUG__)
     double _Complex * F = malloc(nFFT * 2 * sizeof *F);
     double _Complex * tw = malloc(nFFT * 2 * sizeof *tw);
+    #elif defined(_MSC_VER)
+    _Dcomplex * F = malloc(nFFT * 2 * sizeof *F);
+    _Dcomplex * tw = malloc(nFFT * 2 * sizeof *tw);
+    #endif
     for (int i = 0; i < size; i++) {
 
         F[i] = CMPLX(y[i] - m, 0.0);
