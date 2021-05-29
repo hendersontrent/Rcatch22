@@ -1,26 +1,14 @@
 #ifndef FFT_H
 #define FFT_H
-//#include <complex.h>
-
-#if __cplusplus
-#   include <complex>
-    typedef std::complex< double > cplx;
-#else
-#   include <complex.h>
-#if defined(__GNUC__) || defined(__GNUG__)
-typedef double complex cplx;
-#elif defined(_MSC_VER)
-typedef _Dcomplex cplx;
-#endif
-#endif
+#include <complex.h>
 
 #include <stdlib.h>
 #include <string.h>
 #ifndef CMPLX
-#define CMPLX(x, y) ((cplx)((double)(x) + _Complex_I * (double)(y)))
+#define CMPLX(x, y) ((double _Complex)((double)(x) + _double _Complex_I * (double)(y)))
 #endif
-extern void twiddles(cplx a[], int size);
-// extern void _fft(cplx a[], cplx out[], int size, int step, cplx tw[]);
-extern void fft(cplx a[], int size, cplx tw[]);
-extern void ifft(cplx a[], int size, cplx tw[]);
+extern void twiddles(double _Complex a[], int size);
+// extern void _fft(double _Complex a[], double _Complex out[], int size, int step, double _Complex tw[]);
+extern void fft(double _Complex a[], int size, double _Complex tw[]);
+extern void ifft(double _Complex a[], int size, double _Complex tw[]);
 #endif

@@ -7,6 +7,7 @@
 
 #include "SP_Summaries.h"
 #include "CO_AutoCorr.h"
+#include <complex.h>
 
 int welch(const double y[], const int size, const int NFFT, const double Fs, const double window[], const int windowWidth, double ** Pxx, double ** f){
 
@@ -26,8 +27,8 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
     }
 
     // fft variables
-    cplx * F = malloc(NFFT * sizeof *F);
-    cplx * tw = malloc(NFFT * sizeof *tw);
+    double _Complex * F = malloc(NFFT * sizeof *F);
+    double _Complex * tw = malloc(NFFT * sizeof *tw);
     twiddles(tw, NFFT);
 
     double * xw = malloc(windowWidth * sizeof(double));
@@ -41,23 +42,14 @@ int welch(const double y[], const int size, const int NFFT, const double Fs, con
         // initialise F (
         for (int i = 0; i < windowWidth; i++) {
 
-	    #if defined(__GNUC__) || defined(__GNUG__)
-		cplx tmp = xw[i] - m + 0.0 * I;
-	    #elif defined(_MSC_VER)
-		cplx tmp = { xw[i] - m, 0.0 };
-	    #endif
-
+	    double _Complex tmp = xw[i] - m + 0.0 * I;
 
             F[i] = tmp; // CMPLX(xw[i] - m, 0.0);
         }
         for (int i = windowWidth; i < NFFT; i++) {
             // F[i] = CMPLX(0.0, 0.0);
-            //cplx tmp = { 0.0, 0.0 };
-            #if defined(__GNUC__) || defined(__GNUG__)
-		cplx tmp = 0.0 + 0.0 * I;
-	    #elif defined(_MSC_VER)
-		cplx tmp = { 0.0 , 0.0 };
-	    #endif
+            //double _Complex tmp = { 0.0, 0.0 };
+            double _Complex tmp = 0.0 + 0.0 * I;
             F[i] = tmp;
         }
 

@@ -7,27 +7,16 @@
 
 #include <stdlib.h>
 #include <math.h>
-
-#if __cplusplus
-#   include <complex>
-typedef std::complex< double > cplx;
-#else
-#   include <complex.h>
-#if defined(__GNUC__) || defined(__GNUG__)
-    typedef double complex cplx;
-#elif defined(_MSC_VER)
-    typedef _Dcomplex cplx;
-#endif
-#endif
+#include <complex.h>
 
 #include "helper_functions.h"
 #include "butterworth.h"
 
 #ifndef CMPLX
-#define CMPLX(x, y) ((cplx)((double)(x) + _Imaginary_I * (double)(y)))
+#define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
 #endif
 
-void poly(cplx x[], int size, cplx out[])
+void poly(double _Complex x[], int size, double _Complex out[])
 {
     /* Convert roots x to polynomial coefficients */
     
@@ -38,7 +27,7 @@ void poly(cplx x[], int size, cplx out[])
             out[i] = 0;
         }
     #elif defined(_MSC_VER)
-        cplx c1 = { 1, 0 };
+        double _Complex c1 = { 1, 0 };
         out[0] = c1;//1;
         for(int i=1; i<size+1; i++){
             c1._Val[0] = 0;
@@ -47,7 +36,7 @@ void poly(cplx x[], int size, cplx out[])
     #endif
     
     
-    cplx * outTemp = malloc((size+1)* sizeof(cplx));
+    double _Complex * outTemp = malloc((size+1)* sizeof(double _Complex));
     
     for(int i=1; i<size+1; i++){
         
@@ -59,8 +48,8 @@ void poly(cplx x[], int size, cplx out[])
         
         for(int j=1; j<i+1; j++){
             
-            cplx temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
-            cplx temp2 = out[j];
+            double _Complex temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
+            double _Complex temp2 = out[j];
             out[j] = _Cminuscc(temp2, temp1);//x[i - 1] * outTemp[j - 1];
             
         }
@@ -169,28 +158,28 @@ void butterworthFilter(const double y[], int size, const int nPoles, const doubl
     double PI = 3.14159265359;
 
     double V = tan(W * PI/2);
-    cplx * Q = malloc(nPoles * sizeof(cplx));
+    double _Complex * Q = malloc(nPoles * sizeof(double _Complex));
     
     for(int i = 0; i<nPoles; i++){
-        cplx tmp1 = { 0, PI / 2 };
-        cplx tmp2 = { nPoles, 0 };
+        double _Complex tmp1 = { 0, PI / 2 };
+        double _Complex tmp2 = { nPoles, 0 };
         Q[i] =  conj(cexp((_Cdivcc(tmp1, tmp2)) * ((2 + nPoles - 1) + 2*i)));
         //printf("Q[%i]= real %1.3f imag %1.3f\n", i, creal(Q[i]), cimag(Q[i]));
         
     }
     
     double Sg = pow(V,nPoles);
-    cplx * Sp = malloc(nPoles * sizeof(cplx));
+    double _Complex * Sp = malloc(nPoles * sizeof(double _Complex));
     
     for(int i = 0; i<nPoles; i++){
         Sp[i] = V * Q[i];
         //printf("Sp[%i]= real %1.3f imag %1.3f\n", i, creal(Sp[i]), cimag(Sp[i]));
     }
     
-    cplx * P = malloc(nPoles * sizeof(cplx));
-    cplx * Z = malloc(nPoles * sizeof(cplx));
+    double _Complex * P = malloc(nPoles * sizeof(double _Complex));
+    double _Complex * Z = malloc(nPoles * sizeof(double _Complex));
     
-    cplx prod1mSp = 1; // %1 - Sp[0];
+    double _Complex prod1mSp = 1; // %1 - Sp[0];
     
     // Bilinear transform for poles, fill zeros, compute products
     for(int i = 0; i<nPoles; i++){
@@ -210,8 +199,8 @@ void butterworthFilter(const double y[], int size, const int nPoles, const doubl
 
     double G = creal(Sg / prod1mSp);
     
-    cplx * Zpoly = malloc((nPoles+1) * sizeof(cplx));
-    cplx * Ppoly = malloc((nPoles+1) * sizeof(cplx));
+    double _Complex * Zpoly = malloc((nPoles+1) * sizeof(double _Complex));
+    double _Complex * Ppoly = malloc((nPoles+1) * sizeof(double _Complex));
     
     // polynomial coefficients from poles and zeros for filtering
     poly(Z, nPoles, Zpoly);
