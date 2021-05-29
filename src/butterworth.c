@@ -46,8 +46,11 @@ void poly(double _Complex x[], int size, double _Complex out[])
         }
     #endif
     
-    
+    #if defined(__GNUC__) || defined(__GNUG__)
     double _Complex * outTemp = malloc((size+1)* sizeof(double _Complex));
+    #elif defined(_MSC_VER)
+    _Dcomplex * outTemp = malloc((size+1)* sizeof(_Dcomplex));
+    #endif
     
     for(int i=1; i<size+1; i++){
         

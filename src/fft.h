@@ -11,11 +11,11 @@
 
 #if defined(__GNUC__) || defined(__GNUG__)
 #ifndef CMPLX
-#define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
+#define CMPLX(x, y) ((double _Complex)((double)(x) + _Complex_I * (double)(y)))
 #endif
 #elif defined(_MSC_VER)
 #ifndef CMPLX
-#define CMPLX(x, y) ((_Dcomplex)((double)(x) + _Imaginary_I * (double)(y)))
+#define CMPLX(x, y) ((_Dcomplex)((double)(x) + _Complex_I * (double)(y)))
 #endif
 #endif
 
