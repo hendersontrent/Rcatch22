@@ -2,8 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <complex.h>
 #include "stats.h"
+
+#if __cplusplus
+#   include <complex>
+#else
+#   include <complex.h>
+#endif
 
 // compare function for qsort, for array of doubles
 static int compare (const void * a, const void * b)
@@ -105,6 +110,7 @@ void subset(const int a[], int b[], const int start, const int end)
     return;
 }
 
+#if defined(__GNUC__) || defined(__GNUG__)
 double _Complex _Cmulcc(const double _Complex x, const double _Complex y) {
         return x*y;
     }
@@ -133,3 +139,33 @@ double _Complex _Cmulcc(const double _Complex x, const double _Complex y) {
 
         // return x / y;
     }
+#elif defined(_MSC_VER)
+_Dcomplex _Cmulcc(const _Dcomplex x, const _Dcomplex y) {
+    return x*y;
+}
+
+_Dcomplex _Cminuscc(const _Dcomplex x, const _Dcomplex y) {
+    //double _Complex result = { x._Val[0] - y._Val[0], x._Val[1] - y._Val[1] };
+    return x - y;
+}
+
+_Dcomplex _Caddcc(const _Dcomplex x, const _Dcomplex y) {
+    // double _Complex result = { x._Val[0] + y._Val[0], x._Val[1] + y._Val[1] };
+    return x + y;
+}
+
+_Dcomplex _Cdivcc(const _Dcomplex x, const _Dcomplex y) {
+
+    double a = creal(x);
+    double b = cimag(x);
+
+    double c = creal(y);
+    double d = cimag(y);
+
+    _Dcomplex result = (a*c + b*d) / (c*c + d*d) + (b*c - a*d)/(c*c + d*d) * I;
+
+    return result;
+
+    // return x / y;
+}
+#endif
