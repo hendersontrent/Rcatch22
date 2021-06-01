@@ -35,7 +35,7 @@ Please open the included vignette within an R environment or visit the detailed 
 
 ## Computational performance
 
-With features coded in C, `Rcatch22` is highly computationally efficient. Computation time in *milliseconds* for a range of time series lengths is presented below.
+With features coded in C, `Rcatch22` is highly computationally efficient - scaling nearly linearly with time-series size. Computation time in seconds for a range of time series lengths is presented below.
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
@@ -45,13 +45,13 @@ library(Rcatch22)
 
 set.seed(123)
 storage <- list()
-lengths <- c(10^2, 10^3, 10^4, 10^5, 10^6)
+lengths <- c(10^1, 10^2, 10^3, 10^4, 10^5)
 
 for(i in lengths){
   
   tmp <- c(cumsum(rnorm(i, mean = 0, sd = 1)))
   
-  m <- summary(microbenchmark(catch22_all(tmp), times = 10, unit = "ms"))
+  m <- summary(microbenchmark(catch22_all(tmp), times = 10, unit = "s"))
   
   mdat <- data.frame(m) %>%
     dplyr::select(c(mean)) %>%
@@ -68,16 +68,15 @@ sims <- data.table::rbindlist(storage, use.names = TRUE)
 
 sims %>%
   ggplot() +
-  geom_line(aes(x = ts_length, y = mean), size = 1.15, colour = "#1f78b4") +
+  geom_smooth(aes(x = ts_length, y = mean), formula = y ~ x, method = "lm", 
+              se = FALSE, size = 1.15, colour = "#1f78b4") +
   geom_point(aes(x = ts_length, y = mean), size = 3.5, colour = "#1f78b4") +
-  labs(title = "Computational performance of Rcatch22 in milliseconds",
-       x = "Time Series Length",
-       y = "Computation Time (milliseconds)") +
-  scale_x_log10(limits = c(1e2,1e6),
+  labs(x = "Time Series Length",
+       y = "Computation Time (s)") +
+  scale_x_log10(limits = c(1e1,1e5),
                 breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
-  scale_y_log10(limits = c(1,1e6),
-                breaks = scales::trans_breaks("log10", function(x) 10^x),
+  scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(),
