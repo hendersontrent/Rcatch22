@@ -1,5 +1,8 @@
-#' Automatically run every time-series feature calculation included in the catch22 set.
+#' Automatically run every time-series feature calculation included in the catch22 set
+#'
+#' @importFrom stats sd
 #' @param data a numerical time-series input vector
+#' @param catch24 a Boolean of whether to include mean and standard deviation as features
 #' @return object of class DataFrame that contains the summary statistics for each feature
 #' @author Carl H. Lubba
 #' @export
@@ -8,7 +11,7 @@
 #' outs <- catch22_all(data)
 #'
 
-catch22_all <- function(data){
+catch22_all <- function(data, catch24 = FALSE){
 
   names <- c('DN_HistogramMode_5',
   	'DN_HistogramMode_10',
@@ -38,6 +41,14 @@ catch22_all <- function(data){
   for (feature in names){
       fh = get(feature);
       values = append(values, fh(data))
+  }
+
+  if(catch24){
+     additions <- c(mean(data, na.rm = TRUE), stats::sd(data, na.rm = TRUE))
+     additions_names <- c("mean", "standard_deviation")
+     names <- append(names, additions_names)
+     values = append(values, additions)
+  } else{
   }
 
   outData = data.frame(names = names, values = values)
