@@ -18,6 +18,7 @@ LazyData: true
 Depends: 
     R (>= 3.5.0)
 Imports: 
+    stats,
     Rcpp (>= 0.12.15)
 LinkingTo: 
     Rcpp

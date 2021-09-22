@@ -2,18 +2,20 @@
 % Please edit documentation in R/catch22_all.R
 \name{catch22_all}
 \alias{catch22_all}
-\title{Automatically run every time-series feature calculation included in the catch22 set.}
+\title{Automatically run every time-series feature calculation included in the catch22 set}
 \usage{
-catch22_all(data)
+catch22_all(data, catch24 = FALSE)
 }
 \arguments{
 \item{data}{a numerical time-series input vector}
+
+\item{catch24}{a Boolean of whether to include mean and standard deviation as features}
 }
 \value{
 object of class DataFrame that contains the summary statistics for each feature
 }
 \description{
-Automatically run every time-series feature calculation included in the catch22 set.
+Automatically run every time-series feature calculation included in the catch22 set
 }
 \examples{
 data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)

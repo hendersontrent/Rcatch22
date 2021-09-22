@@ -9,7 +9,14 @@
 
 library(Rcatch22)
 
-# Calculations
+# Simulate some mock data
 
-data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+data <- rnorm(1000)
+
+# Base catch22
+
 outs <- catch22_all(data)
+
+# catch24
+
+outs2 <- catch22_all(data, catch24 = TRUE)
