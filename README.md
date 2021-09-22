@@ -45,29 +45,37 @@ time in seconds for a range of time series lengths is presented below.
 
 ![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
+## catch24
+
+An option to include the mean and standard deviation as features in
+addition to `catch22` is available through setting the `catch24`
+argument to `TRUE`:
+
+``` r
+features <- catch22_all(x, catch24 = TRUE)
+```
+
 ## Citation
 
 A DOI is provided at the top of this README. Alternatively, the package
 can be cited using the following:
 
-``` 
 
-To cite package 'Rcatch22' in publications use:
+    To cite package 'Rcatch22' in publications use:
 
-  Trent Henderson (2021). Rcatch22: Calculation of 22 CAnonical
-  Time-Series CHaracteristics. R package version 0.1.12.
+      Trent Henderson (2021). Rcatch22: Calculation of 22 CAnonical
+      Time-Series CHaracteristics. R package version 0.1.13.
 
-A BibTeX entry for LaTeX users is
+    A BibTeX entry for LaTeX users is
 
-  @Manual{,
-    title = {Rcatch22: Calculation of 22 CAnonical Time-Series CHaracteristics},
-    author = {Trent Henderson},
-    year = {2021},
-    note = {R package version 0.1.12},
-  }
-```
+      @Manual{,
+        title = {Rcatch22: Calculation of 22 CAnonical Time-Series CHaracteristics},
+        author = {Trent Henderson},
+        year = {2021},
+        note = {R package version 0.1.13},
+      }
 
 Please also cite the original *catch22* paper:
 
-  - [Lubba et al. (2019). catch22: CAnonical Time-series
+-   [Lubba et al. (2019). catch22: CAnonical Time-series
     CHaracteristics.](https://link.springer.com/article/10.1007/s10618-019-00647-x/)

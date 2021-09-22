@@ -85,6 +85,14 @@ sims %>%
         axis.text = element_text(size = 12))
 ```
 
+## catch24
+
+An option to include the mean and standard deviation as features in addition to `catch22` is available through setting the `catch24` argument to `TRUE`:
+
+```{r, eval = FALSE}
+features <- catch22_all(x, catch24 = TRUE)
+```
+
 ## Citation
 
 A DOI is provided at the top of this README. Alternatively, the package can be cited using the following:
