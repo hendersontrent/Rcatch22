@@ -28,6 +28,14 @@ library(Rcatch22)
 The main function of the package is `catch22_all` which automates the computation of the 22 features. This can be run in a one-liner:
 
 ```{r, message = FALSE, warning = FALSE}
-data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+data <- rnorm(100)
 outs <- catch22_all(data)
+```
+
+### catch24
+
+An option to include the mean and standard deviation as features in addition to `catch22` is available through setting the `catch24` argument to `TRUE`:
+
+```{r, message = FALSE, warning = FALSE}
+outs2 <- catch22_all(data, catch24 = TRUE)
 ```
