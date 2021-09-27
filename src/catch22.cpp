@@ -5,6 +5,8 @@ extern "C" {
 #include "CO_AutoCorr.h"
 #include "DN_HistogramMode_10.h"
 #include "DN_HistogramMode_5.h"
+#include "DN_Mean.h"
+#include "DN_Spread_Std.h"
 #include "DN_OutlierInclude.h"
 #include "FC_LocalSimple.h"
 #include "IN_AutoMutualInfoStats.h"
@@ -465,4 +467,36 @@ NumericVector SP_Summaries_welch_rect_centroid(NumericVector x)
 NumericVector FC_LocalSimple_mean3_stderr(NumericVector x)
 {
   return R_wrapper_double(x, &FC_LocalSimple_mean3_stderr, 1);
+}
+
+//' Function to calculate a statistical feature
+//'
+//' @param x a numerical time-series input vector
+//' @return scalar value that denotes the calculated time-series statistic
+//' @author Trent Henderson
+//' @export
+//' @examples
+//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' outs <- DN_Mean(x)
+//'
+// [[Rcpp::export]]
+NumericVector DN_Mean(NumericVector x)
+{
+  return R_wrapper_double(x, &DN_Mean, 1);
+}
+
+//' Function to calculate a statistical feature
+//'
+//' @param x a numerical time-series input vector
+//' @return scalar value that denotes the calculated time-series statistic
+//' @author Trent Henderson
+//' @export
+//' @examples
+//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' outs <- DN_Spread_Std(x)
+//'
+// [[Rcpp::export]]
+NumericVector DN_Spread_Std(NumericVector x)
+{
+  return R_wrapper_double(x, &DN_Spread_Std, 1);
 }

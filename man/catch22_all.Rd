@@ -23,5 +23,5 @@ outs <- catch22_all(data)
 
 }
 \author{
-Carl H. Lubba
+Trent Henderson & Carl H. Lubba
 }

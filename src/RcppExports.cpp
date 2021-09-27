@@ -252,6 +252,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// DN_Mean
+NumericVector DN_Mean(NumericVector x);
+RcppExport SEXP _Rcatch22_DN_Mean(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(DN_Mean(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// DN_Spread_Std
+NumericVector DN_Spread_Std(NumericVector x);
+RcppExport SEXP _Rcatch22_DN_Spread_Std(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(DN_Spread_Std(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Rcatch22_DN_HistogramMode_5", (DL_FUNC) &_Rcatch22_DN_HistogramMode_5, 1},
@@ -276,6 +298,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1", (DL_FUNC) &_Rcatch22_SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1, 1},
     {"_Rcatch22_SP_Summaries_welch_rect_centroid", (DL_FUNC) &_Rcatch22_SP_Summaries_welch_rect_centroid, 1},
     {"_Rcatch22_FC_LocalSimple_mean3_stderr", (DL_FUNC) &_Rcatch22_FC_LocalSimple_mean3_stderr, 1},
+    {"_Rcatch22_DN_Mean", (DL_FUNC) &_Rcatch22_DN_Mean, 1},
+    {"_Rcatch22_DN_Spread_Std", (DL_FUNC) &_Rcatch22_DN_Spread_Std, 1},
     {NULL, NULL, 0}
 };
 

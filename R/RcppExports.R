@@ -309,3 +309,31 @@ FC_LocalSimple_mean3_stderr <- function(x) {
     .Call('_Rcatch22_FC_LocalSimple_mean3_stderr', PACKAGE = 'Rcatch22', x)
 }
 
+#' Function to calculate a statistical feature
+#'
+#' @param x a numerical time-series input vector
+#' @return scalar value that denotes the calculated time-series statistic
+#' @author Trent Henderson
+#' @export
+#' @examples
+#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' outs <- DN_Mean(x)
+#'
+DN_Mean <- function(x) {
+    .Call('_Rcatch22_DN_Mean', PACKAGE = 'Rcatch22', x)
+}
+
+#' Function to calculate a statistical feature
+#'
+#' @param x a numerical time-series input vector
+#' @return scalar value that denotes the calculated time-series statistic
+#' @author Trent Henderson
+#' @export
+#' @examples
+#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' outs <- DN_Spread_Std(x)
+#'
+DN_Spread_Std <- function(x) {
+    .Call('_Rcatch22_DN_Spread_Std', PACKAGE = 'Rcatch22', x)
+}
+
