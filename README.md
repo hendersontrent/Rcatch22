@@ -5,8 +5,6 @@
 version](http://www.r-pkg.org/badges/version/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
-[![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/Rcatch22)](http://www.r-pkg.org/pkg/Rcatch22)
 [![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
 
 R package for the calculation of [22 CAnonical Time-series
