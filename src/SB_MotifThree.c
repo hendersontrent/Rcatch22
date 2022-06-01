@@ -115,6 +115,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
 
     free(yt);
     free(out);
+    free(out1);
 
     free(sizes_r1);
 

@@ -3,11 +3,13 @@
 
 double DN_Spread_Std(const double a[], const int size)
 {
-    double m = mean(a, size);
     double sd = 0.0;
+    double xbar = mean(a, size);
+
     for (int i = 0; i < size; i++) {
-        sd += pow(a[i] - m, 2);
+        sd += (a[i]-xbar)*(a[i]-xbar);
     }
-    sd = sqrt(sd / (size - 1));
+
+    sd = sqrt(sd);
     return sd;
 }
