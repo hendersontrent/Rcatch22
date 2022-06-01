@@ -162,7 +162,7 @@ NumericVector DN_HistogramMode_10(NumericVector x)
 // [[Rcpp::export]]
 NumericVector CO_f1ecac(NumericVector x)
 {
-  return R_wrapper_int(x, &CO_f1ecac, 1);
+  return R_wrapper_double(x, &CO_f1ecac, 1);
 }
 
 //' Function to calculate a statistical feature
