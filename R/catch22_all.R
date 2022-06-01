@@ -12,6 +12,8 @@
 
 catch22_all <- function(data, catch24 = FALSE){
 
+   rlang::warn("As of 0.1.14 the feature 'CO_f1ecac' returns a double instead of int", .frequency = "once")
+
    names <- c('DN_HistogramMode_5',
               'DN_HistogramMode_10',
               'CO_f1ecac',
@@ -36,11 +38,8 @@ catch22_all <- function(data, catch24 = FALSE){
               'FC_LocalSimple_mean3_stderr')
 
    if(catch24){
-
       names24 <- c("DN_Mean", "DN_Spread_Std")
       names <- append(names, names24)
-
-   } else{
    }
 
    values = c();
@@ -51,6 +50,5 @@ catch22_all <- function(data, catch24 = FALSE){
    }
 
    outData = data.frame(names = names, values = values);
-
    return(outData)
 }
