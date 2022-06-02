@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 library(Rcatch22)
 ```
 
-`Rcatch22` is an R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/chlubba/catch22/) (catch). The package is an efficient implementation that calculates time-series features coded in C.
+`Rcatch22` is an R package for the calculation of [22 CAnonical Time-series CHaracteristics](https://github.com/DynamicsAndNeuralSystems/catch22) (catch). The package is an efficient implementation that calculates time-series features coded in C.
 
 ## Core calculation function
 
