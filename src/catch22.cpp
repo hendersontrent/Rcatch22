@@ -469,7 +469,7 @@ NumericVector FC_LocalSimple_mean3_stderr(NumericVector x)
 // [[Rcpp::export]]
 NumericVector DN_Mean(NumericVector x)
 {
-  return R_wrapper_double(x, &DN_Mean, 1);
+  return R_wrapper_double(x, &DN_Mean, 0);
 }
 
 //' Function to calculate a statistical feature
@@ -485,5 +485,5 @@ NumericVector DN_Mean(NumericVector x)
 // [[Rcpp::export]]
 NumericVector DN_Spread_Std(NumericVector x)
 {
-  return R_wrapper_double(x, &DN_Spread_Std, 1);
+  return R_wrapper_double(x, &DN_Spread_Std, 0);
 }

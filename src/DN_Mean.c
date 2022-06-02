@@ -3,6 +3,6 @@
 
 double DN_Mean(const double a[], const int size)
 {
-    double m = mean(a, size);
-    return m;
+    double mu = mean(a, size);
+    return mu;
 }

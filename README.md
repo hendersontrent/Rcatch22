@@ -2,9 +2,9 @@
 # Rcatch22 <img src="man/figures/logo.png" align="right" width="120" />
 
 R package for the calculation of [22 CAnonical Time-series
-CHaracteristics](https://github.com/chlubba/catch22). The package is an
-efficient implementation that calculates time-series features coded in
-C.
+CHaracteristics](https://github.com/DynamicsAndNeuralSystems/catch22).
+The package is an efficient implementation that calculates time-series
+features coded in C.
 
 ## Installation
 
@@ -21,6 +21,16 @@ the following:
 ``` r
 devtools::install_github("hendersontrent/Rcatch22")
 ```
+
+You might also be interested in a related R package called
+[`theft`](https://github.com/hendersontrent/theft) (Tools for Handling
+Extraction of Features from Time series) which provides standardised
+access to `Rcatch22` and 5 other feature sets (including 3 feature sets
+from Python libraries) for a total of \~1,200 features. `theft` also
+includes extensive functionality for processing and analysing
+time-series features, including automatic time-series classification,
+top performing feature identification, and a range of statistical data
+visualisations.
 
 ## Wiki
 
@@ -55,16 +65,16 @@ can be cited using the following:
 
     To cite package 'Rcatch22' in publications use:
 
-      Trent Henderson (2021). Rcatch22: Calculation of 22 CAnonical
-      Time-Series CHaracteristics. R package version 0.1.13.
+      Trent Henderson (2022). Rcatch22: Calculation of 22 CAnonical
+      Time-Series CHaracteristics. R package version 0.2.1.
 
     A BibTeX entry for LaTeX users is
 
       @Manual{,
         title = {Rcatch22: Calculation of 22 CAnonical Time-Series CHaracteristics},
         author = {Trent Henderson},
-        year = {2021},
-        note = {R package version 0.1.13},
+        year = {2022},
+        note = {R package version 0.2.1},
       }
 
 Please also cite the original *catch22* paper:

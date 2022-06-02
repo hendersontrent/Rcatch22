@@ -25,6 +25,8 @@ You can install the development version of `Rcatch22` from GitHub using the foll
 devtools::install_github("hendersontrent/Rcatch22")
 ```
 
+You might also be interested in a related R package called [`theft`](https://github.com/hendersontrent/theft) (Tools for Handling Extraction of Features from Time series) which provides standardised access to `Rcatch22` and 5 other feature sets (including 3 feature sets from Python libraries) for a total of ~1,200 features. `theft` also includes extensive functionality for processing and analysing time-series features, including automatic time-series classification, top performing feature identification, and a range of statistical data visualisations.
+
 ## Wiki
 
 Please open the included vignette within an R environment or visit the detailed [`Rcatch22` Wiki](https://github.com/hendersontrent/Rcatch22/wiki/) for information and tutorials.
@@ -35,28 +37,27 @@ With features coded in C, `Rcatch22` is highly computationally efficient, scalin
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library(dplyr)
+library(purrr)
 library(ggplot2)
 library(microbenchmark)
 library(Rcatch22)
 
 set.seed(123)
-storage <- list()
 lengths <- c(10^1, 10^2, 10^3, 10^4, 10^5)
 
-for(i in lengths){
+generate_sims <- function(n){
   
-  tmp <- c(cumsum(rnorm(i, mean = 0, sd = 1)))
+  tmp <- c(cumsum(rnorm(n, mean = 0, sd = 1)))
   
-  m <- summary(microbenchmark(catch22_all(tmp), times = 10, unit = "s"))
-  
-  mdat <- data.frame(m) %>%
+  sim <- as.data.frame(summary(microbenchmark(catch22_all(tmp), times = 10, unit = "s"))) %>%
     dplyr::select(c(mean)) %>%
-    mutate(ts_length = i)
+    mutate(ts_length = n)
   
-  storage[[i]] <- mdat
+  return(sim)
 }
 
-sims <- data.table::rbindlist(storage, use.names = TRUE)
+sims <- lengths %>%
+  purrr::map_df(~ generate_sims(n = .x))
 ```
 
 ```{r, message = FALSE, warning = FALSE, echo = FALSE, fig.keep = TRUE}
@@ -67,9 +68,9 @@ sims %>%
   geom_smooth(aes(x = ts_length, y = mean), formula = y ~ x, method = "lm", 
               se = FALSE, size = 1.15, colour = "#1f78b4") +
   geom_point(aes(x = ts_length, y = mean), size = 3.5, colour = "#1f78b4") +
-  labs(x = "Time Series Length",
-       y = "Computation Time (s)") +
-  scale_x_log10(limits = c(1e1,1e5),
+  labs(x = "Time series length",
+       y = "Computation time (s)") +
+  scale_x_log10(limits = c(1e1, 1e5),
                 breaks = scales::trans_breaks("log10", function(x) 10^x),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
   scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
