@@ -16,7 +16,7 @@ scalar value that denotes the calculated time-series statistic
 Function to calculate a statistical feature
 }
 \examples{
-x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+x <- stats::rnorm(100)
 outs <- DN_OutlierInclude_p_001_mdrmd(x)
 
 }

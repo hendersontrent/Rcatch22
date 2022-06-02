@@ -6,11 +6,14 @@
 #' @author Trent Henderson & Carl H. Lubba
 #' @export
 #' @examples
-#' data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' data <- stats::rnorm(100)
 #' outs <- catch22_all(data)
 #'
 
 catch22_all <- function(data, catch24 = FALSE){
+
+   rlang::warn("As of 0.1.14 the feature 'CO_f1ecac' returns a double instead of int",
+               .frequency = "once", .frequency_id = "CO_f1ecac")
 
    names <- c('DN_HistogramMode_5',
               'DN_HistogramMode_10',
@@ -36,11 +39,8 @@ catch22_all <- function(data, catch24 = FALSE){
               'FC_LocalSimple_mean3_stderr')
 
    if(catch24){
-
       names24 <- c("DN_Mean", "DN_Spread_Std")
       names <- append(names, names24)
-
-   } else{
    }
 
    values = c();
@@ -51,6 +51,5 @@ catch22_all <- function(data, catch24 = FALSE){
    }
 
    outData = data.frame(names = names, values = values);
-
    return(outData)
 }

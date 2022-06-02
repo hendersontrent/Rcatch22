@@ -104,19 +104,6 @@ NumericVector R_wrapper_int(NumericVector x, int (*f) (const double*, const int)
 
 // roxygen2 documentation code added by Trent Henderson, 11 March 2021
 
-/*
- double CO_Embed2_Basic_tau_incircle_1_C(double * in, int n)
- {
- return CO_Embed2_Basic_tau_incircle(in, n, 1, -1);
- }
- // [[Rcpp::export]]
- NumericVector CO_Embed2_Basic_tau_incircle_1(NumericVector x) {
-
- return R_wrapper(x, &CO_Embed2_Basic_tau_incircle_1_C, 0);
-
- };
- */
-
 //' Function to calculate a statistical feature
 //'
 //' @param x a numerical time-series input vector
@@ -124,7 +111,7 @@ NumericVector R_wrapper_int(NumericVector x, int (*f) (const double*, const int)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_HistogramMode_5(x)
 //'
 // [[Rcpp::export]]
@@ -140,7 +127,7 @@ NumericVector DN_HistogramMode_5(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_HistogramMode_10(x)
 //'
 // [[Rcpp::export]]
@@ -156,13 +143,13 @@ NumericVector DN_HistogramMode_10(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- CO_f1ecac(x)
 //'
 // [[Rcpp::export]]
 NumericVector CO_f1ecac(NumericVector x)
 {
-  return R_wrapper_int(x, &CO_f1ecac, 1);
+  return R_wrapper_double(x, &CO_f1ecac, 1);
 }
 
 //' Function to calculate a statistical feature
@@ -172,7 +159,7 @@ NumericVector CO_f1ecac(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- CO_FirstMin_ac(x)
 //'
 // [[Rcpp::export]]
@@ -188,7 +175,7 @@ NumericVector CO_FirstMin_ac(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- CO_HistogramAMI_even_2_5(x)
 //'
 // [[Rcpp::export]]
@@ -204,7 +191,7 @@ NumericVector CO_HistogramAMI_even_2_5(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- CO_trev_1_num(x)
 //'
 // [[Rcpp::export]]
@@ -220,7 +207,7 @@ NumericVector CO_trev_1_num(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- MD_hrv_classic_pnn40(x)
 //'
 // [[Rcpp::export]]
@@ -236,7 +223,7 @@ NumericVector MD_hrv_classic_pnn40(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SB_BinaryStats_mean_longstretch1(x)
 //'
 // [[Rcpp::export]]
@@ -252,7 +239,7 @@ NumericVector SB_BinaryStats_mean_longstretch1(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SB_TransitionMatrix_3ac_sumdiagcov(x)
 //'
 // [[Rcpp::export]]
@@ -268,7 +255,7 @@ NumericVector SB_TransitionMatrix_3ac_sumdiagcov(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- PD_PeriodicityWang_th0_01(x)
 //'
 // [[Rcpp::export]]
@@ -284,7 +271,7 @@ NumericVector PD_PeriodicityWang_th0_01(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- CO_Embed2_Dist_tau_d_expfit_meandiff(x)
 //'
 // [[Rcpp::export]]
@@ -300,7 +287,7 @@ NumericVector CO_Embed2_Dist_tau_d_expfit_meandiff(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- IN_AutoMutualInfoStats_40_gaussian_fmmi(x)
 //'
 // [[Rcpp::export]]
@@ -316,7 +303,7 @@ NumericVector IN_AutoMutualInfoStats_40_gaussian_fmmi(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- FC_LocalSimple_mean1_tauresrat(x)
 //'
 // [[Rcpp::export]]
@@ -332,7 +319,7 @@ NumericVector FC_LocalSimple_mean1_tauresrat(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_OutlierInclude_p_001_mdrmd(x)
 //'
 // [[Rcpp::export]]
@@ -348,7 +335,7 @@ NumericVector DN_OutlierInclude_p_001_mdrmd(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_OutlierInclude_n_001_mdrmd(x)
 //'
 // [[Rcpp::export]]
@@ -364,7 +351,7 @@ NumericVector DN_OutlierInclude_n_001_mdrmd(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SP_Summaries_welch_rect_area_5_1(x)
 //'
 // [[Rcpp::export]]
@@ -380,7 +367,7 @@ NumericVector SP_Summaries_welch_rect_area_5_1(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SB_BinaryStats_diff_longstretch0(x)
 //'
 // [[Rcpp::export]]
@@ -396,7 +383,7 @@ NumericVector SB_BinaryStats_diff_longstretch0(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SB_MotifThree_quantile_hh(x)
 //'
 // [[Rcpp::export]]
@@ -412,7 +399,7 @@ NumericVector SB_MotifThree_quantile_hh(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(x)
 //'
 // [[Rcpp::export]]
@@ -428,7 +415,7 @@ NumericVector SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(x)
 //'
 // [[Rcpp::export]]
@@ -444,7 +431,7 @@ NumericVector SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- SP_Summaries_welch_rect_centroid(x)
 //'
 // [[Rcpp::export]]
@@ -460,7 +447,7 @@ NumericVector SP_Summaries_welch_rect_centroid(NumericVector x)
 //' @author Carl H. Lubba
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- FC_LocalSimple_mean3_stderr(x)
 //'
 // [[Rcpp::export]]
@@ -476,13 +463,13 @@ NumericVector FC_LocalSimple_mean3_stderr(NumericVector x)
 //' @author Trent Henderson
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_Mean(x)
 //'
 // [[Rcpp::export]]
 NumericVector DN_Mean(NumericVector x)
 {
-  return R_wrapper_double(x, &DN_Mean, 1);
+  return R_wrapper_double(x, &DN_Mean, 0);
 }
 
 //' Function to calculate a statistical feature
@@ -492,11 +479,11 @@ NumericVector DN_Mean(NumericVector x)
 //' @author Trent Henderson
 //' @export
 //' @examples
-//' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+//' x <- stats::rnorm(100)
 //' outs <- DN_Spread_Std(x)
 //'
 // [[Rcpp::export]]
 NumericVector DN_Spread_Std(NumericVector x)
 {
-  return R_wrapper_double(x, &DN_Spread_Std, 1);
+  return R_wrapper_double(x, &DN_Spread_Std, 0);
 }

@@ -18,7 +18,7 @@ object of class DataFrame that contains the summary statistics for each feature
 Automatically run every time-series feature calculation included in the catch22 set
 }
 \examples{
-data <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+data <- stats::rnorm(100)
 outs <- catch22_all(data)
 
 }

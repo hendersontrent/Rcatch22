@@ -8,7 +8,7 @@
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_HistogramMode_5(x)
 #'
 DN_HistogramMode_5 <- function(x) {
@@ -22,7 +22,7 @@ DN_HistogramMode_5 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_HistogramMode_10(x)
 #'
 DN_HistogramMode_10 <- function(x) {
@@ -36,7 +36,7 @@ DN_HistogramMode_10 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- CO_f1ecac(x)
 #'
 CO_f1ecac <- function(x) {
@@ -50,7 +50,7 @@ CO_f1ecac <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- CO_FirstMin_ac(x)
 #'
 CO_FirstMin_ac <- function(x) {
@@ -64,7 +64,7 @@ CO_FirstMin_ac <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- CO_HistogramAMI_even_2_5(x)
 #'
 CO_HistogramAMI_even_2_5 <- function(x) {
@@ -78,7 +78,7 @@ CO_HistogramAMI_even_2_5 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- CO_trev_1_num(x)
 #'
 CO_trev_1_num <- function(x) {
@@ -92,7 +92,7 @@ CO_trev_1_num <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- MD_hrv_classic_pnn40(x)
 #'
 MD_hrv_classic_pnn40 <- function(x) {
@@ -106,7 +106,7 @@ MD_hrv_classic_pnn40 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SB_BinaryStats_mean_longstretch1(x)
 #'
 SB_BinaryStats_mean_longstretch1 <- function(x) {
@@ -120,7 +120,7 @@ SB_BinaryStats_mean_longstretch1 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SB_TransitionMatrix_3ac_sumdiagcov(x)
 #'
 SB_TransitionMatrix_3ac_sumdiagcov <- function(x) {
@@ -134,7 +134,7 @@ SB_TransitionMatrix_3ac_sumdiagcov <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- PD_PeriodicityWang_th0_01(x)
 #'
 PD_PeriodicityWang_th0_01 <- function(x) {
@@ -148,7 +148,7 @@ PD_PeriodicityWang_th0_01 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- CO_Embed2_Dist_tau_d_expfit_meandiff(x)
 #'
 CO_Embed2_Dist_tau_d_expfit_meandiff <- function(x) {
@@ -162,7 +162,7 @@ CO_Embed2_Dist_tau_d_expfit_meandiff <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- IN_AutoMutualInfoStats_40_gaussian_fmmi(x)
 #'
 IN_AutoMutualInfoStats_40_gaussian_fmmi <- function(x) {
@@ -176,7 +176,7 @@ IN_AutoMutualInfoStats_40_gaussian_fmmi <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- FC_LocalSimple_mean1_tauresrat(x)
 #'
 FC_LocalSimple_mean1_tauresrat <- function(x) {
@@ -190,7 +190,7 @@ FC_LocalSimple_mean1_tauresrat <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_OutlierInclude_p_001_mdrmd(x)
 #'
 DN_OutlierInclude_p_001_mdrmd <- function(x) {
@@ -204,7 +204,7 @@ DN_OutlierInclude_p_001_mdrmd <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_OutlierInclude_n_001_mdrmd(x)
 #'
 DN_OutlierInclude_n_001_mdrmd <- function(x) {
@@ -218,7 +218,7 @@ DN_OutlierInclude_n_001_mdrmd <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SP_Summaries_welch_rect_area_5_1(x)
 #'
 SP_Summaries_welch_rect_area_5_1 <- function(x) {
@@ -232,7 +232,7 @@ SP_Summaries_welch_rect_area_5_1 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SB_BinaryStats_diff_longstretch0(x)
 #'
 SB_BinaryStats_diff_longstretch0 <- function(x) {
@@ -246,7 +246,7 @@ SB_BinaryStats_diff_longstretch0 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SB_MotifThree_quantile_hh(x)
 #'
 SB_MotifThree_quantile_hh <- function(x) {
@@ -260,7 +260,7 @@ SB_MotifThree_quantile_hh <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(x)
 #'
 SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1 <- function(x) {
@@ -274,7 +274,7 @@ SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1(x)
 #'
 SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1 <- function(x) {
@@ -288,7 +288,7 @@ SC_FluctAnal_2_dfa_50_1_2_logi_prop_r1 <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- SP_Summaries_welch_rect_centroid(x)
 #'
 SP_Summaries_welch_rect_centroid <- function(x) {
@@ -302,7 +302,7 @@ SP_Summaries_welch_rect_centroid <- function(x) {
 #' @author Carl H. Lubba
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- FC_LocalSimple_mean3_stderr(x)
 #'
 FC_LocalSimple_mean3_stderr <- function(x) {
@@ -316,7 +316,7 @@ FC_LocalSimple_mean3_stderr <- function(x) {
 #' @author Trent Henderson
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_Mean(x)
 #'
 DN_Mean <- function(x) {
@@ -330,7 +330,7 @@ DN_Mean <- function(x) {
 #' @author Trent Henderson
 #' @export
 #' @examples
-#' x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+#' x <- stats::rnorm(100)
 #' outs <- DN_Spread_Std(x)
 #'
 DN_Spread_Std <- function(x) {

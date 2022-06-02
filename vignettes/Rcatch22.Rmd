@@ -32,10 +32,25 @@ data <- rnorm(100)
 outs <- catch22_all(data)
 ```
 
+Taking a look at the returned dataframe, we can see a nice tidy data structure:
+
+```{r, message = FALSE, warning = FALSE}
+outs
+```
+
 ### catch24
 
 An option to include the mean and standard deviation as features in addition to `catch22` is available through setting the `catch24` argument to `TRUE`:
 
 ```{r, message = FALSE, warning = FALSE}
 outs2 <- catch22_all(data, catch24 = TRUE)
+outs2
+```
+
+## Feature list
+
+A list of the time-series features included in `Rcatch22` can be viewed using the included `feature_list` vector:
+
+```{r, message = FALSE, warning = FALSE}
+Rcatch22::feature_list
 ```
