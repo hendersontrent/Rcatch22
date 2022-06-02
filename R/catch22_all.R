@@ -12,7 +12,8 @@
 
 catch22_all <- function(data, catch24 = FALSE){
 
-   rlang::warn("As of 0.1.14 the feature 'CO_f1ecac' returns a double instead of int", .frequency = "once")
+   rlang::warn("As of 0.1.14 the feature 'CO_f1ecac' returns a double instead of int",
+               .frequency = "once", .frequency_id = "CO_f1ecac")
 
    names <- c('DN_HistogramMode_5',
               'DN_HistogramMode_10',

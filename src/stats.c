@@ -48,21 +48,21 @@ double sum(const double a[], const int size)
 void cumsum(const double a[], const int size, double b[])
 {
     b[0] = a[0];
+
     for (int i = 1; i < size; i++) {
         b[i] = a[i] + b[i-1];
-        //printf("b[%i]%1.3f = a[%i]%1.3f + b[%i-1]%1.3f\n", i, b[i], i, a[i], i, a[i-1]);
     }
-    
+
 }
 
 void icumsum(const int a[], const int size, int b[])
 {
     b[0] = a[0];
+
     for (int i = 1; i < size; i++) {
         b[i] = a[i] + b[i-1];
-        //printf("b[%i]%1.3f = a[%i]%1.3f + b[%i-1]%1.3f\n", i, b[i], i, a[i], i, a[i-1]);
     }
-    
+
 }
 
 double isum(const int a[], const int size)
@@ -103,69 +103,61 @@ double stddev(const double a[], const int size)
 }
 
 double cov(const double x[], const double y[], const int size){
-    
+
     double covariance = 0;
-    
+
     double meanX = mean(x, size);
     double meanY = mean(y, size);
-    
+
     for(int i = 0; i < size; i++){
-        // double xi =x[i];
-        // double yi =y[i];
         covariance += (x[i] - meanX) * (y[i] - meanY);
-        
     }
-    
+
     return covariance/(size-1);
-    
+
 }
 
 double cov_mean(const double x[], const double y[], const int size){
-    
+
     double covariance = 0;
-    
+
     for(int i = 0; i < size; i++){
-        // double xi =x[i];
-        // double yi =y[i];
         covariance += x[i] * y[i];
-        
     }
-    
+
     return covariance/size;
-    
+
 }
 
 double corr(const double x[], const double y[], const int size){
-    
+
     double nom = 0;
     double denomX = 0;
     double denomY = 0;
-    
+
     double meanX = mean(x, size);
     double meanY = mean(y, size);
-    
+
     for(int i = 0; i < size; i++){
         nom += (x[i] - meanX) * (y[i] - meanY);
         denomX += (x[i] - meanX) * (x[i] - meanX);
         denomY += (y[i] - meanY) * (y[i] - meanY);
-        
-        //printf("x[%i]=%1.3f, y[%i]=%1.3f, nom[%i]=%1.3f, denomX[%i]=%1.3f, denomY[%i]=%1.3f\n", i, x[i], i, y[i], i, nom, i, denomX, i, denomY);
     }
-    
+
     return nom/sqrt(denomX * denomY);
-    
+
 }
 
 double autocorr_lag(const double x[], const int size, const int lag){
-    
+
     return corr(x, &(x[lag]), size-lag);
-    
+
 }
 
 double autocov_lag(const double x[], const int size, const int lag){
-    
+
     return cov_mean(x, &(x[lag]), size-lag);
-    
+
 }
 
 void zscore_norm(double a[], int size)
@@ -216,14 +208,7 @@ int linreg(const int n, const double x[], const double y[], double* m, double* b
     double   sumxy = 0.0;                     /* sum of x * y */
     double   sumy = 0.0;                      /* sum of y     */
     double   sumy2 = 0.0;                     /* sum of y**2  */
-    
-    /*
-    for (int i = 0; i < n; i++)
-    {
-        fprintf(stdout, "x[%i] = %f, y[%i] = %f\n", i, x[i], i, y[i]);
-    }
-    */
-    
+
     for (int i=0;i<n;i++){
         sumx  += x[i];
         sumx2 += x[i] * x[i];
@@ -231,7 +216,7 @@ int linreg(const int n, const double x[], const double y[], double* m, double* b
         sumy  += y[i];
         sumy2 += y[i] * y[i];
     }
-    
+
     double denom = (n * sumx2 - sumx * sumx);
     if (denom == 0) {
         // singular matrix. can't solve the problem.
@@ -240,31 +225,24 @@ int linreg(const int n, const double x[], const double y[], double* m, double* b
         //if (r) *r = 0;
         return 1;
     }
-    
+
     *m = (n * sumxy  -  sumx * sumy) / denom;
     *b = (sumy * sumx2  -  sumx * sumxy) / denom;
-    
-    /*if (r!=NULL) {
-        *r = (sumxy - sumx * sumy / n) /    // compute correlation coeff
-        sqrt((sumx2 - sumx * sumx/n) *
-             (sumy2 - sumy * sumy/n));
-    }
-    */
-    
+
     return 0;
 }
 
 double norm_(const double a[], const int size)
 {
-    
+
     double out = 0.0;
-    
+
     for (int i = 0; i < size; i++)
     {
         out += a[i]*a[i];
     }
-    
+
     out = sqrt(out);
-    
+
     return out;
 }

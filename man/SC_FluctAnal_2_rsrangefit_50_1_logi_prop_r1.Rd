@@ -16,7 +16,7 @@ scalar value that denotes the calculated time-series statistic
 Function to calculate a statistical feature
 }
 \examples{
-x <- 1 + 0.5 * 1:1000 + arima.sim(list(ma = 0.5), n = 1000)
+x <- stats::rnorm(100)
 outs <- SC_FluctAnal_2_rsrangefit_50_1_logi_prop_r1(x)
 
 }

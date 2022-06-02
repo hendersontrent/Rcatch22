@@ -2,7 +2,7 @@ Package: Rcatch22
 Type: Package
 Title: Calculation of 22 CAnonical Time-Series CHaracteristics
 Version: 0.1.14
-Date: 2022-06-01
+Date: 2022-06-02
 Authors@R: c(
   person("Trent", "Henderson", email = "then6675@uni.sydney.edu.au", role = c("cre", "aut")),
   person("Carl", "Lubba", email = "c.lubba15@imperial.ac.uk", role = c("ctb"))
