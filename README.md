@@ -1,6 +1,12 @@
 
 # Rcatch22 <img src="man/figures/logo.png" align="right" width="120" />
 
+[![CRAN
+version](https://www.r-pkg.org/badges/version/Rcatch22)](https://www.r-pkg.org/pkg/Rcatch22)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/Rcatch22)](https://www.r-pkg.org/pkg/Rcatch22)
+[![DOI](https://zenodo.org/badge/353530083.svg)](https://zenodo.org/badge/latestdoi/353530083)
+
 R package for the calculation of [22 CAnonical Time-series
 CHaracteristics](https://github.com/DynamicsAndNeuralSystems/catch22).
 The package is an efficient implementation that calculates time-series
