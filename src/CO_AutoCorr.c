@@ -190,7 +190,7 @@ double CO_f1ecac(const double y[], const int size)
     double thresh = 1.0/exp(1);
 
     double out = (double)size;
-    for(int i = 1; i < size-1; i++){
+    for(int i = 0; i < size-2; i++){
         // printf("i=%d autocorrs_i=%1.3f\n", i, autocorrs[i]);
         if ( autocorrs[i] < thresh ){
             double m = autocorrs[i] - autocorrs[i-1];
