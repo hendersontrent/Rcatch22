@@ -20,7 +20,6 @@ LazyData: true
 Depends: 
     R (>= 3.5.0)
 Imports: 
-    rlang,
     Rcpp (>= 0.12.15)
 LinkingTo: 
     Rcpp
@@ -29,6 +28,6 @@ Suggests:
     markdown,
     rmarkdown,
     testthat (>= 3.0.0)
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.1
