@@ -44,20 +44,26 @@ scalar value that denotes the calculated time-series statistic
 }
 \description{
 These features were renamed in Rcatch22 1.0.0 (catch22 v1.0), when every feature was
-redefined to exactly reproduce a call in hctsa v3.0.0 (so values may differ from
-earlier versions). Each deprecated function computes the renamed feature, with a
-deprecation warning:
+made to exactly reproduce a call in hctsa v3.0.0. Each deprecated function computes
+the renamed feature, with a deprecation warning.
+}
+\details{
+Renamed only (same definition, so the same values as before):
+\itemize{
+  \item \code{DN_Mean}: \code{\link{DN_mean}}
+  \item \code{DN_Spread_Std}: \code{\link{DN_Spread_std}}
+  \item \code{MD_hrv_classic_pnn40}: \code{\link{MD_pNN_pnn40}}
+  \item \code{FC_LocalSimple_mean3_stderr}: \code{\link{FC_LocalSimple_mean3_stde}}
+}
+
+Renamed and redefined to match hctsa (so values differ from earlier versions):
 \itemize{
   \item \code{CO_f1ecac}: \code{\link{CO_FirstCrossing_acf_1e_pointOfCrossing}}
   \item \code{SP_Summaries_welch_rect_area_5_1}: \code{\link{SP_Summaries_fft_area_5_1}}
   \item \code{SP_Summaries_welch_rect_centroid}: \code{\link{SP_Summaries_fft_wq_50}}
-  \item \code{FC_LocalSimple_mean3_stderr}: \code{\link{FC_LocalSimple_mean3_stde}}
   \item \code{FC_LocalSimple_mean1_tauresrat}: \code{\link{FC_LocalSimple_mean1_taurat}}
-  \item \code{MD_hrv_classic_pnn40}: \code{\link{MD_pNN_pnn40}}
   \item \code{CO_HistogramAMI_even_2_5}: \code{\link{CO_HistogramAMI_even_5bin_ami2}}
   \item \code{SB_TransitionMatrix_3ac_sumdiagcov}: \code{\link{SB_TransitionMatrix_quantile_3_ac_sumdiagcov}}
-  \item \code{DN_Mean}: \code{\link{DN_mean}}
-  \item \code{DN_Spread_Std}: \code{\link{DN_Spread_std}}
 }
 }
 \keyword{internal}

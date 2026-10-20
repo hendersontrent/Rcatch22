@@ -67,10 +67,19 @@ test_that("names before v1.0 are deprecated aliases of the renamed features", {
   table <- catch22_feature_table(catch24 = TRUE)
   renamed <- table[table$legacy_name != table$name, ]
   expect_equal(10, nrow(renamed))
+  renamed_only <- c("DN_Mean", "DN_Spread_Std", "MD_hrv_classic_pnn40",
+                    "FC_LocalSimple_mean3_stderr")
+  expect_setequal(renamed_only, Rcatch22:::RENAMED_ONLY)
   for (i in seq_len(nrow(renamed))) {
     legacy <- renamed$legacy_name[i]
     expect_true(legacy %in% getNamespaceExports("Rcatch22"), info = legacy)
-    expect_warning(value <- get(legacy)(data), "deprecated", info = legacy)
+    if (legacy %in% renamed_only) {
+      why <- "(renamed in catch22 v1.0)"
+    } else {
+      why <- "(catch22 v1.0, which also changed its definition to match hctsa)"
+    }
+    expect_warning(value <- get(legacy)(data),
+                   paste(legacy, "is now", renamed$name[i], why), fixed = TRUE)
     expect_identical(get(renamed$name[i])(data), value, info = legacy)
   }
   expect_warning(value <- DN_Spread_Std(rep(1, 10), mask_nans = FALSE), "DN_Spread_std")
