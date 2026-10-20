@@ -54,3 +54,40 @@ A list of the time-series features included in `Rcatch22` can be viewed using th
 ```{r, message = FALSE, warning = FALSE}
 Rcatch22::feature_list
 ```
+
+Since version 1.0.0 (catch22 v1.0), every feature exactly reproduces a feature of [_hctsa_](https://github.com/benfulcher/hctsa) v3.0.0, so values differ from earlier versions for most features.
+Several features were renamed to their _hctsa_ names; the old names still work as deprecated aliases.
+`catch22_feature_table` lists each feature's name, short name, name before version 1.0.0 (`legacy_name`), and the _hctsa_ call that reproduces it (on `x_z`, the z-scored time series, or `x`, the raw time series):
+
+```{r, message = FALSE, warning = FALSE}
+catch22_feature_table(catch24 = TRUE)
+```
+
+## Short names and single features
+
+Short names can be added to the output of `catch22_all`:
+
+```{r, message = FALSE, warning = FALSE}
+catch22_all(data, short_names = TRUE)
+```
+
+A single feature can be computed by its name or short name, giving the same value as `catch22_all`:
+
+```{r, message = FALSE, warning = FALSE}
+catch22_feature(data, "trev")
+CO_trev_1_num(data)
+```
+
+## Features that cannot be estimated
+
+Some features cannot be estimated for some time series (e.g., a constant or very short time series).
+By default (`mask_nans = TRUE`), each such feature is set to a fixed value at the appropriate end of its range, so that `catch22_all` always returns real numbers.
+The `masked` column (with `return_masked = TRUE`) shows which values were masked, and `mask_nans = FALSE` gives `NaN` for them instead:
+
+```{r, message = FALSE, warning = FALSE}
+constant <- rep(1, 100)
+head(catch22_all(constant, return_masked = TRUE))
+head(catch22_all(constant, mask_nans = FALSE))
+```
+
+A time series containing `NaN`, `NA` or `Inf` gives `NaN` for every feature (with a warning).
