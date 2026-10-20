@@ -7,27 +7,27 @@
 
 #include <stdlib.h>
 #include <math.h>
+
 #if __cplusplus
 #   include <complex>
+typedef std::complex< double > cplx;
 #else
 #   include <complex.h>
+#if defined(__GNUC__) || defined(__GNUG__)
+    typedef double complex cplx;
+#elif defined(_MSC_VER)
+    typedef _Dcomplex cplx;
+#endif
 #endif
 
 #include "helper_functions.h"
 #include "butterworth.h"
 
-#if defined(__GNUC__) || defined(__GNUG__)
 #ifndef CMPLX
-#define CMPLX(x, y) ((double _Complex)((double)(x) + _Imaginary_I * (double)(y)))
-#endif
-#elif defined(_MSC_VER)
-#ifndef CMPLX
-#define CMPLX(x, y) ((_Dcomplex)((double)(x) + _Imaginary_I * (double)(y)))
-#endif
+#define CMPLX(x, y) ((cplx)((double)(x) + _Imaginary_I * (double)(y)))
 #endif
 
-
-void poly(double _Complex x[], int size, double _Complex out[])
+void poly(cplx x[], int size, cplx out[])
 {
     /* Convert roots x to polynomial coefficients */
     
@@ -38,7 +38,7 @@ void poly(double _Complex x[], int size, double _Complex out[])
             out[i] = 0;
         }
     #elif defined(_MSC_VER)
-        _Dcomplex c1 = { 1, 0 };
+        cplx c1 = { 1, 0 };
         out[0] = c1;//1;
         for(int i=1; i<size+1; i++){
             c1._Val[0] = 0;
@@ -46,11 +46,8 @@ void poly(double _Complex x[], int size, double _Complex out[])
         }
     #endif
     
-    #if defined(__GNUC__) || defined(__GNUG__)
-    double _Complex * outTemp = malloc((size+1)* sizeof(double _Complex));
-    #elif defined(_MSC_VER)
-    _Dcomplex * outTemp = malloc((size+1)* sizeof(_Dcomplex));
-    #endif
+    
+    cplx * outTemp = malloc((size+1)* sizeof(cplx));
     
     for(int i=1; i<size+1; i++){
         
@@ -62,18 +59,15 @@ void poly(double _Complex x[], int size, double _Complex out[])
         
         for(int j=1; j<i+1; j++){
             
-            #if defined(__GNUC__) || defined(__GNUG__)
-            double _Complex temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
-            double _Complex temp2 = out[j];
-            #elif defined(_MSC_VER)
-            _Dcomplex temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
-            _Dcomplex temp2 = out[j];
-            #endif
+            cplx temp1 = _Cmulcc(x[i - 1], outTemp[j - 1]);//x[i - 1] * outTemp[j - 1];
+            cplx temp2 = out[j];
             out[j] = _Cminuscc(temp2, temp1);//x[i - 1] * outTemp[j - 1];
             
         }
         
     }
+    
+    free(outTemp);
     
 }
 
@@ -170,3 +164,137 @@ void filt_reverse(double y[], int size, double a[], double b[], int nCoeffs, dou
     free(yTemp);
     
 }
+
+/*
+void butterworthFilter(const double y[], int size, const int nPoles, const double W, double out[]){
+    
+    double PI = 3.14159265359;
+
+    double V = tan(W * PI/2);
+    cplx * Q = malloc(nPoles * sizeof(cplx));
+    
+    for(int i = 0; i<nPoles; i++){
+        cplx tmp1 = { 0, PI / 2 };
+        cplx tmp2 = { nPoles, 0 };
+        Q[i] =  conj(cexp((_Cdivcc(tmp1, tmp2)) * ((2 + nPoles - 1) + 2*i)));
+        //printf("Q[%i]= real %1.3f imag %1.3f\n", i, creal(Q[i]), cimag(Q[i]));
+        
+    }
+    
+    double Sg = pow(V,nPoles);
+    cplx * Sp = malloc(nPoles * sizeof(cplx));
+    
+    for(int i = 0; i<nPoles; i++){
+        Sp[i] = V * Q[i];
+        //printf("Sp[%i]= real %1.3f imag %1.3f\n", i, creal(Sp[i]), cimag(Sp[i]));
+    }
+    
+    cplx * P = malloc(nPoles * sizeof(cplx));
+    cplx * Z = malloc(nPoles * sizeof(cplx));
+    
+    cplx prod1mSp = 1; // %1 - Sp[0];
+    
+    // Bilinear transform for poles, fill zeros, compute products
+    for(int i = 0; i<nPoles; i++){
+        P[i] = (1 + Sp[i]) / (1 - Sp[i]);
+        Z[i] = -1;
+        
+        // printf("P[%i]= real %1.3f imag %1.3f\n", i, creal(P[i]), cimag(P[i]));
+        // printf("Z[%i]= real %1.3f imag %1.3f\n", i, creal(Z[i]), cimag(Z[i]));
+        
+        prod1mSp *= (1 - Sp[i]);
+        
+        //if(i > 0){
+        //    prod1mSp *= (1 - Sp[i]);
+        //}
+         
+    }
+
+    double G = creal(Sg / prod1mSp);
+    
+    cplx * Zpoly = malloc((nPoles+1) * sizeof(cplx));
+    cplx * Ppoly = malloc((nPoles+1) * sizeof(cplx));
+    
+    // polynomial coefficients from poles and zeros for filtering
+    poly(Z, nPoles, Zpoly);
+    
+    //for(int i = 0; i < nPoles+1; i++){
+    //    printf("Zpoly[%i]= %1.3f + %1.3f i\n", i, creal(Zpoly[i]), cimag(Zpoly[i]));
+    //}
+    
+    poly(P, nPoles, Ppoly);
+    
+    //for(int i = 0; i < nPoles+1; i++){
+    //    printf("Ppoly[%i]= %1.3f + %1.3f i\n", i, creal(Ppoly[i]), cimag(Ppoly[i]));
+    //}
+    
+    
+    // coeffs for filtering
+    double * b = malloc((nPoles+1) * sizeof(double)); // zeros
+    double * a = malloc((nPoles+1) * sizeof(double)); // poles
+    
+    for(int i = 0; i<nPoles+1; i++){
+        b[i] = G * creal(Zpoly[i]);
+        a[i] = creal(Ppoly[i]);
+        //printf("a[%i]=%1.8f, b[%i]=%1.8f\n", i, a[i], i, b[i]);
+    }
+    
+    
+    // this is the simple solution, one forward filtering, phase not preserved.
+    //filt(y, size, a, b, nPoles, out);
+    
+    // from here, better way of filtering. Forward and backward.
+    // pad to both sides to avoid end-transients
+    int nfact = 3*nPoles;
+    double * yPadded = malloc((size + 2*nfact) * sizeof(double));
+    
+    for(int i = 0; i < nfact; i ++)
+    {
+        yPadded[i] = 2*y[0] - y[nfact-i];
+        yPadded[nfact + size + i] = 2*y[size-1] - y[size-2-i];
+        
+    }
+    for(int i = 0; i < size; i ++)
+    {
+        yPadded[nfact+i] = y[i];
+    }
+    
+    // filter in both directions
+    double * outPadded = malloc((size + 2*nfact) * sizeof(double));
+    filt(yPadded, (size + 2*nfact), a, b, nPoles, outPadded);
+    
+    //for(int i=0; i < (size + 2*nfact); i++){
+    //    printf("filtPadded[%i]=%1.3f\n", i, outPadded[i]);
+    //}
+     
+    filt_reverse(outPadded, (size + 2*nfact), a, b, nPoles, outPadded);
+    
+    
+    // for(int i=0; i < (size + 2*nfact); i++){
+    //    printf("filtfiltPadded[%i]=%1.3f\n", i, outPadded[i]);
+    //}
+     
+     
+    for(int i = 0; i < size; i ++){
+        out[i] = outPadded[nfact + i];
+    }
+    
+    
+    //for(int i=0; i < size; i++){
+    //    printf("out[%i]=%1.3f\n", i, out[i]);
+    //}
+     
+    
+    free(Q);
+    free(Sp);
+    free(P);
+    free(Z);
+    free(a);
+    free(b);
+    free(Zpoly);
+    free(Ppoly);
+    free(outPadded);
+    
+}
+
+*/

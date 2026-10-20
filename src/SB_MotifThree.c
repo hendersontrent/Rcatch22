@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "SB_CoarseGrain.h"
 #include "helper_functions.h"
-#include <R.h>
+#include <R.h> // Rcatch22: Rf_error() instead of exit()
 
 double SB_MotifThree_quantile_hh(const double y[], const int size)
 {
@@ -16,7 +16,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             return NAN;
         }
     }
-
+    
     int tmp_idx, r_idx;
     int dynamic_idx;
     int alphabet_size = 3;
@@ -24,10 +24,10 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
     int * yt = malloc(size * sizeof(yt)); // alphabetized array
     double hh; // output
     double * out = malloc(124 * sizeof(out)); // output array
-
+    
     // transfer to alphabet
     sb_coarsegrain(y, size, "quantile", 3, yt);
-
+    
     // words of length 1
     array_size = alphabet_size;
     int ** r1 = malloc(array_size * sizeof(*r1));
@@ -46,7 +46,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             }
         }
     }
-
+    
     // words of length 2
     array_size *= alphabet_size;
     // removing last item if it is == max possible idx since later we are taking idx + 1
@@ -61,16 +61,16 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
             free(tmp_ar);
         }
     }
-
+    
     /*
-     int *** r2 = malloc(array_size * sizeof(**r2));
-     int ** sizes_r2 = malloc(array_size * sizeof(*sizes_r2));
-     double ** out2 = malloc(array_size * sizeof(*out2));
-     */
+    int *** r2 = malloc(array_size * sizeof(**r2));
+    int ** sizes_r2 = malloc(array_size * sizeof(*sizes_r2));
+    double ** out2 = malloc(array_size * sizeof(*out2));
+    */
     int*** r2 = malloc(alphabet_size * sizeof(**r2));
     int** sizes_r2 = malloc(alphabet_size * sizeof(*sizes_r2));
     double** out2 = malloc(alphabet_size * sizeof(*out2));
-
+    
 
     // allocate separately
     for (int i = 0; i < alphabet_size; i++) {
@@ -85,7 +85,7 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
 
     // fill separately
     for (int i = 0; i < alphabet_size; i++) {
-        // for (int i = 0; i < array_size; i++) {
+    // for (int i = 0; i < array_size; i++) {
         //r2[i] = malloc(alphabet_size * sizeof(r2[i]));
         //sizes_r2[i] = malloc(alphabet_size * sizeof(sizes_r2[i]));
         //out2[i] = malloc(alphabet_size * sizeof(out2[i]));
@@ -109,8 +109,21 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
     }
 
     hh = 0.0;
+    int nonEmpty = 0;
     for (int i = 0; i < alphabet_size; i++) {
         hh += f_entropy(out2[i], alphabet_size);
+        for (int j = 0; j < alphabet_size; j++) {
+            if (out2[i][j] > 0) {
+                nonEmpty++;
+            }
+        }
+    }
+    // Miller-Madow bias correction (as hctsa's SB_MotifThree), with degrees of
+    // freedom constrained by the (fixed, equiprobable) symbol marginals:
+    // df = (non-empty cells) - 1 - wordLength*(alphabetSize - 1)
+    const int df = nonEmpty - 1 - 2 * (alphabet_size - 1);
+    if (df > 0) {
+        hh += df / (2.0 * (size - 1));
     }
 
     free(yt);
@@ -125,9 +138,9 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
     }
     free(r1);
     // free(sizes_r1);
-
+    
     for (int i = 0; i < alphabet_size; i++) {
-        //for (int i = alphabet_size - 1; i >= 0; i--) {
+    //for (int i = alphabet_size - 1; i >= 0; i--) {
 
         free(sizes_r2[i]);
         free(out2[i]);
@@ -140,14 +153,14 @@ double SB_MotifThree_quantile_hh(const double y[], const int size)
         }
         free(r2[i]);
     }
-
+    
     free(r2);
     free(sizes_r2);
     free(out2);
-
-
+    
+    
     return hh;
-
+    
 }
 
 double * sb_motifthree(const double y[], int size, const char how[])
@@ -168,7 +181,7 @@ double * sb_motifthree(const double y[], int size, const char how[])
         sb_coarsegrain(diff_y, size, how, alphabet_size, yt);
         size--;
     } else {
-        error("ERROR in sb_motifthree: Unknown how method");
+        Rf_error("ERROR in sb_motifthree: Unknown how method");
     }
 
     // words of length 1
@@ -201,9 +214,10 @@ double * sb_motifthree(const double y[], int size, const char how[])
     // from yt
     for (i = 0; i < alphabet_size; i++) {
         if (sizes_r1[i] != 0 && r1[i][sizes_r1[i] - 1] == size - 1) {
-            tmp_ar = calloc((sizes_r1[i] - 1), sizeof(tmp_ar));
+            tmp_ar = malloc(sizes_r1[i] * sizeof * tmp_ar);
             subset(r1[i], tmp_ar, 0, sizes_r1[i]);
-            memcpy(r1[i], tmp_ar, (sizes_r1[i] - 1) * sizeof(tmp_ar));
+            memcpy(r1[i], tmp_ar, (sizes_r1[i] - 1) * sizeof * tmp_ar);
+            free(tmp_ar);
             sizes_r1[i]--;
         }
     }
@@ -244,8 +258,10 @@ double * sb_motifthree(const double y[], int size, const char how[])
     for (i = 0; i < alphabet_size; i++) {
         for (j = 0; j < alphabet_size; j++) {
             if (sizes_r2[i][j] != 0 && r2[i][j][sizes_r2[i][j] - 1] == size - 2) {
+                tmp_ar = malloc(sizes_r2[i][j] * sizeof * tmp_ar);
                 subset(r2[i][j], tmp_ar, 0, sizes_r2[i][j]);
-                memcpy(r2[i][j], tmp_ar, (sizes_r2[i][j] - 1) * sizeof(tmp_ar));
+                memcpy(r2[i][j], tmp_ar, (sizes_r2[i][j] - 1) * sizeof * tmp_ar);
+                free(tmp_ar);
                 sizes_r2[i][j]--;
             }
         }
@@ -293,8 +309,10 @@ double * sb_motifthree(const double y[], int size, const char how[])
         for (j = 0; j < alphabet_size; j++) {
             for (k = 0; k < alphabet_size; k++) {
                 if (sizes_r3[i][j][k] != 0 && r3[i][j][k][sizes_r3[i][j][k] - 1] == size - 3) {
+                    tmp_ar = malloc(sizes_r3[i][j][k] * sizeof * tmp_ar);
                     subset(r3[i][j][k], tmp_ar, 0, sizes_r3[i][j][k]);
-                    memcpy(r3[i][j][k], tmp_ar, (sizes_r3[i][j][k] - 1) * sizeof(tmp_ar));
+                    memcpy(r3[i][j][k], tmp_ar, (sizes_r3[i][j][k] - 1) * sizeof * tmp_ar);
+                    free(tmp_ar);
                     sizes_r3[i][j][k]--;
                 }
             }
@@ -348,3 +366,28 @@ double * sb_motifthree(const double y[], int size, const char how[])
 
     return out;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

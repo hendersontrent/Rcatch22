@@ -7,8 +7,14 @@
 
 #if __cplusplus
 #   include <complex>
+typedef std::complex< double > cplx;
 #else
 #   include <complex.h>
+#if defined(__GNUC__) || defined(__GNUG__)
+typedef double complex cplx;
+#elif defined(_MSC_VER)
+typedef _Dcomplex cplx;
+#endif
 #endif
 
 extern void linspace(double start, double end, int num_groups, double out[]);
@@ -18,16 +24,11 @@ extern void binarize(const double a[], const int size, int b[], const char how[]
 extern double f_entropy(const double a[], const int size);
 extern void subset(const int a[], int b[], const int start, const int end);
 
+extern cplx _Cminuscc(const cplx x, const cplx y);
+extern cplx _Caddcc(const cplx x, const cplx y);
+extern cplx _Cdivcc(const cplx x, const cplx y);
 #if defined(__GNUC__) || defined(__GNUG__)
-extern double _Complex _Cminuscc(const double _Complex x, const double _Complex y);
-extern double _Complex _Caddcc(const double _Complex x, const double _Complex y);
-extern double _Complex _Cdivcc(const double _Complex x, const double _Complex y);
-extern double _Complex _Cmulcc(const double _Complex x, const double _Complex y);
-#elif defined(_MSC_VER)
-extern _Dcomplex _Cminuscc(_Dcomplex x, _Dcomplex y);
-extern _Dcomplex _Caddcc(_Dcomplex x, _Dcomplex y);
-extern _Dcomplex _Cdivcc(_Dcomplex x, _Dcomplex y);
-extern _Dcomplex _Cmulcc(_Dcomplex x, _Dcomplex y);
+extern cplx _Cmulcc(const cplx x, const cplx y);
 #endif
 
 #endif

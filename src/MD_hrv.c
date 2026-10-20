@@ -9,7 +9,7 @@
 #include "MD_hrv.h"
 #include "stats.h"
 
-double MD_hrv_classic_pnn40(const double y[], const int size){
+double MD_pNN_pnn40(const double y[], const int size){
     
     // NaN check
     for(int i = 0; i < size; i++)
@@ -22,9 +22,13 @@ double MD_hrv_classic_pnn40(const double y[], const int size){
     
     const int pNNx = 40;
     
+    // need at least one difference
+    if (size < 2) {
+        return NAN;
+    }
+    
     // compute diff
-    const int allocsize = (size-1) * sizeof(double);
-    double * Dy = malloc(allocsize);
+    double * Dy = malloc((size-1) * sizeof(double));
     diff(y, size, Dy);
     
     double pnn40 = 0;
