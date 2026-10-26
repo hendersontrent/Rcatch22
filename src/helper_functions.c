@@ -53,15 +53,6 @@ double quantile(const double y[], const int size, const double quant)
     memcpy(tmp, y, size * sizeof(*y));
     sort(tmp, size);
     
-    /*
-    for(int i=0; i < size; i++){
-        printf("y[%i]=%1.4f\n", i, y[i]);
-    }
-    for(int i=0; i < size; i++){
-        printf("sorted[%i]=%1.4f\n", i, tmp[i]);
-    }
-     */
-    
     // out of range limit?
     q = 0.5 / size;
     if (quant < q) {
@@ -80,20 +71,6 @@ double quantile(const double y[], const int size, const double quant)
     value = tmp[idx_left] + (quant_idx - idx_left) * (tmp[idx_right] - tmp[idx_left]) / (idx_right - idx_left);
     free(tmp);
     return value;
-}
-
-void binarize(const double a[], const int size, int b[], const char how[])
-{   
-    double m = 0.0;
-    if (strcmp(how, "mean") == 0) {
-        m = mean(a, size);
-    } else if (strcmp(how, "median") == 0) {
-        m = median(a, size);
-    }
-    for (int i = 0; i < size; i++) {
-        b[i] = (a[i] > m) ? 1 : 0;
-    }  
-    return;
 }
 
 double f_entropy(const double a[], const int size)
@@ -118,24 +95,14 @@ void subset(const int a[], int b[], const int start, const int end)
 
 #if defined(__GNUC__) || defined(__GNUG__)
     cplx _Cmulcc(const cplx x, const cplx y) {
-        /*double a = x._Val[0];
-        double b = x._Val[1];
-
-        double c = y._Val[0];
-        double d = y._Val[1];
-
-        cplx result = { (a * c - b * d), (a * d + c * b) };
-         */
         return x*y;
     }
 
     cplx _Cminuscc(const cplx x, const cplx y) {
-        //cplx result = { x._Val[0] - y._Val[0], x._Val[1] - y._Val[1] };
         return x - y;
     }
 
     cplx _Caddcc(const cplx x, const cplx y) {
-        // cplx result = { x._Val[0] + y._Val[0], x._Val[1] + y._Val[1] };
         return x + y;
     }
 
@@ -151,7 +118,6 @@ void subset(const int a[], int b[], const int start, const int end)
         
         return result;
          
-        // return x / y;
     }
 
 #elif defined(_MSC_VER)

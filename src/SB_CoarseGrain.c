@@ -1,32 +1,19 @@
 #include <math.h>
-#include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "stats.h"
 #include "helper_functions.h"
-#include <R.h> // Rcatch22: Rf_error() instead of exit()
 
-void sb_coarsegrain(const double y[], const int size, const char how[], const int num_groups, int labels[])
+// Labels 1..num_groups of y's quantile (equiprobable) coarse-graining
+void sb_coarsegrain(const double y[], const int size, const int num_groups, int labels[])
 {
     int i, j;
-    if (strcmp(how, "quantile") == 1) {
-        Rf_error("ERROR in sb_coarsegrain: unknown coarse-graining method");
-    }
-    
-    /*
-    for(int i = 0; i < size; i++){
-        printf("yin coarsegrain[%i]=%1.4f\n", i, y[i]);
-    }
-    */
-    
-    double * th = malloc((num_groups + 1) * 2 * sizeof(th));
-    double * ls = malloc((num_groups + 1) * 2 * sizeof(th));
+    double * th = malloc((num_groups + 1) * sizeof *th);
+    double * ls = malloc((num_groups + 1) * sizeof *ls);
     linspace(0, 1, num_groups + 1, ls);
     for (i = 0; i < num_groups + 1; i++) {
-        //double quant = quantile(y, size, ls[i]);
         th[i] = quantile(y, size, ls[i]);
     }
-    th[0] -= 1;
+    th[0] = -INFINITY; // the minimum is in the first group (th[0] - 1 == th[0] beyond 2^53)
     for (i = 0; i < num_groups; i++) {
         for (j = 0; j < size; j++) {
             if (y[j] > th[i] && y[j] <= th[i + 1]) {

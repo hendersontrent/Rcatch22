@@ -1,5 +1,5 @@
 # Rcatch22 must reproduce the catch22 C exactly: compare with the expected outputs
-# in catch22 v1.1.0's testData (copied to testData/), which run_features writes as
+# in catch22 v1.2.0's testData (copied to testData/), which run_features writes as
 # lines of "value, feature name, computation time (ms)" (catch24, masked).
 
 # values separated by any whitespace; "nan", "inf" and "-inf" as written by C

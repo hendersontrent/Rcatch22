@@ -38,24 +38,6 @@ int nextpow2(int n)
     return n;
 }
 
-/*
-static void apply_conj(cplx a[], int size, int normalize)
-{   
-    switch(normalize) {
-        case(1):
-            for (int i = 0; i < size; i++) {
-                a[i] = conj(a[i]) / size;
-            }
-            break;
-        default:
-            for (int i = 0; i < size; i++) {
-                a[i] = conj(a[i]);
-            }
-            break;
-    }
-}
- */
-
 void dot_multiply(cplx a[], cplx b[], int size)
 {
     for (int i = 0; i < size; i++) {
@@ -63,59 +45,10 @@ void dot_multiply(cplx a[], cplx b[], int size)
     }
 }
 
-double * CO_AutoCorr(const double y[], const int size, const int tau[], const int tau_size)
-{
-    double m, nFFT;
-    m = mean(y, size);
-    nFFT = nextpow2(size) << 1;
-
-    cplx * F = malloc(nFFT * sizeof *F);
-    cplx * tw = malloc(nFFT * sizeof *tw);
-    for (int i = 0; i < size; i++) {
-        
-        #if defined(__GNUC__) || defined(__GNUG__)
-                F[i] = CMPLX(y[i] - m, 0.0);
-        #elif defined(_MSC_VER)
-                cplx tmp = { y[i] - m, 0.0 };
-                F[i] = tmp;
-        #endif
-        
-    }
-    for (int i = size; i < nFFT; i++) {
-        #if defined(__GNUC__) || defined(__GNUG__)
-                F[i] = CMPLX(0.0, 0.0);
-        #elif defined(_MSC_VER)
-                cplx tmp = { 0.0, 0.0 };
-                F[i] = tmp; // CMPLX(0.0, 0.0);
-        #endif
-        
-    }
-    // size = nFFT;
-
-    twiddles(tw, nFFT);
-    fft(F, nFFT, tw);
-    dot_multiply(F, F, nFFT);
-    fft(F, nFFT, tw);
-    cplx divisor = F[0];
-    for (int i = 0; i < nFFT; i++) {
-        //F[i] = F[i] / divisor;
-        F[i] = _Cdivcc(F[i], divisor);
-    }
-    
-    double * out = malloc(tau_size * sizeof(out));
-    for (int i = 0; i < tau_size; i++) {
-        out[i] = creal(F[tau[i]]);
-    }
-    free(F);
-    free(tw);
-    return out;
-}
-
 double * co_autocorrs(const double y[], const int size)
 {
-    double m, nFFT;
-    m = mean(y, size);
-    nFFT = nextpow2(size) << 1;
+    const double m = mean(y, size);
+    const int nFFT = nextpow2(size) << 1;
     
     cplx * F = malloc(nFFT * 2 * sizeof *F);
     cplx * tw = malloc(nFFT * 2 * sizeof *tw);
@@ -137,7 +70,6 @@ double * co_autocorrs(const double y[], const int size)
             F[i] = tmp;
         #endif
     }
-    //size = nFFT;
     
     twiddles(tw, nFFT);
     fft(F, nFFT, tw);
@@ -160,8 +92,6 @@ double * co_autocorrs(const double y[], const int size)
 int co_firstzero(const double y[], const int size, const int maxtau)
 {
     
-    //double * autocorrs = malloc(size * sizeof * autocorrs);
-    //autocorrs = co_autocorrs(y, size);
     
     double * autocorrs = co_autocorrs(y, size);
     
@@ -203,38 +133,8 @@ double co_firstcrossing_continuous(const double y[], const int size, const doubl
 
 double CO_FirstCrossing_acf_1e_pointOfCrossing(const double y[], const int size)
 {
-    // NaN check
-    for (int i = 0; i < size; i++) {
-        if (!isfinite(y[i])) {
-            return NAN;
-        }
-    }
     // first 1/e crossing of the autocorrelation function
     return co_firstcrossing_continuous(y, size, 1.0/exp(1));
-}
-
-double CO_Embed2_Basic_tau_incircle(const double y[], const int size, const double radius, const int tau)
-{
-    int tauIntern = 0;
-    
-    if(tau < 0)
-    {
-        tauIntern = co_firstzero(y, size, size);
-    }
-    else{
-        tauIntern = tau;
-    }
-    
-    double insidecount = 0;
-    for(int i = 0; i < size-tauIntern; i++)
-    {
-        if(y[i]*y[i] + y[i+tauIntern]*y[i+tauIntern] < radius)
-        {
-            insidecount += 1;
-        }
-    }
-    
-    return insidecount/(size-tauIntern);
 }
 
 double CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
@@ -244,14 +144,9 @@ double CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
     // between the distribution ('pdf') of successive distances, binned by hctsa's
     // 'auto' rule (BF_HistEdges), and an exponential fitted to them, at the bin
     // centres. NaN if all distances are equal (to within rounding).
-    for (int i = 0; i < size; i++) {
-        if (isnan(y[i])) {
-            return NAN;
-        }
-    }
     int tau = co_firstzero(y, size, size);
     if (tau > (double)size / 10) {
-        tau = floor((double)size / 10);
+        tau = (int) floor((double)size / 10);
     }
     const int n = size - tau - 1; // number of successive distances
     if (n < 1) {
@@ -294,15 +189,6 @@ double CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
 
 double CO_FirstMin_ac(const double y[], const int size)
 {
-    
-    // NaN check
-    for(int i = 0; i < size; i++)
-    {
-        if(!isfinite(y[i]))
-        {
-            return NAN;
-        }
-    }
     if (size < 3) {
         return NAN;
     }
@@ -327,16 +213,6 @@ double CO_FirstMin_ac(const double y[], const int size)
 
 double CO_trev_1_num(const double y[], const int size)
 {
-    
-    // NaN check
-    for(int i = 0; i < size; i++)
-    {
-        if(isnan(y[i]))
-        {
-            return NAN;
-        }
-    }
-    
     int tau = 1;
     
     // need at least one difference
@@ -368,11 +244,6 @@ double CO_HistogramAMI_even_5bin_ami2(const double y[], const int size)
     // hctsa's CO_HistogramAMI(y,2,'even',5): automutual information at lag 2 from
     // 5 equal-width bins spanning the series (BF_HistEdges edges, histcounts2
     // counting), with the Panzeri-Treves bias correction
-    for (int i = 0; i < size; i++) {
-        if (isnan(y[i])) {
-            return NAN;
-        }
-    }
     if (size <= tau) { // need at least one pair of values tau apart
         return NAN;
     }
@@ -384,6 +255,9 @@ double CO_HistogramAMI_even_5bin_ami2(const double y[], const int size)
     for (int t = 0; t < nSamples; t++) {
         const int b1 = hist_bin_index(y[t], edges, nb);
         const int b2 = hist_bin_index(y[t + tau], edges, nb);
+        if (b1 < 0 || b2 < 0) { // edges miss a value (rounding, far from zero): only for input that is not z-scored
+            return NAN;
+        }
         pij[b1][b2] += 1;
     }
     double total = 0;

@@ -1,7 +1,7 @@
 set.seed(2)
 data <- stats::rnorm(200)
 
-# featureList.txt (from catch22 v1.1.0): name, short_name, legacy_name, hctsa_call
+# featureList.txt (from catch22 v1.2.0): name, short_name, legacy_name, hctsa_call
 read_feature_list <- function() {
   path <- test_path("testData", "featureList.txt")
   lines <- readLines(path)
