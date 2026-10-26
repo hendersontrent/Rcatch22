@@ -40,16 +40,11 @@ catch22_all <- function(data, catch24 = FALSE){
 
    if(catch24){
       names24 <- c("DN_Mean", "DN_Spread_Std")
-      names <- append(names, names24)
+      names <- c(names, names24)
    }
 
-   values = c();
+   values <- vapply(names, function(f) get(f)(data), numeric(1), USE.NAMES = FALSE)
 
-   for (feature in names){
-      fh = get(feature);
-      values = append(values, fh(data));
-   }
-
-   outData = data.frame(names = names, values = values);
+   outData <- data.frame(names = names, values = values)
    return(outData)
 }
