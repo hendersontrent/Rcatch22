@@ -285,6 +285,7 @@ double CO_Embed2_Dist_tau_d_expfit_meandiff(const double y[], const int size)
 
     int nBins = num_bins_auto(d, size-tau-1);
     if (nBins == 0){
+        free(d);
         return 0;
     }
     int * histCounts = malloc(nBins * sizeof(double));
