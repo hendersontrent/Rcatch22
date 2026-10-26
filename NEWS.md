@@ -1,8 +1,8 @@
 # Rcatch22 1.0.0
 
-* Updates the C code to catch22 v1.1.0.
+* Updates the C code to catch22 v1.2.0.
   Every feature now exactly reproduces a feature of hctsa v3.0.0, so values change for most features.
-  This includes fixes to four features, which now return the lag (not the lag minus one) for `PD_PeriodicityWang_th0_01` and `IN_AutoMutualInfoStats_40_gaussian_fmmi`, and count the longest stretches correctly for `SB_BinaryStats_mean_longstretch1` and `SB_BinaryStats_diff_longstretch0`.
+  Time series with extreme values (very large or very small) no longer hang or crash; features that cannot be computed at such scales are `NaN` (masked by default).
 * Ten features are renamed to their hctsa names (see `catch22_feature_table()`).
   `DN_Mean`, `DN_Spread_Std`, `MD_hrv_classic_pnn40` and `FC_LocalSimple_mean3_stderr` are only renamed, to `DN_mean`, `DN_Spread_std`, `MD_pNN_pnn40` and `FC_LocalSimple_mean3_stde`.
   `CO_f1ecac`, `CO_HistogramAMI_even_2_5`, `SB_TransitionMatrix_3ac_sumdiagcov`, `FC_LocalSimple_mean1_tauresrat`, `SP_Summaries_welch_rect_area_5_1` and `SP_Summaries_welch_rect_centroid` are renamed and redefined to match hctsa, as `CO_FirstCrossing_acf_1e_pointOfCrossing`, `CO_HistogramAMI_even_5bin_ami2`, `SB_TransitionMatrix_quantile_3_ac_sumdiagcov`, `FC_LocalSimple_mean1_taurat`, `SP_Summaries_fft_area_5_1` and `SP_Summaries_fft_wq_50`.
@@ -19,4 +19,10 @@
 * New `catch22_feature_table()` gives each feature's name, short name, name before 1.0.0, and the hctsa call that reproduces it.
 * The R code calls the catch22 C library's single entry point (`catch22_compute`), which does the z-scoring, masking and `NaN` handling, and takes the feature names from the C library.
 * Removes the dependency on rlang.
-* Tests check that every feature reproduces catch22 v1.1.0's expected outputs on its basic, simulated and pathological test data.
+* Tests check that every feature reproduces catch22 v1.2.0's expected outputs on its basic, simulated and pathological test data.
+
+# Rcatch22 0.3.0
+
+* Fixes four features to match their hctsa definitions: `PD_PeriodicityWang_th0_01` and `IN_AutoMutualInfoStats_40_gaussian_fmmi` now return the lag (not the lag minus one), and `SB_BinaryStats_mean_longstretch1` and `SB_BinaryStats_diff_longstretch0` count the longest stretches correctly (catch22 v0.6.0).
+* Fixes a memory leak in `CO_Embed2_Dist_tau_d_expfit_meandiff`.
+* Registers the native routines.
