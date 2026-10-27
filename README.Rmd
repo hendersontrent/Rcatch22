@@ -93,6 +93,27 @@ An option to include the mean and standard deviation as features in addition to 
 features <- catch22_all(x, catch24 = TRUE)
 ```
 
+## Feature names, masking and single features
+
+Since version 1.0.0 (catch22 v1.0), every feature exactly reproduces a feature of [_hctsa_](https://github.com/benfulcher/hctsa) v3.0.0, so values differ from earlier versions for most features.
+Several features were renamed to their _hctsa_ names (e.g., `CO_f1ecac` is now `CO_FirstCrossing_acf_1e_pointOfCrossing`); the old names still work as deprecated aliases.
+`catch22_feature_table()` lists each feature's name, short name, name before version 1.0.0, and the _hctsa_ call that reproduces it:
+
+```{r, eval = FALSE}
+catch22_feature_table(catch24 = TRUE)
+```
+
+Short names (e.g., `trev` for `CO_trev_1_num`) can be added to the output of `catch22_all`, and a single feature can be computed by its name or short name:
+
+```{r, eval = FALSE}
+features <- catch22_all(x, short_names = TRUE)
+catch22_feature(x, "trev")
+```
+
+By default (`mask_nans = TRUE`), a feature that cannot be estimated (e.g., for a constant or very short time series) is set to a fixed value at the appropriate end of its range, so that `catch22_all` always returns real numbers.
+Set `mask_nans = FALSE` to get `NaN` for these features instead.
+A time series containing `NaN`, `NA` or `Inf` gives `NaN` for every feature (with a warning).
+
 ## Citation
 
 A DOI is provided at the top of this README. Alternatively, the package can be cited using the following:

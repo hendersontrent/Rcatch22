@@ -1,6 +1,5 @@
 #' @useDynLib Rcatch22, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-#' @importFrom rlang warn
 NULL
 
 Rcatch22 <- function(){

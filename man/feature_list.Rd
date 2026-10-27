@@ -14,6 +14,8 @@ A vector with 1 variable:
 feature_list
 }
 \description{
-The variables include:
+The names of the 22 catch22 features, in the order of \code{\link{catch22_all}}.
+See \code{\link{catch22_feature_table}} for their short names, names before
+Rcatch22 1.0.0 and hctsa calls.
 }
 \keyword{datasets}

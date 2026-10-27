@@ -4,23 +4,51 @@
 \alias{catch22_all}
 \title{Automatically run every time-series feature calculation included in the catch22 set}
 \usage{
-catch22_all(data, catch24 = FALSE)
+catch22_all(
+  data,
+  catch24 = FALSE,
+  short_names = FALSE,
+  mask_nans = TRUE,
+  return_masked = FALSE
+)
 }
 \arguments{
 \item{data}{a numerical time-series input vector}
 
 \item{catch24}{a Boolean of whether to include mean and standard deviation as features}
+
+\item{short_names}{a Boolean of whether to also return the features' short names
+(e.g., \code{"trev"} for \code{"CO_trev_1_num"}) in a \code{short_names} column}
+
+\item{mask_nans}{a Boolean. If \code{TRUE} (default; recommended for statistical
+learning), a feature that cannot be estimated (e.g., for a constant or very short
+time series) is set to a fixed value at the appropriate end of its range, so that
+real numbers are always returned. If \code{FALSE}, it is \code{NaN}. A time series
+containing \code{NaN}, \code{NA} or \code{Inf} gives \code{NaN} for every feature
+either way (with a warning).}
+
+\item{return_masked}{a Boolean of whether to also return, in a \code{masked}
+column, whether each feature's value was masked}
 }
 \value{
-object of class DataFrame that contains the summary statistics for each feature
+object of class DataFrame that contains the summary statistics for each
+feature, with columns \code{names} and \code{values} (plus \code{short_names} and
+\code{masked} if requested)
 }
 \description{
-Automatically run every time-series feature calculation included in the catch22 set
+Each feature exactly reproduces a call in hctsa v3.0.0 (see
+\code{\link{catch22_feature_table}}). Features are computed on the z-scored
+time series, except the mean and standard deviation added by \code{catch24}.
 }
 \examples{
 data <- stats::rnorm(100)
 outs <- catch22_all(data)
+outs24 <- catch22_all(data, catch24 = TRUE, short_names = TRUE)
 
+}
+\seealso{
+\code{\link{catch22_feature}} to compute one feature by name, and
+\code{\link{catch22_feature_table}} for the features' names and hctsa calls
 }
 \author{
 Trent Henderson & Carl H. Lubba
